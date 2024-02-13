@@ -21,14 +21,14 @@ class _AddNewTaskState extends State<AddNewTask> {
       body: Stack(
         children: [
           Container(
-            margin: EdgeInsets.all(30),
+            margin: const EdgeInsets.all(30),
             child: Column(
               children: [
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Container(
-                      margin: EdgeInsets.only(bottom: 20, top: 10),
+                      margin: const EdgeInsets.only(bottom: 20, top: 10),
                       child: SizedBox(
                         width: 50,
                         child: FloatingActionButton(
@@ -40,18 +40,18 @@ class _AddNewTaskState extends State<AddNewTask> {
                             borderRadius: BorderRadius.circular(8.0),
                           ),
                           onPressed: () {},
-                          child: Icon(
+                          tooltip: 'Floating Action Button',
+                          child: const Icon(
                             Icons.menu,
                             color: AppColors.black,
                           ),
-                          tooltip: 'Floating Action Button',
                         ),
                       ),
                     ),
                     Row(
                       children: [
                         Container(
-                          margin: EdgeInsets.only(bottom: 20, top: 10),
+                          margin: const EdgeInsets.only(bottom: 20, top: 10),
                           child: SizedBox(
                             width: 50,
                             child: FloatingActionButton(
@@ -63,17 +63,17 @@ class _AddNewTaskState extends State<AddNewTask> {
                                 borderRadius: BorderRadius.circular(8.0),
                               ),
                               onPressed: () {},
-                              child: Icon(
+                              tooltip: 'Floating Action Button',
+                              child: const Icon(
                                 CupertinoIcons.bell_fill,
                                 color: AppColors.black,
                               ),
-                              tooltip: 'Floating Action Button',
                             ),
                           ),
                         ),
-                        SizedBox(width: 10,),
+                        const SizedBox(width: 10,),
                         Container(
-                          margin: EdgeInsets.only(bottom: 20, top: 10),
+                          margin: const EdgeInsets.only(bottom: 20, top: 10),
                           child: SizedBox(
                             width: 50,
                             child: FloatingActionButton(
@@ -87,11 +87,11 @@ class _AddNewTaskState extends State<AddNewTask> {
                               onPressed: () {
                                 Navigator.of(context).pushNamed('/profile');
                               },
-                              child: Icon(
+                              tooltip: 'Floating Action Button',
+                              child: const Icon(
                                 Icons.person,
                                 color: AppColors.black,
                               ),
-                              tooltip: 'Floating Action Button',
                             ),
                           ),
                         ),
@@ -100,9 +100,9 @@ class _AddNewTaskState extends State<AddNewTask> {
                   ],
                 ),
                 Container(
-                  margin: EdgeInsets.only(top: 20),
+                  margin: const EdgeInsets.only(top: 20),
                   alignment: Alignment.centerLeft,
-                  child: Text(
+                  child: const Text(
                     'Додати\nзадачу',
                     style: TextStyle(
                         color: AppColors.white,
@@ -124,7 +124,7 @@ class _AddNewTaskState extends State<AddNewTask> {
                 child: Container(
                   height: screenSize.height,
                   width: screenSize.width,
-                  decoration: BoxDecoration(
+                  decoration: const BoxDecoration(
                     color: AppColors.white,
                     borderRadius: BorderRadius.only(
                       topLeft: Radius.circular(30.0),
@@ -132,7 +132,7 @@ class _AddNewTaskState extends State<AddNewTask> {
                     ),
                   ),
                   child: Container(
-                    margin: EdgeInsets.only(top: 100, left: 20, right: 20),
+                    margin: const EdgeInsets.only(top: 100, left: 20, right: 20),
                     child: Column(
                       children: [
                         TextField(
@@ -140,7 +140,7 @@ class _AddNewTaskState extends State<AddNewTask> {
                             filled: true,
                             fillColor: AppColors.grey.withOpacity(0.3),
                             hintText: 'Назва',
-                            hintStyle: TextStyle(
+                            hintStyle: const TextStyle(
                                 fontSize: 16,
                                 fontWeight: FontWeight.bold
                             ),
@@ -150,13 +150,13 @@ class _AddNewTaskState extends State<AddNewTask> {
                             ),
                           ),
                         ),
-                        SizedBox(height: 20,),
+                        const SizedBox(height: 20,),
                         TextField(
                           decoration: InputDecoration(
                             filled: true,
                             fillColor: AppColors.grey.withOpacity(0.3),
                             hintText: 'Результат',
-                            hintStyle: TextStyle(
+                            hintStyle: const TextStyle(
                                 fontSize: 16,
                                 fontWeight: FontWeight.bold
                             ),
@@ -172,16 +172,16 @@ class _AddNewTaskState extends State<AddNewTask> {
                               children: [
                                 ListView.builder(
                                   shrinkWrap: true,
-                                  physics: NeverScrollableScrollPhysics(),
+                                  physics: const NeverScrollableScrollPhysics(),
                                   itemCount: taskWidgets.length,
                                   itemBuilder: (context, index) {
                                     return Padding(
-                                      padding: EdgeInsets.only(top: 15),
+                                      padding: const EdgeInsets.only(top: 15),
                                       child: Row(
                                         children: [
                                           Expanded(
                                             child: Container(
-                                              padding: EdgeInsets.symmetric(horizontal: 10),
+                                              padding: const EdgeInsets.symmetric(horizontal: 10),
                                               //height: 20,
                                               decoration: BoxDecoration(
                                                   color: AppColors.grey.withOpacity(0.3),
@@ -200,7 +200,7 @@ class _AddNewTaskState extends State<AddNewTask> {
                                                             taskWidgets.removeAt(index);
                                                           });
                                                         },
-                                                        icon: Icon(Icons.remove_circle_outline),
+                                                        icon: const Icon(Icons.remove_circle_outline),
                                                       ),
                                                       IconButton(
                                                         onPressed: () {
@@ -208,7 +208,7 @@ class _AddNewTaskState extends State<AddNewTask> {
                                                             taskWidgets.add(TextEditingController());
                                                           });
                                                         },
-                                                        icon: Icon(Icons.add_circle_outline),
+                                                        icon: const Icon(Icons.add_circle_outline),
                                                       ),
 
                                                     ],
@@ -219,12 +219,12 @@ class _AddNewTaskState extends State<AddNewTask> {
                                                         taskWidgets.removeAt(index);
                                                       });
                                                     },
-                                                    icon: Icon(Icons.remove_circle_outline),
+                                                    icon: const Icon(Icons.remove_circle_outline),
                                                   ),
                                                   //filled: true,
                                                   //fillColor: AppColors.grey.withOpacity(0.3),
                                                   hintText: 'Завдання',
-                                                  hintStyle: TextStyle(
+                                                  hintStyle: const TextStyle(
                                                       fontSize: 16,
                                                       fontWeight: FontWeight.bold
                                                   ),
@@ -242,8 +242,8 @@ class _AddNewTaskState extends State<AddNewTask> {
                                     );
                                   },
                                 ),
-                                SizedBox(height: 20),
-                                Container(
+                                const SizedBox(height: 20),
+                                SizedBox(
                                   height: 60,
                                   child: Row(
                                     mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -252,13 +252,13 @@ class _AddNewTaskState extends State<AddNewTask> {
                                         child: ElevatedButton(
                                           onPressed: () {},
                                           style: ElevatedButton.styleFrom(
-                                            minimumSize: Size(70, 55),
+                                            minimumSize: const Size(70, 55),
                                             backgroundColor: AppColors.buttonsGrey,
                                             shape: RoundedRectangleBorder(
                                               borderRadius: BorderRadius.circular(6.0),
                                             ),
                                           ),
-                                          child: Row(
+                                          child: const Row(
                                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                             children: [
                                               Text(
@@ -274,18 +274,18 @@ class _AddNewTaskState extends State<AddNewTask> {
                                           ),
                                         ),
                                       ),
-                                      SizedBox(width: 20),
+                                      const SizedBox(width: 20),
                                       Expanded(
                                         child: ElevatedButton(
                                           onPressed: () {},
                                           style: ElevatedButton.styleFrom(
-                                            minimumSize: Size(70, 55),
+                                            minimumSize: const Size(70, 55),
                                             backgroundColor: AppColors.buttonsGrey,
                                             shape: RoundedRectangleBorder(
                                               borderRadius: BorderRadius.circular(6.0),
                                             ),
                                           ),
-                                          child: Row(
+                                          child: const Row(
                                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                             children: [
                                               Text(
@@ -305,18 +305,18 @@ class _AddNewTaskState extends State<AddNewTask> {
                                     ],
                                   ),
                                 ),
-                                SizedBox(height: 20,),
+                                const SizedBox(height: 20,),
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                       children: [
                                         Container(
-                                          constraints: BoxConstraints(minWidth: 50.0),
-                                          margin: EdgeInsets.only(left: 30),
-                                          padding: EdgeInsets.all(8.0),
+                                          constraints: const BoxConstraints(minWidth: 50.0),
+                                          margin: const EdgeInsets.only(left: 30),
+                                          padding: const EdgeInsets.all(8.0),
                                           child: Center(
                                             child: Text(
                                               "${selectedDate.day} - ${selectedDate.month} - ${selectedDate.year}",
-                                              style: TextStyle(
+                                              style: const TextStyle(
                                                 color: AppColors.darkGrey,
                                                 fontWeight: FontWeight.bold,
                                                 fontSize: 16,
@@ -332,7 +332,7 @@ class _AddNewTaskState extends State<AddNewTask> {
                                             final DateTime? dateTime = await showModalBottomSheet<DateTime>(
                                               context: context,
                                               builder: (BuildContext builder) {
-                                                return Container(
+                                                return SizedBox(
                                                   height: MediaQuery.of(context).copyWith().size.height / 3,
                                                   child: CupertinoDatePicker(
                                                     initialDateTime: DateTime.now(),
@@ -368,13 +368,12 @@ class _AddNewTaskState extends State<AddNewTask> {
                                           //   }
                                           // },
                                           style: ElevatedButton.styleFrom(
-                                            minimumSize: Size(70, 55),
-                                            primary: AppColors.buttonsGrey,
+                                            minimumSize: const Size(70, 55), backgroundColor: AppColors.buttonsGrey,
                                             shape: RoundedRectangleBorder(
                                               borderRadius: BorderRadius.circular(6.0),
                                             ),
                                           ),
-                                          child: Row(
+                                          child: const Row(
                                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                             children: [
                                               Text(
@@ -395,20 +394,20 @@ class _AddNewTaskState extends State<AddNewTask> {
 
                                       ],
                                     ),
-                                SizedBox(height: 50),
+                                const SizedBox(height: 50),
                                 ElevatedButton(
                                   onPressed: () {
                                     Navigator.pop(context);
                                   },
                                   style: ElevatedButton.styleFrom(
-                                    primary: AppColors.black,
+                                    backgroundColor: AppColors.black,
                                     shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(8.0),
                                     ),
                                   ),
                                   child: Container(
-                                    margin: EdgeInsets.symmetric(vertical: 15, horizontal: 20),
-                                    child: Text(
+                                    margin: const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
+                                    child: const Text(
                                       'Додати задачу',
                                       style: TextStyle(
                                         color: AppColors.white,

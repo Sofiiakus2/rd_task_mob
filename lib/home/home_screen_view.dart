@@ -21,14 +21,14 @@ class _HomeState extends State<Home> {
       backgroundColor: AppColors.white,
       body: SingleChildScrollView(
         child: Container(
-        margin: EdgeInsets.all(30),
+        margin: const EdgeInsets.all(30),
         child: Column(
           children: [
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Container(
-                  margin: EdgeInsets.only(bottom: 20, top: 10),
+                  margin: const EdgeInsets.only(bottom: 20, top: 10),
                   child: SizedBox(
                     width: 50,
                     child: FloatingActionButton(
@@ -40,17 +40,17 @@ class _HomeState extends State<Home> {
                         borderRadius: BorderRadius.circular(8.0),
                       ),
                       onPressed: () {},
-                      child: Icon(Icons.menu,
+                      tooltip: 'Floating Action Button',
+                      child: const Icon(Icons.menu,
                         color: AppColors.black,
                       ),
-                      tooltip: 'Floating Action Button',
                     ),
                   ),
                 ),
                 Row(
                   children: [
                     Container(
-                      margin: EdgeInsets.only(bottom: 20, top: 10),
+                      margin: const EdgeInsets.only(bottom: 20, top: 10),
                       child: SizedBox(
                         width: 50,
                         child: FloatingActionButton(
@@ -64,15 +64,15 @@ class _HomeState extends State<Home> {
                           onPressed: () {
                             Navigator.of(context).pushNamed('/registration');
                           },
-                          child: Icon(CupertinoIcons.bell_fill,
-                            color: AppColors.black,),
                           tooltip: 'Floating Action Button',
+                          child: const Icon(CupertinoIcons.bell_fill,
+                            color: AppColors.black,),
                         ),
                       ),
                     ),
-                    SizedBox(width: 10,),
+                    const SizedBox(width: 10,),
                     Container(
-                      margin: EdgeInsets.only(bottom: 20, top: 10),
+                      margin: const EdgeInsets.only(bottom: 20, top: 10),
                       child: SizedBox(
                         width: 50,
                         child: FloatingActionButton(
@@ -86,9 +86,9 @@ class _HomeState extends State<Home> {
                           onPressed: () {
                             Navigator.of(context).pushNamed('/profile');
                           },
-                          child: Icon(Icons.person,
-                            color: AppColors.black,),
                           tooltip: 'Floating Action Button',
+                          child: const Icon(Icons.person,
+                            color: AppColors.black,),
                         ),
                       ),
                     ),
@@ -96,7 +96,7 @@ class _HomeState extends State<Home> {
                 ),
               ],
             ),
-            Row(
+            const Row(
               children: [
                 Text('Вітаю, ',
                   style: TextStyle(
@@ -113,7 +113,7 @@ class _HomeState extends State<Home> {
               ],
             ),
             Container(
-              margin: EdgeInsets.only(top: 10),
+              margin: const EdgeInsets.only(top: 10),
               alignment: Alignment.centerLeft,
                 child: Text('Поточні задачі для вас',
                 style: TextStyle(
@@ -130,7 +130,7 @@ class _HomeState extends State<Home> {
 
                   },
                   child: Container(
-                    margin: EdgeInsets.only(top: 20),
+                    margin: const EdgeInsets.only(top: 20),
                     width: screenSize.width/2 - 40,
                     height: screenSize.width/2 - 40,
                     decoration: BoxDecoration(
@@ -141,12 +141,12 @@ class _HomeState extends State<Home> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Icon(
+                        const Icon(
                           Icons.add_box_outlined,
                           size: 35,
                           color: AppColors.black,
                         ),
-                        SizedBox(height: 8),
+                        const SizedBox(height: 8),
                         Text(
                           'Додати задачу',
                           style: TextStyle(
@@ -160,7 +160,7 @@ class _HomeState extends State<Home> {
                 ),
 
                 Container(
-                  margin: EdgeInsets.only(top: 20),
+                  margin: const EdgeInsets.only(top: 20),
                   width: screenSize.width/2 - 40,
                   height: screenSize.width/2 - 40,
                   decoration: BoxDecoration(
@@ -243,21 +243,21 @@ class _HomeState extends State<Home> {
                     color: AppColors.grey.withOpacity(0.2),
                     borderRadius: BorderRadius.circular(10),
                   ),
-              margin: EdgeInsets.only(top: 20),
+              margin: const EdgeInsets.only(top: 20),
               height: 80,
               child: Row(
                 children: [
                   Container(
-                    margin: EdgeInsets.only(left: 30),
-                    child: Icon(
+                    margin: const EdgeInsets.only(left: 30),
+                    child: const Icon(
                     Icons.list,
                     size: 30,
                     color: AppColors.black,
                   ),
                   ),
                   Container(
-                    margin: EdgeInsets.only(left: 30),
-                    child: Text(
+                    margin: const EdgeInsets.only(left: 30),
+                    child: const Text(
                       'Всі мої задачі',
                       style: TextStyle(fontSize: 18),
                     ),
@@ -266,7 +266,7 @@ class _HomeState extends State<Home> {
                     child: Container(),
                   ),
                   IconButton(
-                    icon: Icon(Icons.navigate_next, color: AppColors.black),
+                    icon: const Icon(Icons.navigate_next, color: AppColors.black),
                     onPressed: () {},
                   ),
                 ],
@@ -277,21 +277,21 @@ class _HomeState extends State<Home> {
                 color: AppColors.grey.withOpacity(0.2),
                 borderRadius: BorderRadius.circular(10),
               ),
-              margin: EdgeInsets.only(top: 20),
+              margin: const EdgeInsets.only(top: 20),
               height: 80,
               child: Row(
                 children: [
                   Container(
-                    margin: EdgeInsets.only(left: 30),
-                    child: Icon(
+                    margin: const EdgeInsets.only(left: 30),
+                    child: const Icon(
                       Icons.check_circle_outline,
                       size: 30,
                       color: AppColors.black,
                     ),
                   ),
                   Container(
-                    margin: EdgeInsets.only(left: 30),
-                    child: Text(
+                    margin: const EdgeInsets.only(left: 30),
+                    child: const Text(
                       'Задачі для мене',
                       style: TextStyle(fontSize: 18),
                     ),
@@ -300,7 +300,7 @@ class _HomeState extends State<Home> {
                     child: Container(),
                   ),
                   IconButton(
-                    icon: Icon(Icons.navigate_next, color: AppColors.black),
+                    icon: const Icon(Icons.navigate_next, color: AppColors.black),
                     onPressed: () {},
                   ),
                 ],
@@ -316,21 +316,21 @@ class _HomeState extends State<Home> {
                 color: AppColors.grey.withOpacity(0.2),
                 borderRadius: BorderRadius.circular(10),
               ),
-              margin: EdgeInsets.only(top: 20),
+              margin: const EdgeInsets.only(top: 20),
               height: 80,
               child: Row(
                 children: [
                   Container(
-                    margin: EdgeInsets.only(left: 30),
-                    child: Icon(
+                    margin: const EdgeInsets.only(left: 30),
+                    child: const Icon(
                       Icons.remove_red_eye_outlined,
                       size: 30,
                       color: AppColors.black,
                     ),
                   ),
                   Container(
-                    margin: EdgeInsets.only(left: 30),
-                    child: Text(
+                    margin: const EdgeInsets.only(left: 30),
+                    child: const Text(
                       'Стежу',
                       style: TextStyle(fontSize: 18),
                     ),
@@ -339,7 +339,7 @@ class _HomeState extends State<Home> {
                     child: Container(),
                   ),
                   IconButton(
-                    icon: Icon(Icons.navigate_next, color: AppColors.black),
+                    icon: const Icon(Icons.navigate_next, color: AppColors.black),
                     onPressed: () {
 
                     },
@@ -352,27 +352,27 @@ class _HomeState extends State<Home> {
                 color: AppColors.grey.withOpacity(0.2),
                 borderRadius: BorderRadius.circular(10),
               ),
-              margin: EdgeInsets.only(top: 20),
+              margin: const EdgeInsets.only(top: 20),
               height: 80,
               child: Row(
                 children: [
                   Container(
-                    margin: EdgeInsets.only(left: 30),
-                    child: Icon(
+                    margin: const EdgeInsets.only(left: 30),
+                    child: const Icon(
                       Icons.people_alt_outlined,
                       size: 30,
                       color: AppColors.black,
                     ),
                   ),
                   Container(
-                    margin: EdgeInsets.only(left: 30),
-                    child: Text(
+                    margin: const EdgeInsets.only(left: 30),
+                    child: const Text(
                       'Мої команди',
                       style: TextStyle(fontSize: 18),
                     ),
                   ),
                   IconButton(
-                    icon: Icon(Icons.navigate_next, color: AppColors.black),
+                    icon: const Icon(Icons.navigate_next, color: AppColors.black),
                     onPressed: () {},
                   ),
                 ],

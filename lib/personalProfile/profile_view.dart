@@ -39,7 +39,7 @@ class _ProfileState extends State<Profile> {
       ),
       body: Container(
         color: AppColors.white,
-        margin: EdgeInsets.all(30),
+        margin: const EdgeInsets.all(30),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -53,29 +53,29 @@ class _ProfileState extends State<Profile> {
                   child: Container(
                     width: screenSize.width/5,
                     height: screenSize.width/5,
-                    child: Center(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(8),
+                      color: AppColors.grey.withOpacity(0.3),
+                    ),
+                    child: const Center(
                       child: Icon(
                         Icons.perm_identity,
                         color: AppColors.grey,
                         size: 50,
                       ),
                     ),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(8),
-                      color: AppColors.grey.withOpacity(0.3),
-                    ),
                   ),
                 ),
-                SizedBox(width: 20),
+                const SizedBox(width: 20),
                 Expanded(
                   child: TextField(
                     decoration: InputDecoration(
                       labelText: 'Телефон',
-                      labelStyle: TextStyle(
+                      labelStyle: const TextStyle(
                           fontSize: 20,
                           color: AppColors.grey
                       ),
-                      focusedBorder: OutlineInputBorder(
+                      focusedBorder: const OutlineInputBorder(
                         borderSide: BorderSide(color: AppColors.grey),
                       ),
                       enabledBorder: OutlineInputBorder(
@@ -87,16 +87,16 @@ class _ProfileState extends State<Profile> {
                 ),
               ],
             ),
-            SizedBox(height: 50,),
+            const SizedBox(height: 50,),
             Container(
               child: TextField(
                 decoration: InputDecoration(
                   labelText: 'Прізвище та ім\'я',
-                  labelStyle: TextStyle(
+                  labelStyle: const TextStyle(
                       fontSize: 20,
                       color: AppColors.grey
                   ),
-                  focusedBorder: OutlineInputBorder(
+                  focusedBorder: const OutlineInputBorder(
                     borderSide: BorderSide(color: AppColors.grey),
                   ),
                   enabledBorder: OutlineInputBorder(
@@ -106,16 +106,16 @@ class _ProfileState extends State<Profile> {
                 ),
               ),
             ),
-            SizedBox(height: 30,),
+            const SizedBox(height: 30,),
             Container(
               child: TextField(
                 decoration: InputDecoration(
                   labelText: 'Посада',
-                  labelStyle: TextStyle(
+                  labelStyle: const TextStyle(
                       fontSize: 20,
                       color: AppColors.grey
                   ),
-                  focusedBorder: OutlineInputBorder(
+                  focusedBorder: const OutlineInputBorder(
                     borderSide: BorderSide(color: AppColors.grey),
                   ),
                   enabledBorder: OutlineInputBorder(
@@ -125,10 +125,10 @@ class _ProfileState extends State<Profile> {
                 ),
               ),
             ),
-            SizedBox(height: 30,),
+            const SizedBox(height: 30,),
             DropdownButtonFormField<String>(
               decoration: InputDecoration(
-                focusedBorder: OutlineInputBorder(
+                focusedBorder: const OutlineInputBorder(
                   borderSide: BorderSide(color: AppColors.grey),
                 ),
                 enabledBorder: OutlineInputBorder(
@@ -146,7 +146,7 @@ class _ProfileState extends State<Profile> {
                 return DropdownMenuItem<String>(
                   value: organization,
                   child: Text(organization,
-                    style: TextStyle(
+                    style: const TextStyle(
                         fontSize: 20,
                         color: AppColors.grey,
                         fontWeight: FontWeight.w400
@@ -156,10 +156,10 @@ class _ProfileState extends State<Profile> {
                 );
               }).toList(),
             ),
-            SizedBox(height: 30,),
+            const SizedBox(height: 30,),
             DropdownButtonFormField<String>(
               decoration: InputDecoration(
-                focusedBorder: OutlineInputBorder(
+                focusedBorder: const OutlineInputBorder(
                   borderSide: BorderSide(color: AppColors.grey),
                 ),
                 enabledBorder: OutlineInputBorder(
@@ -177,7 +177,7 @@ class _ProfileState extends State<Profile> {
                 return DropdownMenuItem<String>(
                   value: department,
                   child: Text(department,
-                    style: TextStyle(
+                    style: const TextStyle(
                         fontSize: 20,
                         color: AppColors.grey,
                         fontWeight: FontWeight.w400
@@ -187,15 +187,15 @@ class _ProfileState extends State<Profile> {
                 );
               }).toList(),
             ),
-            SizedBox(height: 80,),
+            const SizedBox(height: 80,),
             Center(
               child: CupertinoButton(
               onPressed: () {},
-              child: Container(
-                margin: EdgeInsets.all(10),
-                child: Text('Зберегти'),
-              ),
               color: AppColors.black,
+              child: Container(
+                margin: const EdgeInsets.all(10),
+                child: const Text('Зберегти'),
+              ),
             ),),
 
           ],

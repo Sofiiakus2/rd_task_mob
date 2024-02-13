@@ -56,14 +56,14 @@ class FullTasks extends StatelessWidget {
     return Scaffold(
       backgroundColor: AppColors.darkGrey,
       body: Container(
-        margin: EdgeInsets.all(30),
+        margin: const EdgeInsets.all(30),
         child: Column(
           children: [
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Container(
-                  margin: EdgeInsets.only(bottom: 20, top: 10),
+                  margin: const EdgeInsets.only(bottom: 20, top: 10),
 
                   child: SizedBox(
                     width: 50,
@@ -76,18 +76,18 @@ class FullTasks extends StatelessWidget {
                         borderRadius: BorderRadius.circular(8.0),
                       ),
                       onPressed: () {},
-                      child: Icon(Icons.menu,
+                      tooltip: 'Floating Action Button',
+                      child: const Icon(Icons.menu,
                         color: AppColors.black,
                         //size: 25,
                       ),
-                      tooltip: 'Floating Action Button',
                     ),
                   ),
                 ),
                 Row(
                   children: [
                     Container(
-                      margin: EdgeInsets.only(bottom: 20, top: 10),
+                      margin: const EdgeInsets.only(bottom: 20, top: 10),
                       child: SizedBox(
                         width: 50,
                         child: FloatingActionButton(
@@ -99,15 +99,15 @@ class FullTasks extends StatelessWidget {
                             borderRadius: BorderRadius.circular(8.0),
                           ),
                           onPressed: () {},
-                          child: Icon(CupertinoIcons.bell_fill,
-                            color: AppColors.black,),
                           tooltip: 'Floating Action Button',
+                          child: const Icon(CupertinoIcons.bell_fill,
+                            color: AppColors.black,),
                         ),
                       ),
                     ),
-                    SizedBox(width: 10,),
+                    const SizedBox(width: 10,),
                     Container(
-                      margin: EdgeInsets.only(bottom: 20, top: 10),
+                      margin: const EdgeInsets.only(bottom: 20, top: 10),
                       child: SizedBox(
                         width: 50,
                         child: FloatingActionButton(
@@ -121,9 +121,9 @@ class FullTasks extends StatelessWidget {
                           onPressed: () {
                             Navigator.of(context).pushNamed('/profile');
                           },
-                          child: Icon(Icons.person,
-                            color: AppColors.black,),
                           tooltip: 'Floating Action Button',
+                          child: const Icon(Icons.person,
+                            color: AppColors.black,),
                         ),
                       ),
                     ),
@@ -132,9 +132,9 @@ class FullTasks extends StatelessWidget {
               ],
             ),
             Container(
-              margin: EdgeInsets.only(top: 20),
+              margin: const EdgeInsets.only(top: 20),
               alignment: Alignment.centerLeft,
-              child: Text(
+              child: const Text(
                 'Перелік\nзадач',
                 style: TextStyle(
                     color: AppColors.white,
@@ -150,14 +150,14 @@ class FullTasks extends StatelessWidget {
           ? Container(
           height: 3 * screenSize.height / 5,
           width: screenSize.width,
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             color: AppColors.white,
             borderRadius: BorderRadius.only(
               topLeft: Radius.circular(40.0),
               topRight: Radius.circular(40.0),
             ),
           ),
-          child: Center(
+          child: const Center(
         child: Text(
           'У вас немає завдань',
           style: TextStyle(
@@ -169,7 +169,7 @@ class FullTasks extends StatelessWidget {
           : Container(
         height: 3 * screenSize.height / 5,
         width: screenSize.width,
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           color: AppColors.white,
           borderRadius: BorderRadius.only(
             topLeft: Radius.circular(40.0),
@@ -177,7 +177,7 @@ class FullTasks extends StatelessWidget {
           ),
         ),
         child: Container(
-          margin: EdgeInsets.only(top: 50, left: 20, right: 20),
+          margin: const EdgeInsets.only(top: 50, left: 20, right: 20),
           child: ListView(
           shrinkWrap: true,
           children: [
@@ -190,11 +190,11 @@ class FullTasks extends StatelessWidget {
                 final progressPercentage = (tasks[index].progress * 100).toStringAsFixed(0);
 
                 if (progressPercentage == '100') {
-                  trailingWidget = Icon(Icons.check, color: AppColors.black);
+                  trailingWidget = const Icon(Icons.check, color: AppColors.black);
                 } else {
                   trailingWidget = Text(
                     '$progressPercentage%',
-                    style: TextStyle(
+                    style: const TextStyle(
                       color: AppColors.black,
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
@@ -213,7 +213,7 @@ class FullTasks extends StatelessWidget {
                     child: Column(
                         children:[
                           ListTile(
-                            contentPadding: EdgeInsets.symmetric(vertical: 20),
+                            contentPadding: const EdgeInsets.symmetric(vertical: 20),
                             leading: Container(
                               height: 60,
                               width: 60,
@@ -221,11 +221,11 @@ class FullTasks extends StatelessWidget {
                                 color: AppColors.grey.withOpacity(0.3),
                                 borderRadius: BorderRadius.circular(8),
                               ),
-                              child: Icon(Icons.settings,
+                              child: const Icon(Icons.settings,
                                 color: AppColors.grey,),
                             ),
                             title: Text(tasks[index].title,
-                              style: TextStyle(
+                              style: const TextStyle(
                                   color: AppColors.black,
                                   fontWeight: FontWeight.bold
                               ),),

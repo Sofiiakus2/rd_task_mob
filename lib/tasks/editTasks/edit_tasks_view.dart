@@ -14,7 +14,7 @@ class EditTasks extends StatefulWidget {
   final List<String>? assignees;
   final List<bool> completedTasks;
 
-  EditTasks({
+  const EditTasks({
     Key? key,
     required this.title,
     required this.performer,
@@ -38,14 +38,14 @@ class _EditTasksState extends State<EditTasks> {
     return Scaffold(
       backgroundColor: AppColors.white,
       body: Container(
-        margin: EdgeInsets.all(30),
+        margin: const EdgeInsets.all(30),
         child: Column(
           children: [
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Container(
-                  margin: EdgeInsets.only(bottom: 20, top: 10),
+                  margin: const EdgeInsets.only(bottom: 20, top: 10),
                   child: SizedBox(
                     width: 50,
                     child: FloatingActionButton(
@@ -57,18 +57,18 @@ class _EditTasksState extends State<EditTasks> {
                         borderRadius: BorderRadius.circular(8.0),
                       ),
                       onPressed: () {},
-                      child: Icon(
+                      tooltip: 'Floating Action Button',
+                      child: const Icon(
                         Icons.menu,
                         color: AppColors.black,
                       ),
-                      tooltip: 'Floating Action Button',
                     ),
                   ),
                 ),
                 Row(
                   children: [
                     Container(
-                      margin: EdgeInsets.only(bottom: 20, top: 10),
+                      margin: const EdgeInsets.only(bottom: 20, top: 10),
                       child: SizedBox(
                         width: 50,
                         child: FloatingActionButton(
@@ -80,17 +80,17 @@ class _EditTasksState extends State<EditTasks> {
                             borderRadius: BorderRadius.circular(8.0),
                           ),
                           onPressed: () {},
-                          child: Icon(
+                          tooltip: 'Floating Action Button',
+                          child: const Icon(
                             CupertinoIcons.bell_fill,
                             color: AppColors.black,
                           ),
-                          tooltip: 'Floating Action Button',
                         ),
                       ),
                     ),
-                    SizedBox(width: 10),
+                    const SizedBox(width: 10),
                     Container(
-                      margin: EdgeInsets.only(bottom: 20, top: 10),
+                      margin: const EdgeInsets.only(bottom: 20, top: 10),
                       child: SizedBox(
                         width: 50,
                         child: FloatingActionButton(
@@ -104,11 +104,11 @@ class _EditTasksState extends State<EditTasks> {
                           onPressed: () {
                             Navigator.of(context).pushNamed('/profile');
                           },
-                          child: Icon(
+                          tooltip: 'Floating Action Button',
+                          child: const Icon(
                             Icons.person,
                             color: AppColors.black,
                           ),
-                          tooltip: 'Floating Action Button',
                         ),
                       ),
                     ),
@@ -117,12 +117,12 @@ class _EditTasksState extends State<EditTasks> {
               ],
             ),
             Container(
-              margin: EdgeInsets.only(top: 30),
+              margin: const EdgeInsets.only(top: 30),
               height: screenSize.height / 4,
               width: screenSize.width,
               color: AppColors.grey.withOpacity(0.2),
               child: Container(
-                margin: EdgeInsets.all(20),
+                margin: const EdgeInsets.all(20),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
@@ -130,7 +130,7 @@ class _EditTasksState extends State<EditTasks> {
                       alignment: Alignment.centerLeft,
                       child: Text(
                         widget.title,
-                        style: TextStyle(
+                        style: const TextStyle(
                           color: AppColors.black,
                           fontWeight: FontWeight.bold,
                           fontSize: 16,
@@ -138,10 +138,10 @@ class _EditTasksState extends State<EditTasks> {
                       ),
                     ),
                     Container(
-                      margin: EdgeInsets.only(top: 10),
+                      margin: const EdgeInsets.only(top: 10),
                       child: Text(
                         'Результат: ${widget.result}',
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontSize: 14,
                           color: AppColors.darkGrey,
                         ),
@@ -155,14 +155,14 @@ class _EditTasksState extends State<EditTasks> {
                           children: [
                             Text(
                               widget.performer,
-                              style: TextStyle(
+                              style: const TextStyle(
                                 fontSize: 14,
                                 color: AppColors.darkGrey,
                               ),
                             ),
                             Text(
                               'До ${widget.date}',
-                              style: TextStyle(
+                              style: const TextStyle(
                                 fontSize: 14,
                                 color: AppColors.darkGrey,
                               ),
@@ -172,12 +172,11 @@ class _EditTasksState extends State<EditTasks> {
                         TextButton(
                           onPressed: () {},
                           style: TextButton.styleFrom(
-                            primary: AppColors.grey,
-                            backgroundColor:
+                            foregroundColor: AppColors.grey, backgroundColor:
                             AppColors.grey.withOpacity(0.2),
-                            side: BorderSide(color: AppColors.darkGrey),
+                            side: const BorderSide(color: AppColors.darkGrey),
                           ),
-                          child: Text('Чат',
+                          child: const Text('Чат',
                           style: TextStyle(
                             color: AppColors.darkGrey
                           ),
@@ -189,7 +188,7 @@ class _EditTasksState extends State<EditTasks> {
                 ),
               ),
             ),
-            SizedBox(height: 40),
+            const SizedBox(height: 40),
             Expanded(
               child: ListView.builder(
                 itemCount: widget.miniTasks.length,
@@ -204,14 +203,14 @@ class _EditTasksState extends State<EditTasks> {
                             //color: AppColors.grey.withOpacity(0.2),
                             borderRadius: BorderRadius.circular(8),
                           ),
-                          child: Icon(
+                          child: const Icon(
                             Icons.settings,
                             color: AppColors.grey,
                           ),
                         ),
                         title: Text(
                           widget.miniTasks[index],
-                          style: TextStyle(
+                          style: const TextStyle(
                             color: AppColors.black,
                             fontWeight: FontWeight.bold,
                           ),
@@ -241,14 +240,14 @@ class _EditTasksState extends State<EditTasks> {
                 Navigator.pop(context);
               },
               style: ElevatedButton.styleFrom(
-                primary: AppColors.black,
+                backgroundColor: AppColors.black,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(8.0),
                 ),
               ),
               child: Container(
-                margin: EdgeInsets.symmetric(vertical: 15, horizontal: 20),
-                child: Text(
+                margin: const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
+                child: const Text(
                   'Зберегти',
                   style: TextStyle(
                     color: AppColors.white,

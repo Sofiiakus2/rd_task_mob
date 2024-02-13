@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:tasker/tasks/editTasks/edit_tasks_view.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import '../tasks.dart';
 

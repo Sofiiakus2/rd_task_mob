@@ -10,84 +10,84 @@ class Enter extends StatelessWidget {
     return Scaffold(
       backgroundColor: AppColors.white,
       body: Container(
-          margin: EdgeInsets.symmetric(horizontal: 30),
+          margin: const EdgeInsets.symmetric(horizontal: 30),
           child: Center(
             child:Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text('Вхід',
+                const Text('Вхід',
                   style: TextStyle(
                       color: AppColors.grey,
                       fontSize: 22,
                       fontWeight: FontWeight.bold
                   ),),
-                SizedBox(height: 60,),
-                Text('RD Tasks',
+                const SizedBox(height: 60,),
+                const Text('RD Tasks',
                   style: TextStyle(
                       color: AppColors.black,
                       fontSize: 26,
                       fontWeight: FontWeight.w900
                   ),),
-                SizedBox(height: 60,),
+                const SizedBox(height: 60,),
                 TextField(
                   decoration: InputDecoration(
                     filled: true,
                     fillColor: AppColors.white,
                     hintText: 'Телефон',
-                    hintStyle: TextStyle(
+                    hintStyle: const TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
                         color: AppColors.grey
                     ),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10.0),
-                      borderSide: BorderSide(
+                      borderSide: const BorderSide(
                         color: AppColors.grey,
                         width: 0.5,
                       ),
                     ),
                   ),
                 ),
-                SizedBox(height: 20,),
+                const SizedBox(height: 20,),
                 TextField(
                   decoration: InputDecoration(
                     filled: true,
                     suffixIcon: IconButton(
-                      icon: Icon(Icons.remove_red_eye_outlined,
+                      icon: const Icon(Icons.remove_red_eye_outlined,
                         color: AppColors.grey,),
                       onPressed: () {  },
                     ),
                     fillColor: AppColors.white,
                     hintText: 'Організація',
-                    hintStyle: TextStyle(
+                    hintStyle: const TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
                         color: AppColors.grey
                     ),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10.0),
-                      borderSide: BorderSide(
+                      borderSide: const BorderSide(
                         color: AppColors.grey,
                         width: 0.5,
                       ),
                     ),
                   ),
                 ),
-                SizedBox(height: 60,),
+                const SizedBox(height: 60,),
                 ElevatedButton(
                   onPressed: () {
                     //Navigator.pop(context);
                   },
                   style: ElevatedButton.styleFrom(
-                    primary: AppColors.black,
+                    backgroundColor: AppColors.black,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(8.0),
                     ),
                   ),
                   child: Container(
                     width: 160,
-                    margin: EdgeInsets.symmetric(vertical: 15, horizontal: 20),
-                    child: Center(
+                    margin: const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
+                    child: const Center(
                       child: Text(
                       'Увійти',
                       style: TextStyle(
@@ -97,7 +97,7 @@ class Enter extends StatelessWidget {
                     ),)
                   ),
                 ),
-                SizedBox(height: 20,),
+                const SizedBox(height: 20,),
                 ElevatedButton(
                   onPressed: () {
                     Navigator.pushNamed(context, "/");
@@ -110,8 +110,8 @@ class Enter extends StatelessWidget {
                   ),
                   child: Container(
                       width: 160,
-                      margin: EdgeInsets.symmetric(vertical: 15, horizontal: 20),
-                      child: Center(
+                      margin: const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
+                      child: const Center(
                         child: Text(
                           'Реєстрація',
                           style: TextStyle(

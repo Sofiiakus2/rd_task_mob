@@ -11,7 +11,7 @@ class ChatsPage extends StatelessWidget {
     return Scaffold(
       backgroundColor: AppColors.white,
       body: Container(
-        margin: EdgeInsets.all(30),
+        margin: const EdgeInsets.all(30),
         child: Column(
           children: [
             Row(
@@ -29,17 +29,17 @@ class ChatsPage extends StatelessWidget {
                         borderRadius: BorderRadius.circular(8.0),
                       ),
                       onPressed: () {},
-                      child: Icon(Icons.menu,
+                      tooltip: 'Floating Action Button',
+                      child: const Icon(Icons.menu,
                         color: AppColors.black,
                       ),
-                      tooltip: 'Floating Action Button',
                     ),
                   ),
                 ),
                 Row(
                   children: [
                     Container(
-                      margin: EdgeInsets.only(bottom: 20, top: 10),
+                      margin: const EdgeInsets.only(bottom: 20, top: 10),
                       child: SizedBox(
                         width: 50,
                         child: FloatingActionButton(
@@ -51,15 +51,15 @@ class ChatsPage extends StatelessWidget {
                             borderRadius: BorderRadius.circular(8.0),
                           ),
                           onPressed: () {},
-                          child: Icon(CupertinoIcons.bell_fill,
-                            color: AppColors.black,),
                           tooltip: 'Floating Action Button',
+                          child: const Icon(CupertinoIcons.bell_fill,
+                            color: AppColors.black,),
                         ),
                       ),
                     ),
-                    SizedBox(width: 10,),
+                    const SizedBox(width: 10,),
                     Container(
-                      margin: EdgeInsets.only(bottom: 20, top: 10),
+                      margin: const EdgeInsets.only(bottom: 20, top: 10),
                       child: SizedBox(
                         width: 50,
                         child: FloatingActionButton(
@@ -73,9 +73,9 @@ class ChatsPage extends StatelessWidget {
                           onPressed: () {
                             Navigator.of(context).pushNamed('/profile');
                           },
-                          child: Icon(Icons.person,
-                            color: AppColors.black,),
                           tooltip: 'Floating Action Button',
+                          child: const Icon(Icons.person,
+                            color: AppColors.black,),
                         ),
                       ),
                     ),
@@ -83,14 +83,14 @@ class ChatsPage extends StatelessWidget {
                 ),
               ],
             ),
-            SizedBox(height: 20,),
+            const SizedBox(height: 20,),
             TextField(
               decoration: InputDecoration(
                 filled: true,
-                prefixIcon: Icon(Icons.search_outlined),
+                prefixIcon: const Icon(Icons.search_outlined),
                 fillColor: AppColors.grey.withOpacity(0.2),
                 hintText: 'Пошук',
-                hintStyle: TextStyle(
+                hintStyle: const TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.bold
                 ),
@@ -100,7 +100,7 @@ class ChatsPage extends StatelessWidget {
                 ),
               ),
             ),
-            SizedBox(height: 30,),
+            const SizedBox(height: 30,),
 
           ],
         ),

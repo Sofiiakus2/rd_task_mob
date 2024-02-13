@@ -75,7 +75,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
                 size: screenSize.width / 15,
                 color: isActive ? AppColors.grey : AppColors.black,
               ),
-              SizedBox(height: 4),
+              const SizedBox(height: 4),
               Text(
                 label,
                 style: TextStyle(
