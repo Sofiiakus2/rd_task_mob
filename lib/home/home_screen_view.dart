@@ -11,8 +11,8 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  double value1 = 0.4;
-  double value2 = 0.7;
+  double value1 = 0.5;
+  double value2 = 0.8;
 
   @override
   Widget build(BuildContext context) {
@@ -170,42 +170,128 @@ class _HomeState extends State<Home> {
                   child: Center(
                     child: Stack(
                       children: value1 < value2
-                          ? [
-                        CircularProgressIndicator(
-                          backgroundColor: AppColors.white,
-                          strokeCap: StrokeCap.round,
-                          strokeWidth: 10,
-                          strokeAlign: 6,
-                          color: AppColors.black,
-                          value: value2,
-                        ),
-                        CircularProgressIndicator(
-                          strokeCap: StrokeCap.round,
-                          strokeWidth: 10,
-                          strokeAlign: 6,
-                          color: Colors.red,
-                          value: value1,
+                      ? [
+                        TweenAnimationBuilder(
+                      tween: Tween<double>(begin: 0, end: value2),
+                      duration: Duration(seconds: 4),
+                      builder: (context, double vale, child) => Padding(
+                        padding: const EdgeInsets.all(15.0),
+                        child:
+                        Stack(
+                            children: [
+                          CircularProgressIndicator(
+                            strokeWidth: 10,
+                            strokeAlign: 6,
+                            strokeCap: StrokeCap.round,
+                            value: vale,
+                            color: AppColors.black,
+                            backgroundColor: AppColors.white,
+                          ),
+                        ]),
+                      ),
+                    ),
+                        TweenAnimationBuilder(
+                          tween: Tween<double>(begin: 0, end: value1),
+                          duration: Duration(seconds: 4),
+                          builder: (context, double vale, child) => Padding(
+                            padding: const EdgeInsets.all(15.0),
+                            child:
+                            Stack(
+                                children: [
+                                  CircularProgressIndicator(
+                                    strokeWidth: 10,
+                                    strokeAlign: 6,
+                                    strokeCap: StrokeCap.round,
+                                    value: vale,
+                                    color: Colors.amber,
+                                    //backgroundColor: Color.fromARGB(255, 255, 255, 255),
+                                  ),
+
+                                ]),
+                          ),
                         ),
                       ]
-                          : [
-                        CircularProgressIndicator(
-                          backgroundColor: AppColors.white,
-                          strokeCap: StrokeCap.round,
-                          strokeWidth: 10,
-                          strokeAlign: 6,
-                          color: Colors.red,
-                          value: value1,
+                        :[
+                        TweenAnimationBuilder(
+                          tween: Tween<double>(begin: 0, end: value1),
+                          duration: Duration(seconds: 4),
+                          builder: (context, double vale, child) => Padding(
+                            padding: const EdgeInsets.all(15.0),
+                            child:
+                            Stack(
+                                children: [
+                                  CircularProgressIndicator(
+                                    strokeWidth: 10,
+                                    strokeAlign: 6,
+                                    strokeCap: StrokeCap.round,
+                                    value: vale,
+                                    color: Colors.amber,
+                                    backgroundColor: AppColors.white,
+                                  ),
+
+                                ]),
+                          ),
                         ),
-                        CircularProgressIndicator(
-                         // backgroundColor: AppColors.white,
-                          strokeCap: StrokeCap.round,
-                          strokeWidth: 10,
-                          strokeAlign: 6,
-                          color: AppColors.black,
-                          value: value2,
+                        TweenAnimationBuilder(
+                          tween: Tween<double>(begin: 0, end: value2),
+                          duration: Duration(seconds: 4),
+                          builder: (context, double vale, child) => Padding(
+                            padding: const EdgeInsets.all(15.0),
+                            child:
+                            Stack(
+                                children: [
+                                  CircularProgressIndicator(
+                                    strokeWidth: 10,
+                                    strokeAlign: 6,
+                                    strokeCap: StrokeCap.round,
+                                    value: vale,
+                                    color: AppColors.black,
+                                    //backgroundColor: Color.fromARGB(255, 255, 255, 255),
+                                  ),
+                                ]),
+                          ),
                         ),
-                      ],
+
+                      ]
                     ),
+                    // child: Stack(
+                    //   children: value1 < value2
+                    //       ? [
+                    //     CircularProgressIndicator(
+                    //       backgroundColor: AppColors.white,
+                    //       strokeCap: StrokeCap.round,
+                    //       strokeWidth: 10,
+                    //       strokeAlign: 6,
+                    //       color: AppColors.black,
+                    //       value: value2,
+                    //     ),
+                    //     CircularProgressIndicator(
+                    //       strokeCap: StrokeCap.round,
+                    //       strokeWidth: 10,
+                    //       strokeAlign: 6,
+                    //       color: Colors.red,
+                    //       value: value1,
+                    //     ),
+                    //   ]
+                    //       : [
+                    //     CircularProgressIndicator(
+                    //       backgroundColor: AppColors.white,
+                    //       strokeCap: StrokeCap.round,
+                    //       strokeWidth: 10,
+                    //       strokeAlign: 6,
+                    //       color: Colors.red,
+                    //       value: value1,
+                    //     ),
+                    //     CircularProgressIndicator(
+                    //      // backgroundColor: AppColors.white,
+                    //       strokeCap: StrokeCap.round,
+                    //       strokeWidth: 10,
+                    //       strokeAlign: 6,
+                    //       color: AppColors.black,
+                    //       value: value2,
+                    //     ),
+                    //   ],
+                    // ),
 
                     //   CircularPercentIndicator(
                   //   radius: 65,
@@ -267,7 +353,9 @@ class _HomeState extends State<Home> {
                   ),
                   IconButton(
                     icon: const Icon(Icons.navigate_next, color: AppColors.black),
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.of(context).pushNamed('/list');
+                    },
                   ),
                 ],
               ),

@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../../colors.dart';
+import 'add_new_tasks.dart';
 
 class AddNewTask extends StatefulWidget {
   const AddNewTask({super.key});
@@ -11,6 +12,76 @@ class AddNewTask extends StatefulWidget {
 }
 
 class _AddNewTaskState extends State<AddNewTask> {
+  final List<String> _items = ['Завдання 1']; // Початковий елемент списку
+  final GlobalKey<AnimatedListState> _key = GlobalKey();
+
+  void _addItem() {
+    _items.insert(0, "Завдання");
+    _key.currentState!.insertItem(
+      0,
+      duration: const Duration(seconds: 1),
+    );
+  }
+
+  void _removeItem(int index) {
+    _key.currentState!.removeItem(
+      index,
+          (context, animation) {
+        return SizeTransition(
+          sizeFactor: animation,
+          child: TextField(
+            //controller: taskWidgets[index],
+            decoration: InputDecoration(
+              suffixIcon: index == taskWidgets.length - 1
+                  ? Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  IconButton(
+                    onPressed: () {
+                      setState(() {
+                        taskWidgets.removeAt(index);
+                      });
+                    },
+                    icon: const Icon(Icons.remove_circle_outline),
+                  ),
+                  IconButton(
+                    onPressed: () {
+                      setState(() {
+                        taskWidgets.add(TextEditingController());
+                      });
+                    },
+                    icon: const Icon(Icons.add_circle_outline),
+                  ),
+                ],
+              )
+                  : IconButton(
+                onPressed: () {
+                  setState(() {
+                    taskWidgets.removeAt(index);
+                  });
+                },
+                icon: const Icon(Icons.remove_circle_outline),
+              ),
+              //filled: true,
+              //fillColor: AppColors.grey.withOpacity(0.3),
+              hintText: 'Завдання',
+              hintStyle: const TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+              ),
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(6.0),
+                borderSide: BorderSide.none,
+              ),
+            ),
+          ),
+        );
+      },
+      duration: const Duration(milliseconds: 300),
+    );
+    _items.removeAt(index);
+  }
+
   List<TextEditingController> taskWidgets = [TextEditingController()];
   DateTime selectedDate = DateTime.now();
   @override
@@ -132,7 +203,7 @@ class _AddNewTaskState extends State<AddNewTask> {
                     ),
                   ),
                   child: Container(
-                    margin: const EdgeInsets.only(top: 100, left: 20, right: 20),
+                    margin: const EdgeInsets.only(top: 90, left: 20, right: 20),
                     child: Column(
                       children: [
                         TextField(
@@ -166,260 +237,326 @@ class _AddNewTaskState extends State<AddNewTask> {
                             ),
                           ),
                         ),
-                        Expanded(
-                          child: SingleChildScrollView(
-                            child: Column(
-                              children: [
-                                ListView.builder(
-                                  shrinkWrap: true,
-                                  physics: const NeverScrollableScrollPhysics(),
-                                  itemCount: taskWidgets.length,
-                                  itemBuilder: (context, index) {
-                                    return Padding(
-                                      padding: const EdgeInsets.only(top: 15),
-                                      child: Row(
+                        AnimationList(),
+                        SizedBox(
+                              height: 60,
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                children: [
+                                  Expanded(
+                                    child: ElevatedButton(
+                                      onPressed: () {},
+                                      style: ElevatedButton.styleFrom(
+                                        minimumSize: const Size(70, 55),
+                                        backgroundColor: AppColors.buttonsGrey,
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(6.0),
+                                        ),
+                                      ),
+                                      child: const Row(
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                         children: [
-                                          Expanded(
-                                            child: Container(
-                                              padding: const EdgeInsets.symmetric(horizontal: 10),
-                                              //height: 20,
-                                              decoration: BoxDecoration(
-                                                  color: AppColors.grey.withOpacity(0.3),
-                                                  borderRadius: BorderRadius.circular(6.0)
-                                              ),
-                                              child: TextField(
-                                                controller: taskWidgets[index],
-                                                decoration: InputDecoration(
-                                                  suffixIcon: index == taskWidgets.length - 1
-                                                      ? Row(
-                                                    mainAxisSize: MainAxisSize.min,
-                                                    children: [
-                                                      IconButton(
-                                                        onPressed: () {
-                                                          setState(() {
-                                                            taskWidgets.removeAt(index);
-                                                          });
-                                                        },
-                                                        icon: const Icon(Icons.remove_circle_outline),
-                                                      ),
-                                                      IconButton(
-                                                        onPressed: () {
-                                                          setState(() {
-                                                            taskWidgets.add(TextEditingController());
-                                                          });
-                                                        },
-                                                        icon: const Icon(Icons.add_circle_outline),
-                                                      ),
-
-                                                    ],
-                                                  )
-                                                      : IconButton(
-                                                    onPressed: () {
-                                                      setState(() {
-                                                        taskWidgets.removeAt(index);
-                                                      });
-                                                    },
-                                                    icon: const Icon(Icons.remove_circle_outline),
-                                                  ),
-                                                  //filled: true,
-                                                  //fillColor: AppColors.grey.withOpacity(0.3),
-                                                  hintText: 'Завдання',
-                                                  hintStyle: const TextStyle(
-                                                      fontSize: 16,
-                                                      fontWeight: FontWeight.bold
-                                                  ),
-                                                  border: OutlineInputBorder(
-                                                    borderRadius: BorderRadius.circular(6.0),
-                                                    borderSide: BorderSide.none,
-                                                  ),
-                                                ),
-                                              ),
+                                          Text(
+                                            'Додати\nвиконавця',
+                                            style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              color: AppColors.darkGrey,
                                             ),
                                           ),
-
+                                          Icon(Icons.person_add_alt_1_outlined,
+                                          color: AppColors.darkGrey,), // Ваша іконка
                                         ],
                                       ),
-                                    );
-                                  },
-                                ),
-                                const SizedBox(height: 20),
-                                SizedBox(
-                                  height: 60,
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                    children: [
-                                      Expanded(
-                                        child: ElevatedButton(
-                                          onPressed: () {},
-                                          style: ElevatedButton.styleFrom(
-                                            minimumSize: const Size(70, 55),
-                                            backgroundColor: AppColors.buttonsGrey,
-                                            shape: RoundedRectangleBorder(
-                                              borderRadius: BorderRadius.circular(6.0),
-                                            ),
-                                          ),
-                                          child: const Row(
-                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                            children: [
-                                              Text(
-                                                'Додати\nвиконавця',
-                                                style: TextStyle(
-                                                  fontWeight: FontWeight.bold,
-                                                  color: AppColors.darkGrey,
-                                                ),
-                                              ),
-                                              Icon(Icons.person_add_alt_1_outlined,
-                                              color: AppColors.darkGrey,), // Ваша іконка
-                                            ],
-                                          ),
-                                        ),
-                                      ),
-                                      const SizedBox(width: 20),
-                                      Expanded(
-                                        child: ElevatedButton(
-                                          onPressed: () {},
-                                          style: ElevatedButton.styleFrom(
-                                            minimumSize: const Size(70, 55),
-                                            backgroundColor: AppColors.buttonsGrey,
-                                            shape: RoundedRectangleBorder(
-                                              borderRadius: BorderRadius.circular(6.0),
-                                            ),
-                                          ),
-                                          child: const Row(
-                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                            children: [
-                                              Text(
-                                                'Додати\nспостерігача',
-                                                style: TextStyle(
-                                                  fontWeight: FontWeight.bold,
-                                                  color: AppColors.darkGrey,
-                                                ),
-                                              ),
-                                              Icon(Icons.person_add_alt_1_rounded,
-                                              color: AppColors.darkGrey,),
-                                            ],
-                                          ),
-                                        ),
-                                      ),
-
-                                    ],
-                                  ),
-                                ),
-                                const SizedBox(height: 20,),
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Container(
-                                          constraints: const BoxConstraints(minWidth: 50.0),
-                                          margin: const EdgeInsets.only(left: 30),
-                                          padding: const EdgeInsets.all(8.0),
-                                          child: Center(
-                                            child: Text(
-                                              "${selectedDate.day} - ${selectedDate.month} - ${selectedDate.year}",
-                                              style: const TextStyle(
-                                                color: AppColors.darkGrey,
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: 16,
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-
-
-                                        ElevatedButton(
-                                          onPressed: () async {
-
-                                            final DateTime? dateTime = await showModalBottomSheet<DateTime>(
-                                              context: context,
-                                              builder: (BuildContext builder) {
-                                                return SizedBox(
-                                                  height: MediaQuery.of(context).copyWith().size.height / 3,
-                                                  child: CupertinoDatePicker(
-                                                    initialDateTime: DateTime.now(),
-                                                    minimumDate: DateTime(2000),
-                                                    maximumDate: DateTime(3000),
-                                                    mode: CupertinoDatePickerMode.date,
-
-                                                    onDateTimeChanged: (DateTime newDateTime) {
-                                                    },
-                                                  ),
-                                                );
-                                              },
-                                            );
-
-                                            if (dateTime != null) {
-                                              setState(() {
-                                                selectedDate = dateTime;
-                                              });
-                                            }
-                                          },
-
-                                          // onPressed: () async{
-                                          //   final DateTime? dateTime = await
-                                          //   showDatePicker(
-                                          //     context: context,
-                                          //     firstDate: DateTime(2000),
-                                          //     lastDate: DateTime(3000),
-                                          //   );
-                                          //   if(dateTime != null){
-                                          //     setState(() {
-                                          //       selectedDate = dateTime;
-                                          //     });
-                                          //   }
-                                          // },
-                                          style: ElevatedButton.styleFrom(
-                                            minimumSize: const Size(70, 55), backgroundColor: AppColors.buttonsGrey,
-                                            shape: RoundedRectangleBorder(
-                                              borderRadius: BorderRadius.circular(6.0),
-                                            ),
-                                          ),
-                                          child: const Row(
-                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                            children: [
-                                              Text(
-                                                'Змінити дату',
-                                                style: TextStyle(
-                                                  fontWeight: FontWeight.bold,
-                                                  color: AppColors.darkGrey,
-                                                ),
-                                              ),
-                                              Icon(
-                                                Icons.calendar_today,
-                                                color: AppColors.darkGrey,
-                                              ),
-                                            ],
-                                          ),
-                                        )
-
-
-                                      ],
-                                    ),
-                                const SizedBox(height: 50),
-                                ElevatedButton(
-                                  onPressed: () {
-                                    Navigator.pop(context);
-                                  },
-                                  style: ElevatedButton.styleFrom(
-                                    backgroundColor: AppColors.black,
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(8.0),
                                     ),
                                   ),
-                                  child: Container(
-                                    margin: const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
-                                    child: const Text(
-                                      'Додати задачу',
-                                      style: TextStyle(
-                                        color: AppColors.white,
-                                        fontSize: 18,
+                                  const SizedBox(width: 20),
+                                  Expanded(
+                                    child: ElevatedButton(
+                                      onPressed: () {},
+                                      style: ElevatedButton.styleFrom(
+                                        minimumSize: const Size(70, 55),
+                                        backgroundColor: AppColors.buttonsGrey,
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(6.0),
+                                        ),
+                                      ),
+                                      child: const Row(
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Text(
+                                            'Додати\nспостерігача',
+                                            style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              color: AppColors.darkGrey,
+                                            ),
+                                          ),
+                                          Icon(Icons.person_add_alt_1_rounded,
+                                          color: AppColors.darkGrey,),
+                                        ],
                                       ),
                                     ),
                                   ),
-                                ),
-                              ],
+
+                                ],
+                              ),
                             ),
-                          ),
-                        ),
+
+
+                        // Expanded(
+                        //   child: SingleChildScrollView(
+                        //     child: Column(
+                        //       children: [
+                        //         ListView.builder(
+                        //           shrinkWrap: true,
+                        //           physics: const NeverScrollableScrollPhysics(),
+                        //           itemCount: taskWidgets.length,
+                        //           itemBuilder: (context, index) {
+                        //             return Padding(
+                        //               padding: const EdgeInsets.only(top: 15),
+                        //               child: Row(
+                        //                 children: [
+                        //
+                        //                   Expanded(
+                        //                     child: Container(
+                        //                       padding: const EdgeInsets.symmetric(horizontal: 10),
+                        //                       //height: 20,
+                        //                       decoration: BoxDecoration(
+                        //                           color: AppColors.grey.withOpacity(0.3),
+                        //                           borderRadius: BorderRadius.circular(6.0)
+                        //                       ),
+                        //                       child: TextField(
+                        //                         controller: taskWidgets[index],
+                        //                         decoration: InputDecoration(
+                        //                           suffixIcon: index == taskWidgets.length - 1
+                        //                               ? Row(
+                        //                             mainAxisSize: MainAxisSize.min,
+                        //                             children: [
+                        //                               IconButton(
+                        //                                 onPressed: () {
+                        //                                   setState(() {
+                        //                                     taskWidgets.removeAt(index);
+                        //                                   });
+                        //                                 },
+                        //                                 icon: const Icon(Icons.remove_circle_outline),
+                        //                               ),
+                        //                               IconButton(
+                        //                                 onPressed: () {
+                        //                                   setState(() {
+                        //                                     taskWidgets.add(TextEditingController());
+                        //                                   });
+                        //                                 },
+                        //                                 icon: const Icon(Icons.add_circle_outline),
+                        //                               ),
+                        //
+                        //                             ],
+                        //                           )
+                        //                               : IconButton(
+                        //                             onPressed: () {
+                        //                               setState(() {
+                        //                                 taskWidgets.removeAt(index);
+                        //                               });
+                        //                             },
+                        //                             icon: const Icon(Icons.remove_circle_outline),
+                        //                           ),
+                        //                           //filled: true,
+                        //                           //fillColor: AppColors.grey.withOpacity(0.3),
+                        //                           hintText: 'Завдання',
+                        //                           hintStyle: const TextStyle(
+                        //                               fontSize: 16,
+                        //                               fontWeight: FontWeight.bold
+                        //                           ),
+                        //                           border: OutlineInputBorder(
+                        //                             borderRadius: BorderRadius.circular(6.0),
+                        //                             borderSide: BorderSide.none,
+                        //                           ),
+                        //                         ),
+                        //                       ),
+                        //                     ),
+                        //                   ),
+                        //
+                        //                 ],
+                        //               ),
+                        //             );
+                        //           },
+                        //         ),
+                        //         const SizedBox(height: 20),
+                        //         SizedBox(
+                        //           height: 60,
+                        //           child: Row(
+                        //             mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        //             children: [
+                        //               Expanded(
+                        //                 child: ElevatedButton(
+                        //                   onPressed: () {},
+                        //                   style: ElevatedButton.styleFrom(
+                        //                     minimumSize: const Size(70, 55),
+                        //                     backgroundColor: AppColors.buttonsGrey,
+                        //                     shape: RoundedRectangleBorder(
+                        //                       borderRadius: BorderRadius.circular(6.0),
+                        //                     ),
+                        //                   ),
+                        //                   child: const Row(
+                        //                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        //                     children: [
+                        //                       Text(
+                        //                         'Додати\nвиконавця',
+                        //                         style: TextStyle(
+                        //                           fontWeight: FontWeight.bold,
+                        //                           color: AppColors.darkGrey,
+                        //                         ),
+                        //                       ),
+                        //                       Icon(Icons.person_add_alt_1_outlined,
+                        //                       color: AppColors.darkGrey,), // Ваша іконка
+                        //                     ],
+                        //                   ),
+                        //                 ),
+                        //               ),
+                        //               const SizedBox(width: 20),
+                        //               Expanded(
+                        //                 child: ElevatedButton(
+                        //                   onPressed: () {},
+                        //                   style: ElevatedButton.styleFrom(
+                        //                     minimumSize: const Size(70, 55),
+                        //                     backgroundColor: AppColors.buttonsGrey,
+                        //                     shape: RoundedRectangleBorder(
+                        //                       borderRadius: BorderRadius.circular(6.0),
+                        //                     ),
+                        //                   ),
+                        //                   child: const Row(
+                        //                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        //                     children: [
+                        //                       Text(
+                        //                         'Додати\nспостерігача',
+                        //                         style: TextStyle(
+                        //                           fontWeight: FontWeight.bold,
+                        //                           color: AppColors.darkGrey,
+                        //                         ),
+                        //                       ),
+                        //                       Icon(Icons.person_add_alt_1_rounded,
+                        //                       color: AppColors.darkGrey,),
+                        //                     ],
+                        //                   ),
+                        //                 ),
+                        //               ),
+                        //
+                        //             ],
+                        //           ),
+                        //         ),
+                        //         const SizedBox(height: 20,),
+                        //         Row(
+                        //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        //               children: [
+                        //                 Container(
+                        //                   constraints: const BoxConstraints(minWidth: 50.0),
+                        //                   margin: const EdgeInsets.only(left: 30),
+                        //                   padding: const EdgeInsets.all(8.0),
+                        //                   child: Center(
+                        //                     child: Text(
+                        //                       "${selectedDate.day} - ${selectedDate.month} - ${selectedDate.year}",
+                        //                       style: const TextStyle(
+                        //                         color: AppColors.darkGrey,
+                        //                         fontWeight: FontWeight.bold,
+                        //                         fontSize: 16,
+                        //                       ),
+                        //                     ),
+                        //                   ),
+                        //                 ),
+                        //
+                        //
+                        //                 ElevatedButton(
+                        //                   onPressed: () async {
+                        //
+                        //                     final DateTime? dateTime = await showModalBottomSheet<DateTime>(
+                        //                       context: context,
+                        //                       builder: (BuildContext builder) {
+                        //                         return SizedBox(
+                        //                           height: MediaQuery.of(context).copyWith().size.height / 3,
+                        //                           child: CupertinoDatePicker(
+                        //                             initialDateTime: DateTime.now(),
+                        //                             minimumDate: DateTime(2000),
+                        //                             maximumDate: DateTime(3000),
+                        //                             mode: CupertinoDatePickerMode.date,
+                        //
+                        //                             onDateTimeChanged: (DateTime newDateTime) {
+                        //                             },
+                        //                           ),
+                        //                         );
+                        //                       },
+                        //                     );
+                        //
+                        //                     if (dateTime != null) {
+                        //                       setState(() {
+                        //                         selectedDate = dateTime;
+                        //                       });
+                        //                     }
+                        //                   },
+                        //
+                        //                   // onPressed: () async{
+                        //                   //   final DateTime? dateTime = await
+                        //                   //   showDatePicker(
+                        //                   //     context: context,
+                        //                   //     firstDate: DateTime(2000),
+                        //                   //     lastDate: DateTime(3000),
+                        //                   //   );
+                        //                   //   if(dateTime != null){
+                        //                   //     setState(() {
+                        //                   //       selectedDate = dateTime;
+                        //                   //     });
+                        //                   //   }
+                        //                   // },
+                        //                   style: ElevatedButton.styleFrom(
+                        //                     minimumSize: const Size(70, 55), backgroundColor: AppColors.buttonsGrey,
+                        //                     shape: RoundedRectangleBorder(
+                        //                       borderRadius: BorderRadius.circular(6.0),
+                        //                     ),
+                        //                   ),
+                        //                   child: const Row(
+                        //                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        //                     children: [
+                        //                       Text(
+                        //                         'Змінити дату',
+                        //                         style: TextStyle(
+                        //                           fontWeight: FontWeight.bold,
+                        //                           color: AppColors.darkGrey,
+                        //                         ),
+                        //                       ),
+                        //                       Icon(
+                        //                         Icons.calendar_today,
+                        //                         color: AppColors.darkGrey,
+                        //                       ),
+                        //                     ],
+                        //                   ),
+                        //                 )
+                        //
+                        //
+                        //               ],
+                        //             ),
+                        //         const SizedBox(height: 50),
+                        //         ElevatedButton(
+                        //           onPressed: () {
+                        //             Navigator.pop(context);
+                        //           },
+                        //           style: ElevatedButton.styleFrom(
+                        //             backgroundColor: AppColors.black,
+                        //             shape: RoundedRectangleBorder(
+                        //               borderRadius: BorderRadius.circular(8.0),
+                        //             ),
+                        //           ),
+                        //           child: Container(
+                        //             margin: const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
+                        //             child: const Text(
+                        //               'Додати задачу',
+                        //               style: TextStyle(
+                        //                 color: AppColors.white,
+                        //                 fontSize: 18,
+                        //               ),
+                        //             ),
+                        //           ),
+                        //         ),
+                        //       ],
+                        //     ),
+                        //   ),
+                        // ),
 
 
                       ],
