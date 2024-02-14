@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "157931460120",
+    "project_id": "rd-tasks-mobi",
+    "storage_bucket": "rd-tasks-mobi.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:157931460120:android:28e5ac9b77919a4409956d",
+        "android_client_info": {
+          "package_name": "com.example.tasker"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBRka_S11U7YuY0vf1VR_LG8m1KOELkF9o"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
