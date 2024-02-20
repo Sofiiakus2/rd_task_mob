@@ -354,7 +354,7 @@ class _HomeState extends State<Home> {
                   IconButton(
                     icon: const Icon(Icons.navigate_next, color: AppColors.black),
                     onPressed: () {
-                      Navigator.of(context).pushNamed('/list');
+                      Navigator.of(context).pushNamed('/try');
                     },
                   ),
                 ],

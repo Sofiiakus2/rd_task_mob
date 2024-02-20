@@ -8,6 +8,7 @@ import 'package:tasker/tasks/editTasks/edit_tasks_view.dart';
 import 'package:tasker/tasks/monitoringTasks/monitoring_tasks_view.dart';
 import 'package:tasker/tasks/tasks_full_view.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:tasker/tasks/tasks_try.dart';
 
 import 'chat/chats_page_view.dart';
 import 'enter/entering/enter_view.dart';
@@ -52,7 +53,7 @@ class Tasker extends StatelessWidget {
         "/registration":(context)=> const Registration(),
         "/enter":(context)=> const Enter(),
         "/list":(context)=> AnimationList(),
-
+        "/try":(context)=> TryTasks(),
 
       },
       localizationsDelegates: const <LocalizationsDelegate<Object>>[

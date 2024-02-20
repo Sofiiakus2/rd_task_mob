@@ -84,14 +84,15 @@ class _AnimationListState extends State<AnimationList> {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: AnimatedList(
+    return  Container(
+        //padding: const EdgeInsets.symmetric(horizontal: 10),
+        child: AnimatedList(
         key: _key,
         initialItemCount: _items.length,
         itemBuilder: (context, index, animation) {
           return Padding(
-            padding: EdgeInsets.only(bottom: 20),
-            //padding: const EdgeInsets.symmetric(vertical: 8.0), // Adjust the vertical spacing here
+            //padding: EdgeInsets.only(bottom: 20),
+            padding: const EdgeInsets.symmetric(vertical: 8.0), // Adjust the vertical spacing here
             child: SizeTransition(
               key: UniqueKey(),
               sizeFactor: animation,
@@ -144,8 +145,8 @@ class _AnimationListState extends State<AnimationList> {
             ),
           );
         },
-      ),
-    );
+      ),);
+
   }
 
 }

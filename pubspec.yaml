@@ -24,6 +24,8 @@ dependencies:
   firebase_storage: ^11.6.4
   firebase_auth: ^4.17.3
   animated_icon: ^0.0.5
+  flutter_svg: ^2.0.9
+  flutter_sliding_up_panel: ^2.1.1
 
 dev_dependencies:
   flutter_test:
@@ -36,3 +38,5 @@ dev_dependencies:
 flutter:
 
   uses-material-design: true
+  assets:
+    - assets/
