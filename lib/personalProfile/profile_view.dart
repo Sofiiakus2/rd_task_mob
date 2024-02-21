@@ -13,8 +13,8 @@ class _ProfileState extends State<Profile> {
   List<String> organizations = ['Організація 1', 'Організація 2', 'Організація 3'];
   String selectedOrganization = 'Організація 1';
 
-  List<String> departments = ['Відділ 1', 'Відділ 2', 'Відділ 3'];
-  String selectedDepartment = 'Відділ 1';
+  // List<String> departments = ['Відділ 1', 'Відділ 2', 'Відділ 3'];
+  // String selectedDepartment = 'Відділ 1';
 
   @override
   Widget build(BuildContext context) {
@@ -156,37 +156,37 @@ class _ProfileState extends State<Profile> {
                 );
               }).toList(),
             ),
-            const SizedBox(height: 30,),
-            DropdownButtonFormField<String>(
-              decoration: InputDecoration(
-                focusedBorder: const OutlineInputBorder(
-                  borderSide: BorderSide(color: AppColors.grey),
-                ),
-                enabledBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: AppColors.grey.withOpacity(0.5), width: 1.5),
-                  borderRadius: BorderRadius.circular(8.0),
-                ),
-              ),
-              value: selectedDepartment,
-              onChanged: (newValue) {
-                setState(() {
-                  selectedDepartment = newValue!;
-                });
-              },
-              items: departments.map((String department) {
-                return DropdownMenuItem<String>(
-                  value: department,
-                  child: Text(department,
-                    style: const TextStyle(
-                        fontSize: 20,
-                        color: AppColors.grey,
-                        fontWeight: FontWeight.w400
-                    ),
-                  ),
-
-                );
-              }).toList(),
-            ),
+            // const SizedBox(height: 30,),
+            // DropdownButtonFormField<String>(
+            //   decoration: InputDecoration(
+            //     focusedBorder: const OutlineInputBorder(
+            //       borderSide: BorderSide(color: AppColors.grey),
+            //     ),
+            //     enabledBorder: OutlineInputBorder(
+            //       borderSide: BorderSide(color: AppColors.grey.withOpacity(0.5), width: 1.5),
+            //       borderRadius: BorderRadius.circular(8.0),
+            //     ),
+            //   ),
+            //   value: selectedDepartment,
+            //   onChanged: (newValue) {
+            //     setState(() {
+            //       selectedDepartment = newValue!;
+            //     });
+            //   },
+            //   items: departments.map((String department) {
+            //     return DropdownMenuItem<String>(
+            //       value: department,
+            //       child: Text(department,
+            //         style: const TextStyle(
+            //             fontSize: 20,
+            //             color: AppColors.grey,
+            //             fontWeight: FontWeight.w400
+            //         ),
+            //       ),
+            //
+            //     );
+            //   }).toList(),
+            // ),
             const SizedBox(height: 80,),
             Center(
               child: CupertinoButton(

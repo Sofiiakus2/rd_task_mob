@@ -1,9 +1,15 @@
+import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:tasker/tasks/addTask/add_v_alert.dart';
+import 'package:tasker/tasks/department.dart';
+import 'package:tasker/tasks/employee.dart';
 
 import '../../colors.dart';
+import '../SelectedEmployee.dart';
 import 'add_new_tasks.dart';
+import 'add_s_alert.dart';
 
 class AddNewTask extends StatefulWidget {
   const AddNewTask({super.key});
@@ -21,6 +27,7 @@ class _AddNewTaskState extends State<AddNewTask> {
   final List<String> _items = ['Завдання 1']; // Початковий елемент списку
   final GlobalKey<AnimatedListState> _key = GlobalKey();
   List<TextEditingController> taskWidgets = [TextEditingController()];
+
 
   void _addItem() {
     _items.insert(0, "Завдання");
@@ -105,6 +112,7 @@ class _AddNewTaskState extends State<AddNewTask> {
 
   @override
   Widget build(BuildContext context) {
+
     Size screenSize = MediaQuery.of(context).size;
     return Scaffold(
       backgroundColor: AppColors.darkGrey,
@@ -275,80 +283,79 @@ class _AddNewTaskState extends State<AddNewTask> {
                           ),
                           Column(
                             children: [
-                              // ListView.builder(
-                              //   shrinkWrap: true,
-                              //   physics: const NeverScrollableScrollPhysics(),
-                              //   itemCount: taskWidgets.length,
-                              //   itemBuilder: (context, index) {
-                              //     return Padding(
-                              //       padding: EdgeInsets.only(top: 0),
-                              //       child: Row(
-                              //         children: [
-                              //
-                              //           Expanded(
-                              //             child: Container(
-                              //               //padding: const EdgeInsets.symmetric(horizontal: 10),
-                              //               //height: 20,
-                              //               decoration: BoxDecoration(
-                              //                   color: AppColors.grey.withOpacity(0.3),
-                              //                   borderRadius: BorderRadius.circular(6.0)
-                              //               ),
-                              //               child: TextField(
-                              //                 controller: taskWidgets[index],
-                              //                 decoration: InputDecoration(
-                              //                   suffixIcon: index == taskWidgets.length - 1
-                              //                       ? Row(
-                              //                     mainAxisSize: MainAxisSize.min,
-                              //                     children: [
-                              //                       IconButton(
-                              //                         onPressed: () {
-                              //                           setState(() {
-                              //                             taskWidgets.removeAt(index);
-                              //                           });
-                              //                         },
-                              //                         icon: const Icon(Icons.remove_circle_outline),
-                              //                       ),
-                              //                       IconButton(
-                              //                         onPressed: () {
-                              //                           setState(() {
-                              //                             taskWidgets.add(TextEditingController());
-                              //                           });
-                              //                         },
-                              //                         icon: const Icon(Icons.add_circle_outline),
-                              //                       ),
-                              //
-                              //                     ],
-                              //                   )
-                              //                       : IconButton(
-                              //                     onPressed: () {
-                              //                       setState(() {
-                              //                         taskWidgets.removeAt(index);
-                              //                       });
-                              //                     },
-                              //                     icon: const Icon(Icons.remove_circle_outline),
-                              //                   ),
-                              //                   //filled: true,
-                              //                   //fillColor: AppColors.grey.withOpacity(0.3),
-                              //                   hintText: 'Завдання',
-                              //                   hintStyle: const TextStyle(
-                              //                       fontSize: 16,
-                              //                       fontWeight: FontWeight.bold
-                              //                   ),
-                              //                   border: OutlineInputBorder(
-                              //                     borderRadius: BorderRadius.circular(6.0),
-                              //                     borderSide: BorderSide.none,
-                              //                   ),
-                              //                 ),
-                              //               ),
-                              //             ),
-                              //           ),
-                              //
-                              //         ],
-                              //       ),
-                              //     );
-                              //   },
-                              // ),
-                              const SizedBox(height: 20),
+                              ListView.builder(
+                                shrinkWrap: true,
+                                physics: const NeverScrollableScrollPhysics(),
+                                itemCount: taskWidgets.length,
+                                itemBuilder: (context, index) {
+                                  return Padding(
+                                    padding: EdgeInsets.only(top: 0, bottom: 20),
+                                    child: Row(
+                                      children: [
+
+                                        Expanded(
+                                          child: Container(
+                                            //padding: const EdgeInsets.symmetric(horizontal: 10),
+                                            //height: 20,
+                                            decoration: BoxDecoration(
+                                                color: AppColors.grey.withOpacity(0.3),
+                                                borderRadius: BorderRadius.circular(6.0)
+                                            ),
+                                            child: TextField(
+                                              controller: taskWidgets[index],
+                                              decoration: InputDecoration(
+                                                suffixIcon: index == taskWidgets.length - 1
+                                                    ? Row(
+                                                  mainAxisSize: MainAxisSize.min,
+                                                  children: [
+                                                    IconButton(
+                                                      onPressed: () {
+                                                        setState(() {
+                                                          taskWidgets.removeAt(index);
+                                                        });
+                                                      },
+                                                      icon: const Icon(Icons.remove_circle_outline),
+                                                    ),
+                                                    IconButton(
+                                                      onPressed: () {
+                                                        setState(() {
+                                                          taskWidgets.add(TextEditingController());
+                                                        });
+                                                      },
+                                                      icon: const Icon(Icons.add_circle_outline),
+                                                    ),
+
+                                                  ],
+                                                )
+                                                    : IconButton(
+                                                  onPressed: () {
+                                                    setState(() {
+                                                      taskWidgets.removeAt(index);
+                                                    });
+                                                  },
+                                                  icon: const Icon(Icons.remove_circle_outline),
+                                                ),
+                                                //filled: true,
+                                                //fillColor: AppColors.grey.withOpacity(0.3),
+                                                hintText: 'Завдання',
+                                                hintStyle: const TextStyle(
+                                                    fontSize: 16,
+                                                    fontWeight: FontWeight.bold
+                                                ),
+                                                border: OutlineInputBorder(
+                                                  borderRadius: BorderRadius.circular(6.0),
+                                                  borderSide: BorderSide.none,
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+
+                                      ],
+                                    ),
+                                  );
+                                },
+                              ),
                               SizedBox(
                                 height: 60,
                                 child: Row(
@@ -356,7 +363,12 @@ class _AddNewTaskState extends State<AddNewTask> {
                                   children: [
                                     Expanded(
                                       child: ElevatedButton(
-                                        onPressed: () {},
+                                        onPressed: () {
+                                          showDialog(
+                                              context: context,
+                                              builder: (context)=>AddVAlert(),
+                                          );
+                                        },
                                         style: ElevatedButton.styleFrom(
                                           minimumSize: const Size(70, 55),
                                           backgroundColor: AppColors.buttonsGrey,
@@ -383,7 +395,12 @@ class _AddNewTaskState extends State<AddNewTask> {
                                     const SizedBox(width: 20),
                                     Expanded(
                                       child: ElevatedButton(
-                                        onPressed: () {},
+                                        onPressed: () {
+                                          showDialog(
+                                            context: context,
+                                            builder: (context)=>AddSAlert(),
+                                          );
+                                        },
                                         style: ElevatedButton.styleFrom(
                                           minimumSize: const Size(70, 55),
                                           backgroundColor: AppColors.buttonsGrey,
