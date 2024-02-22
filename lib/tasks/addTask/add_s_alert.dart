@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:tasker/colors.dart';
+import 'package:tasker/models/employee.dart';
 import 'package:tasker/tasks/SelectedEmployee.dart';
-import '../Department.dart';
+
+import '../../models/department.dart';
+
+
 
 
 class AddSAlert extends StatefulWidget {
@@ -32,14 +37,33 @@ class _AddVAlertState extends State<AddSAlert> {
         padding: EdgeInsets.all(10),
         child: SingleChildScrollView(
           child: Column(
-            children: departments.map((department) {
+            children: Department.departments.map((department) {
               return ExpansionTile(
                 title:selectedItems.any((item)=>item.department==department.name)
                 ?Wrap(
 
-                  children: selectedItems.map((e) => Chip(
-                    label: Text(e.name),
-                  )).toList(),
+                  children: selectedItems.map((e) {
+                    if (e.department == department.name) {
+                      return Chip(
+                        backgroundColor: AppColors.grey.withOpacity(0.3),
+                        labelStyle: TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w600,
+                          color: AppColors.darkGrey
+                        ),
+                        label: Text(e.name),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20),
+                          side: BorderSide(
+                            color: AppColors.grey.withOpacity(0.3),
+                            width: 0
+                          ),
+                        ),
+                      );
+                    } else {
+                      return SizedBox(); // Порожня коробка, яка не буде відображатись
+                    }
+                  }).toList(),
                 )
                 :Text(
                   department.name,
@@ -48,7 +72,7 @@ class _AddVAlertState extends State<AddSAlert> {
                     fontSize: 18,
                   ),
                 ),
-                children: department.employees.map((employee) {
+                children: Employee.employees.map((employee) {
                   return CheckboxListTile(
                     title: Text(
                       '${employee.name} - ${employee.position}',

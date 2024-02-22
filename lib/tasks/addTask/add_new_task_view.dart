@@ -3,8 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:tasker/tasks/addTask/add_v_alert.dart';
-import 'package:tasker/tasks/department.dart';
-import 'package:tasker/tasks/employee.dart';
+
 
 import '../../colors.dart';
 import '../SelectedEmployee.dart';

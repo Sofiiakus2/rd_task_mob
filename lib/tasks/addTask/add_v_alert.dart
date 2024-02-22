@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:tasker/colors.dart';
+import 'package:tasker/models/employee.dart';
 import 'package:tasker/tasks/SelectedEmployee.dart';
-import '../Department.dart';
+
+import '../../models/department.dart';
+
 
 class AddVAlert extends StatefulWidget {
   AddVAlert({Key? key}) : super(key: key);
@@ -32,7 +35,7 @@ class _AddVAlertState extends State<AddVAlert> {
         height: screenSize.height / 2,
         child: SingleChildScrollView(
           child: Column(
-            children: departments.map((department) {
+            children: Department.departments.map((department) {
               return ExpansionTile(
                 title: Text(
                   department.name,
@@ -41,7 +44,7 @@ class _AddVAlertState extends State<AddVAlert> {
                     fontSize: 18,
                   ),
                 ),
-                children: department.employees.map((employee) {
+                children: Employee.employees.map((employee) {
                   return ListTile(
                     title: Text(
                       '${employee.name} - ${employee.position}',
