@@ -1,13 +1,21 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:tasker/models/employee.dart';
+import 'package:tasker/models/message.dart';
 
 import '../colors.dart';
+import '../models/chat.dart';
 
 class ChatsPage extends StatelessWidget {
   const ChatsPage({super.key});
 
   @override
   Widget build(BuildContext context) {
+    Size screenSize = MediaQuery.of(context).size;
+    List<Chat> chats = Chat.chats;
+    List<Employee> employees = Employee.employees;
+
     return Scaffold(
       backgroundColor: AppColors.white,
       body: Container(
@@ -101,6 +109,34 @@ class ChatsPage extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 30,),
+            Expanded(
+                //color: Colors.amber,
+                child: ListView.builder(
+                itemCount: chats.length,
+                itemBuilder: (context, index){
+                  Employee employee = chats[index].employee!.where((emp) => emp.id != '1').first;
+                  chats[index]
+                      .messages
+                      .sort((a,b) => b.createdAt.compareTo(a.createdAt),);
+                  Message lastMessage = chats[index].messages.first;
+                  return ListTile(
+                    leading: CircleAvatar(
+                        radius: 30,
+                        backgroundColor: AppColors.grey.withOpacity(0.3),),
+                    title: Text('${employee.name}',
+                      style: Theme.of(context)
+                      .textTheme
+                      .bodyLarge!
+                      .copyWith(fontWeight: FontWeight.bold),
+                    ),
+                    // subtitle: Text(lastMessage.text,
+                    //   maxLines: 1,
+                    //   style: Theme.of(context).textTheme.bodySmall,),
+                    // trailing: Text('${lastMessage.createdAt.hour}:${lastMessage.createdAt.minute}',
+                    //   style: Theme.of(context).textTheme.bodySmall,),
+                  );
+                })
+            ),
 
           ],
         ),

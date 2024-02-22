@@ -19,7 +19,7 @@ class Message{
          createdAt: DateTime.now(),
      ),
     Message(
-      senderId: '2',
+      senderId: '4',
       recipientId: '3',
       text: 'Привіт',
       createdAt: DateTime.now(),
