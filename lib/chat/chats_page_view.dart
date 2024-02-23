@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:tasker/models/employee.dart';
 import 'package:tasker/models/message.dart';
+import 'package:get/get.dart';
 
 import '../colors.dart';
 import '../models/chat.dart';
@@ -108,7 +109,7 @@ class ChatsPage extends StatelessWidget {
                 ),
               ),
             ),
-            const SizedBox(height: 30,),
+            const SizedBox(height:20,),
             Expanded(
                 //color: Colors.amber,
                 child: ListView.builder(
@@ -118,22 +119,31 @@ class ChatsPage extends StatelessWidget {
                   chats[index]
                       .messages
                       .sort((a,b) => b.createdAt.compareTo(a.createdAt),);
+                  //print(chats[index].task);
                   Message lastMessage = chats[index].messages.first;
                   return ListTile(
+                    onTap: (){
+                      Get.toNamed('/chat', arguments: [
+                        employee,
+                        chats[index],
+                      ]);
+                    },
                     leading: CircleAvatar(
                         radius: 30,
+                        child: Icon(Icons.settings,
+                        color: AppColors.grey,),
                         backgroundColor: AppColors.grey.withOpacity(0.3),),
-                    title: Text('${employee.name}',
+                    title: Text('${chats[index].task.title}',
                       style: Theme.of(context)
                       .textTheme
                       .bodyLarge!
                       .copyWith(fontWeight: FontWeight.bold),
                     ),
-                    // subtitle: Text(lastMessage.text,
-                    //   maxLines: 1,
-                    //   style: Theme.of(context).textTheme.bodySmall,),
-                    // trailing: Text('${lastMessage.createdAt.hour}:${lastMessage.createdAt.minute}',
-                    //   style: Theme.of(context).textTheme.bodySmall,),
+                    subtitle: Text(lastMessage.text,
+                      maxLines: 1,
+                      style: Theme.of(context).textTheme.bodySmall,),
+                    trailing: Text('${lastMessage.createdAt.hour}:${lastMessage.createdAt.minute}',
+                      style: Theme.of(context).textTheme.bodySmall,),
                   );
                 })
             ),

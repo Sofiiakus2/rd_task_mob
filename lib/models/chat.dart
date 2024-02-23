@@ -4,15 +4,19 @@ import 'dart:core';
 import 'package:tasker/models/employee.dart';
 import 'package:tasker/models/message.dart';
 
+import '../tasks/tasks.dart';
+
 class Chat{
   final String? id;
   final List<Employee> employee;
   final List<Message> messages;
+  final Task task;
 
   Chat({
     this.id,
     this.employee = const <Employee>[],
     this.messages = const <Message>[],
+    required this.task,
 });
 
   Chat copyWith({
@@ -24,6 +28,7 @@ class Chat{
       id: id??this.id,
       employee: employee??this.employee,
       messages: messages ?? this.messages,
+      task: task??this.task,
     );
   }
 
@@ -34,9 +39,10 @@ class Chat{
       messages: Message.messages
         .where(
           (message)=>
-          (message.senderId=='1'||message.recipientId=='2')&
-          (message.recipientId=='1' || message.senderId=='2'),
+          (message.senderId=='1' && message.recipientId=='2')||
+          (message.recipientId=='1' && message.senderId=='2'),
       ).toList(),
+      task: Task.tasks[0]
     ),
     Chat(
       id: '1',
@@ -44,9 +50,10 @@ class Chat{
       messages: Message.messages
           .where(
             (message)=>
-        (message.senderId=='4'||message.recipientId=='3')&
-        (message.recipientId=='4' || message.senderId=='3'),
+        (message.senderId=='4' && message.recipientId=='3')||
+        (message.recipientId=='4' && message.senderId=='3'),
       ).toList(),
+        task: Task.tasks[1]
     ),
   ];
 }

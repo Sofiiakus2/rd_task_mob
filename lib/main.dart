@@ -1,6 +1,8 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:tasker/chat/chat_screen_view.dart';
 import 'package:tasker/personalProfile/profile_view.dart';
 import 'package:tasker/tasks/addTask/add_new_task_view.dart';
 import 'package:tasker/tasks/addTask/add_new_tasks.dart';
@@ -36,7 +38,7 @@ class Tasker extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         textTheme: GoogleFonts.montserratTextTheme(),
@@ -54,6 +56,8 @@ class Tasker extends StatelessWidget {
         "/enter":(context)=> const Enter(),
         "/list":(context)=> AnimationList(),
         "/try":(context)=> TryTasks(),
+        "/chat":(context)=>CurrentChat(),
+
 
       },
       localizationsDelegates: const <LocalizationsDelegate<Object>>[

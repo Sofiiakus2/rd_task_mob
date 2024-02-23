@@ -8,47 +8,7 @@ import 'editTasks/edit_tasks.dart';
 
 class FullTasks extends StatelessWidget {
   FullTasks({super.key});
-  final List<Task> tasks = [
-    Task(
-      title: 'Розробити сторінки',
-      performer: 'Софія',
-      date: '2024-02-10',
-      progress: 0.3,
-      result: 'Робоча програма зі всім робочим функціоналом',
-      miniTasks: [
-        'Сторінки вхід/реєстрація',
-        'Сторінка редагувати задачу',
-        'Сторінка чату',
-        'Сторінки вхід/реєстрація',
-        'Сторінка редагувати задачу',
-        'Сторінка чату',
-
-      ],
-      assigner: 'Роман',
-
-    ),
-    Task(
-      title: 'Ще якесь завдання',
-      performer: 'Jane Smith',
-      date: '2024-02-16',
-      progress: 1,
-      result: 'Виконане завдання',
-      miniTasks: [
-        'завдання'
-      ], assigner: 'Олег',
-    ),
-    Task(
-      title: 'Ще якесь завдання 3',
-      performer: 'Jane Smith',
-      date: '2024-02-16',
-      progress: 1,
-      result: 'Виконане завдання',
-      miniTasks: [
-        'завдання'
-      ], assigner: 'Олег',
-    ),
-
-  ];
+  final List<Task> tasks = Task.tasks;
   @override
   Widget build(BuildContext context) {
     final Size screenSize = MediaQuery.of(context).size;
@@ -153,7 +113,6 @@ class FullTasks extends StatelessWidget {
             left: 0,
             right: 0,
             child: Container(
-              // color: AppColors.white, // Ви можете видалити цей рядок
               height: 3.5 * screenSize.height / 6,
               width: screenSize.width,
               decoration: BoxDecoration(
