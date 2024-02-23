@@ -61,7 +61,7 @@ class _AddVAlertState extends State<AddSAlert> {
                         ),
                       );
                     } else {
-                      return SizedBox(); // Порожня коробка, яка не буде відображатись
+                      return SizedBox();
                     }
                   }).toList(),
                 )

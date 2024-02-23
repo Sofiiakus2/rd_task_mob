@@ -4,7 +4,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:tasker/colors.dart';
 import 'package:tasker/models/employee.dart';
 import 'package:tasker/models/message.dart';
@@ -44,7 +43,6 @@ class _CurrentChatState extends State<CurrentChat> {
             children: [
               Container(
                 height: screenSize.height / 6,
-                //color: Colors.amber,
                 margin: const EdgeInsets.only(top: 30, left: 30, right: 30),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -86,13 +84,12 @@ class _CurrentChatState extends State<CurrentChat> {
             ],
           ),
           Positioned(
-            bottom: 0, // Прикріплюємо до нижньої частини екрану
+            bottom: 0,
             left: 0,
             right: 0,
             child: Container(
               height: 4* screenSize.height / 5,
               width: screenSize.width,
-              //color: AppColors.white,
               decoration: BoxDecoration(
                 color: AppColors.white,
                 borderRadius: BorderRadius.only(
@@ -117,7 +114,6 @@ class _CurrentChatState extends State<CurrentChat> {
                                       ?Alignment.centerRight
                                       :Alignment.centerLeft,
                                   child: Container(
-                                   // margin: EdgeInsets.only(bottom: 20),
                                     constraints: BoxConstraints(
                                       maxWidth: screenSize.width*0.66,
                                     ),
@@ -196,115 +192,115 @@ class _CurrentChatState extends State<CurrentChat> {
     );
 
   }
-  Widget bottomsheet(){
-    return Container(
-      height: 150,
-      width: MediaQuery.of(context).size.width,
-      child: Container(
-        margin: EdgeInsets.only(top: 40),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            Column(
-              //mainAxisAlignment: MainAxisAlignment.center,
-
-              children: [
-                CircleAvatar(
-                  radius: 30,
-                  backgroundColor: AppColors.black,
-                  child: IconButton(
-                    onPressed: _pickFile,
-                    icon: Icon(
-                      Icons.file_open_sharp,
-                      color: AppColors.white,
-                    ),
-                  ),
-                ),
-                SizedBox(height: 5),
-                Text(
-                  'Файл',
-                  style: TextStyle(
-                    color: AppColors.black,
-                    fontSize: 12,
-                  ),
-                ),
-              ],
-            ),
-            Column(
-              children: [
-                CircleAvatar(
-                  radius: 30,
-                  backgroundColor: AppColors.black,
-                  child: IconButton(
-                    onPressed: (){},
-                    icon: Icon(
-                      Icons.photo_camera,
-                      color: AppColors.white,
-                    ),
-                  ),
-                ),
-                SizedBox(height: 5),
-                Text(
-                  'Камера',
-                  style: TextStyle(
-                    color: AppColors.black,
-                    fontSize: 12,
-                  ),
-                ),
-              ],
-            ),
-            Column(
-              children: [
-                CircleAvatar(
-                  radius: 30,
-                  backgroundColor: AppColors.black,
-                  child: IconButton(
-                    onPressed: () {},
-                    icon: Icon(
-                      Icons.image,
-                      color: AppColors.white,
-                    ),
-                  ),
-                ),
-                SizedBox(height: 5),
-                Text(
-                  'Зображення',
-                  style: TextStyle(
-                    color: AppColors.black,
-                    fontSize: 12,
-                  ),
-                ),
-              ],
-            ),
-            Column(
-              children: [
-                CircleAvatar(
-                  radius: 30,
-                  backgroundColor: AppColors.black,
-                  child: IconButton(
-                    onPressed: () {},
-                    icon: Icon(
-                      Icons.person,
-                      color: AppColors.white,
-                    ),
-                  ),
-                ),
-                SizedBox(height: 5),
-                Text(
-                  'Контакт',
-                  style: TextStyle(
-                    color: AppColors.black,
-                    fontSize: 12,
-                  ),
-                ),
-              ],
-            ),
-          ],
-        ),
-      )
-
-    );
-  }
+  // Widget bottomsheet(){
+  //   return Container(
+  //     height: 150,
+  //     width: MediaQuery.of(context).size.width,
+  //     child: Container(
+  //       margin: EdgeInsets.only(top: 40),
+  //       child: Row(
+  //         mainAxisAlignment: MainAxisAlignment.spaceAround,
+  //         children: [
+  //           Column(
+  //             //mainAxisAlignment: MainAxisAlignment.center,
+  //
+  //             children: [
+  //               CircleAvatar(
+  //                 radius: 30,
+  //                 backgroundColor: AppColors.black,
+  //                 child: IconButton(
+  //                   onPressed: _pickFile,
+  //                   icon: Icon(
+  //                     Icons.file_open_sharp,
+  //                     color: AppColors.white,
+  //                   ),
+  //                 ),
+  //               ),
+  //               SizedBox(height: 5),
+  //               Text(
+  //                 'Файл',
+  //                 style: TextStyle(
+  //                   color: AppColors.black,
+  //                   fontSize: 12,
+  //                 ),
+  //               ),
+  //             ],
+  //           ),
+  //           Column(
+  //             children: [
+  //               CircleAvatar(
+  //                 radius: 30,
+  //                 backgroundColor: AppColors.black,
+  //                 child: IconButton(
+  //                   onPressed: (){},
+  //                   icon: Icon(
+  //                     Icons.photo_camera,
+  //                     color: AppColors.white,
+  //                   ),
+  //                 ),
+  //               ),
+  //               SizedBox(height: 5),
+  //               Text(
+  //                 'Камера',
+  //                 style: TextStyle(
+  //                   color: AppColors.black,
+  //                   fontSize: 12,
+  //                 ),
+  //               ),
+  //             ],
+  //           ),
+  //           Column(
+  //             children: [
+  //               CircleAvatar(
+  //                 radius: 30,
+  //                 backgroundColor: AppColors.black,
+  //                 child: IconButton(
+  //                   onPressed: () {},
+  //                   icon: Icon(
+  //                     Icons.image,
+  //                     color: AppColors.white,
+  //                   ),
+  //                 ),
+  //               ),
+  //               SizedBox(height: 5),
+  //               Text(
+  //                 'Зображення',
+  //                 style: TextStyle(
+  //                   color: AppColors.black,
+  //                   fontSize: 12,
+  //                 ),
+  //               ),
+  //             ],
+  //           ),
+  //           Column(
+  //             children: [
+  //               CircleAvatar(
+  //                 radius: 30,
+  //                 backgroundColor: AppColors.black,
+  //                 child: IconButton(
+  //                   onPressed: () {},
+  //                   icon: Icon(
+  //                     Icons.person,
+  //                     color: AppColors.white,
+  //                   ),
+  //                 ),
+  //               ),
+  //               SizedBox(height: 5),
+  //               Text(
+  //                 'Контакт',
+  //                 style: TextStyle(
+  //                   color: AppColors.black,
+  //                   fontSize: 12,
+  //                 ),
+  //               ),
+  //             ],
+  //           ),
+  //         ],
+  //       ),
+  //     )
+  //
+  //   );
+  // }
 
 }
 

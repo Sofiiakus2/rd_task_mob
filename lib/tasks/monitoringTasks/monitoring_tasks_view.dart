@@ -5,6 +5,8 @@ import 'package:tasker/colors.dart';
 import 'package:tasker/tasks/tasks.dart';
 import 'dart:core';
 
+import '../../top_bar_view.dart';
+
 class MonitoringTasks extends StatelessWidget {
   MonitoringTasks({super.key});
   final List<Task> tasks = [
@@ -58,78 +60,7 @@ class MonitoringTasks extends StatelessWidget {
             margin: EdgeInsets.all(30),
             child: Column(
               children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Container(
-                      margin: const EdgeInsets.only(bottom: 20, top: 10),
-
-                      child: SizedBox(
-                        width: 50,
-                        child: FloatingActionButton(
-                          heroTag: 'menu_button',
-                          backgroundColor: AppColors.white,
-                          splashColor: AppColors.grey,
-                          elevation: 1.5,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(8.0),
-                          ),
-                          onPressed: () {},
-                          tooltip: 'Floating Action Button',
-                          child: const Icon(Icons.menu,
-                            color: AppColors.black,
-                            //size: 25,
-                          ),
-                        ),
-                      ),
-                    ),
-                    Row(
-                      children: [
-                        Container(
-                          margin: const EdgeInsets.only(bottom: 20, top: 10),
-                          child: SizedBox(
-                            width: 50,
-                            child: FloatingActionButton(
-                              heroTag: 'bell_button',
-                              backgroundColor: AppColors.white,
-                              splashColor: AppColors.grey,
-                              elevation: 1.5,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(8.0),
-                              ),
-                              onPressed: () {},
-                              tooltip: 'Floating Action Button',
-                              child: const Icon(CupertinoIcons.bell_fill,
-                                color: AppColors.black,),
-                            ),
-                          ),
-                        ),
-                        const SizedBox(width: 10,),
-                        Container(
-                          margin: const EdgeInsets.only(bottom: 20, top: 10),
-                          child: SizedBox(
-                            width: 50,
-                            child: FloatingActionButton(
-                              heroTag: 'profile_button',
-                              backgroundColor: AppColors.white,
-                              splashColor: AppColors.grey,
-                              elevation: 1.5,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(8.0),
-                              ),
-                              onPressed: () {
-                                Navigator.of(context).pushNamed('/profile');
-                              },
-                              tooltip: 'Floating Action Button',
-                              child: const Icon(Icons.person,
-                                color: AppColors.black,),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
+                TopBar(),
                 Container(
                   margin: const EdgeInsets.only(top: 80),
                   alignment: Alignment.centerLeft,
@@ -151,7 +82,6 @@ class MonitoringTasks extends StatelessWidget {
             left: 0,
             right: 0,
             child: Container(
-              // color: AppColors.white, // Ви можете видалити цей рядок
               height: 3.5 * screenSize.height / 6,
               width: screenSize.width,
               decoration: BoxDecoration(
@@ -275,9 +205,8 @@ class MonitoringTasks extends StatelessWidget {
           ),
           Positioned(
             bottom: 3.5 * screenSize.height / 6.5,
-            right: 40, // Змінено для центрування по горизонталі
+            right: 40,
             child: Container(
-              // color: Colors.lightGreen,
               child: SvgPicture.asset(
                 'assets/1.svg',
                 width: screenSize.width/2,

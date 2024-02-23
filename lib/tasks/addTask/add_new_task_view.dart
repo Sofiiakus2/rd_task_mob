@@ -1,4 +1,4 @@
-import 'package:dropdown_search/dropdown_search.dart';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -6,8 +6,7 @@ import 'package:tasker/tasks/addTask/add_v_alert.dart';
 
 
 import '../../colors.dart';
-import '../SelectedEmployee.dart';
-import 'add_new_tasks.dart';
+import '../../top_bar_view.dart';
 import 'add_s_alert.dart';
 
 class AddNewTask extends StatefulWidget {
@@ -23,7 +22,7 @@ class _AddNewTaskState extends State<AddNewTask> {
   double panelHeight = 400;
 
   DateTime selectedDate = DateTime.now();
-  final List<String> _items = ['Завдання 1']; // Початковий елемент списку
+  final List<String> _items = ['Завдання 1'];
   final GlobalKey<AnimatedListState> _key = GlobalKey();
   List<TextEditingController> taskWidgets = [TextEditingController()];
 
@@ -99,8 +98,7 @@ class _AddNewTaskState extends State<AddNewTask> {
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance!.addPostFrameCallback((_) {
-      // Initialize panelPosition and imagePosition after the first frame has been built
+    WidgetsBinding.instance.addPostFrameCallback((_) {
       Size screenSize = MediaQuery.of(context).size;
       panelPosition = -0.42 * screenSize.height;
       imagePosition = 0.52 * screenSize.height;
@@ -121,81 +119,7 @@ class _AddNewTaskState extends State<AddNewTask> {
             margin: const EdgeInsets.all(30),
             child: Column(
               children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Container(
-                      margin: const EdgeInsets.only(bottom: 20, top: 10),
-                      child: SizedBox(
-                        width: 50,
-                        child: FloatingActionButton(
-                          heroTag: 'menu_button',
-                          backgroundColor: AppColors.white,
-                          splashColor: AppColors.grey,
-                          elevation: 1.5,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(8.0),
-                          ),
-                          onPressed: () {},
-                          tooltip: 'Floating Action Button',
-                          child: const Icon(
-                            Icons.menu,
-                            color: AppColors.black,
-                          ),
-                        ),
-                      ),
-                    ),
-                    Row(
-                      children: [
-                        Container(
-                          margin: const EdgeInsets.only(bottom: 20, top: 10),
-                          child: SizedBox(
-                            width: 50,
-                            child: FloatingActionButton(
-                              heroTag: 'bell_button',
-                              backgroundColor: AppColors.white,
-                              splashColor: AppColors.grey,
-                              elevation: 1.5,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(8.0),
-                              ),
-                              onPressed: () {},
-                              tooltip: 'Floating Action Button',
-                              child: const Icon(
-                                CupertinoIcons.bell_fill,
-                                color: AppColors.black,
-                              ),
-                            ),
-                          ),
-                        ),
-                        const SizedBox(width: 10,),
-                        Container(
-                          margin: const EdgeInsets.only(bottom: 20, top: 10),
-                          child: SizedBox(
-                            width: 50,
-                            child: FloatingActionButton(
-                              heroTag: 'profile_button',
-                              backgroundColor: AppColors.white,
-                              splashColor: AppColors.grey,
-                              elevation: 1.5,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(8.0),
-                              ),
-                              onPressed: () {
-                                Navigator.of(context).pushNamed('/profile');
-                              },
-                              tooltip: 'Floating Action Button',
-                              child: const Icon(
-                                Icons.person,
-                                color: AppColors.black,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
+                TopBar(),
                 Container(
                   margin: const EdgeInsets.only(top: 20),
                   alignment: Alignment.centerLeft,
@@ -294,8 +218,6 @@ class _AddNewTaskState extends State<AddNewTask> {
 
                                         Expanded(
                                           child: Container(
-                                            //padding: const EdgeInsets.symmetric(horizontal: 10),
-                                            //height: 20,
                                             decoration: BoxDecoration(
                                                 color: AppColors.grey.withOpacity(0.3),
                                                 borderRadius: BorderRadius.circular(6.0)
@@ -334,8 +256,6 @@ class _AddNewTaskState extends State<AddNewTask> {
                                                   },
                                                   icon: const Icon(Icons.remove_circle_outline),
                                                 ),
-                                                //filled: true,
-                                                //fillColor: AppColors.grey.withOpacity(0.3),
                                                 hintText: 'Завдання',
                                                 hintStyle: const TextStyle(
                                                     fontSize: 16,
@@ -386,7 +306,7 @@ class _AddNewTaskState extends State<AddNewTask> {
                                               ),
                                             ),
                                             Icon(Icons.person_add_alt_1_outlined,
-                                              color: AppColors.darkGrey,), // Ваша іконка
+                                              color: AppColors.darkGrey,),
                                           ],
                                         ),
                                       ),
@@ -428,6 +348,7 @@ class _AddNewTaskState extends State<AddNewTask> {
                                 ),
                               ),
                               const SizedBox(height: 20),
+                              //ANIMATED LIST
                               // Container(
                               //   height: MediaQuery.of(context).size.height , // Фіксована висота для AnimatedList
                               //   child: AnimatedList(
@@ -536,7 +457,7 @@ class _AddNewTaskState extends State<AddNewTask> {
                                         });
                                       }
                                     },
-
+                                    //ANDROID CALENDAR VIEW
                                     // onPressed: () async{
                                     //   final DateTime? dateTime = await
                                     //   showDatePicker(
@@ -602,72 +523,6 @@ class _AddNewTaskState extends State<AddNewTask> {
                             ],
 
                           ),
-
-                          // Column(
-                          //     children:[
-                          //       Expanded(
-                          //         child: AnimatedList(
-                          //           key: _key,
-                          //           initialItemCount: _items.length,
-                          //           itemBuilder: (context, index, animation) {
-                          //             return Padding(
-                          //               //padding: EdgeInsets.only(bottom: 20),
-                          //               padding: const EdgeInsets.symmetric(vertical: 8.0), // Adjust the vertical spacing here
-                          //               child: SizeTransition(
-                          //                 key: UniqueKey(),
-                          //                 sizeFactor: animation,
-                          //                 child: TextField(
-                          //                   //controller: taskWidgets[index],
-                          //                   decoration: InputDecoration(
-                          //                     filled: true,
-                          //                     fillColor: AppColors.grey.withOpacity(0.3),
-                          //                     suffixIcon: index == taskWidgets.length - 1
-                          //                         ? Row(
-                          //                       mainAxisSize: MainAxisSize.min,
-                          //                       children: [
-                          //                         IconButton(
-                          //                           onPressed: () {
-                          //                             setState(() {
-                          //                               _removeItem(index);
-                          //                             });
-                          //                           },
-                          //                           icon: const Icon(Icons.remove_circle_outline),
-                          //                         ),
-                          //                         IconButton(
-                          //                           onPressed: () {
-                          //                             setState(() {
-                          //                               _addItem();
-                          //                             });
-                          //                           },
-                          //                           icon: const Icon(Icons.add_circle_outline),
-                          //                         ),
-                          //                       ],
-                          //                     )
-                          //                         : IconButton(
-                          //                       onPressed: () {
-                          //                         setState(() {
-                          //                           _removeItem(index);
-                          //                         });
-                          //                       },
-                          //                       icon: const Icon(Icons.remove_circle_outline),
-                          //                     ),
-                          //                     hintText: 'Завдання',
-                          //                     hintStyle: const TextStyle(
-                          //                       fontSize: 16,
-                          //                       fontWeight: FontWeight.bold,
-                          //                     ),
-                          //                     border: OutlineInputBorder(
-                          //                       borderRadius: BorderRadius.circular(6.0),
-                          //                       borderSide: BorderSide.none,
-                          //                     ),
-                          //                   ),
-                          //                 ),
-                          //               ),
-                          //             );
-                          //           },
-                          //         ),),
-                          //     ]
-                          // ),
 
                         ],
                       ),

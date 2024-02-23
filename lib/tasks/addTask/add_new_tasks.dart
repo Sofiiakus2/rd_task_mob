@@ -11,7 +11,7 @@ class AnimationList extends StatefulWidget {
 }
 
 class _AnimationListState extends State<AnimationList> {
-  final List<String> _items = ['Завдання 1']; // Початковий елемент списку
+  final List<String> _items = ['Завдання 1'];
   final GlobalKey<AnimatedListState> _key = GlobalKey();
   List<TextEditingController> taskWidgets = [TextEditingController()];
 
@@ -85,19 +85,16 @@ class _AnimationListState extends State<AnimationList> {
   @override
   Widget build(BuildContext context) {
     return  Container(
-        //padding: const EdgeInsets.symmetric(horizontal: 10),
         child: AnimatedList(
         key: _key,
         initialItemCount: _items.length,
         itemBuilder: (context, index, animation) {
           return Padding(
-            //padding: EdgeInsets.only(bottom: 20),
-            padding: const EdgeInsets.symmetric(vertical: 8.0), // Adjust the vertical spacing here
+            padding: const EdgeInsets.symmetric(vertical: 8.0),
             child: SizeTransition(
               key: UniqueKey(),
               sizeFactor: animation,
               child: TextField(
-                //controller: taskWidgets[index],
                 decoration: InputDecoration(
                   filled: true,
                   fillColor: AppColors.grey.withOpacity(0.3),

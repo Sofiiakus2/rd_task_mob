@@ -1,5 +1,4 @@
 import 'dart:core';
-import 'dart:core';
 
 import 'package:tasker/models/employee.dart';
 import 'package:tasker/models/message.dart';

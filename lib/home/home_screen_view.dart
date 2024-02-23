@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../colors.dart';
+import '../top_bar_view.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -24,78 +25,7 @@ class _HomeState extends State<Home> {
         margin: const EdgeInsets.all(30),
         child: Column(
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Container(
-                  margin: const EdgeInsets.only(bottom: 20, top: 10),
-                  child: SizedBox(
-                    width: 50,
-                    child: FloatingActionButton(
-                      heroTag: 'menu_button',
-                      backgroundColor: AppColors.white,
-                      splashColor: AppColors.grey,
-                      elevation: 1.5,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8.0),
-                      ),
-                      onPressed: () {},
-                      tooltip: 'Floating Action Button',
-                      child: const Icon(Icons.menu,
-                        color: AppColors.black,
-                      ),
-                    ),
-                  ),
-                ),
-                Row(
-                  children: [
-                    Container(
-                      margin: const EdgeInsets.only(bottom: 20, top: 10),
-                      child: SizedBox(
-                        width: 50,
-                        child: FloatingActionButton(
-                          heroTag: 'bell_button',
-                          backgroundColor: AppColors.white,
-                          splashColor: AppColors.grey,
-                          elevation: 1.5,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(8.0),
-                          ),
-                          onPressed: () {
-                            Navigator.of(context).pushNamed('/registration');
-                          },
-                          tooltip: 'Floating Action Button',
-                          child: const Icon(CupertinoIcons.bell_fill,
-                            color: AppColors.black,),
-                        ),
-                      ),
-                    ),
-                    const SizedBox(width: 10,),
-                    Container(
-                      margin: const EdgeInsets.only(bottom: 20, top: 10),
-                      child: SizedBox(
-                        width: 50,
-                        child: FloatingActionButton(
-                          heroTag: 'profile_button',
-                          backgroundColor: AppColors.white,
-                          splashColor: AppColors.grey,
-                          elevation: 1.5,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(8.0),
-                          ),
-                          onPressed: () {
-                            Navigator.of(context).pushNamed('/profile');
-                          },
-                          tooltip: 'Floating Action Button',
-                          child: const Icon(Icons.person,
-                            color: AppColors.black,),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ],
-            ),
+            TopBar(),
             const Row(
               children: [
                 Text('Вітаю, ',
@@ -354,7 +284,7 @@ class _HomeState extends State<Home> {
                   IconButton(
                     icon: const Icon(Icons.navigate_next, color: AppColors.black),
                     onPressed: () {
-                      Navigator.of(context).pushNamed('/try');
+                      //Navigator.of(context).pushNamed('/try');
                     },
                   ),
                 ],
@@ -435,7 +365,12 @@ class _HomeState extends State<Home> {
                 ],
               ),
             ),),
-            Container(
+            GestureDetector(
+              onTap: (){
+
+                Navigator.of(context).pushNamed('/commands');
+              },
+              child: Container(
               decoration: BoxDecoration(
                 color: AppColors.grey.withOpacity(0.2),
                 borderRadius: BorderRadius.circular(10),
@@ -459,13 +394,19 @@ class _HomeState extends State<Home> {
                       style: TextStyle(fontSize: 18),
                     ),
                   ),
+                  Expanded(
+                    child: Container(),
+                  ),
                   IconButton(
                     icon: const Icon(Icons.navigate_next, color: AppColors.black),
-                    onPressed: () {},
+                    onPressed: () {
+
+                    },
                   ),
                 ],
               ),
-            ),
+            ),),
+
 
           ],
         ),

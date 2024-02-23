@@ -4,6 +4,7 @@ import 'package:tasker/colors.dart';
 import 'package:tasker/tasks/tasks.dart';
 import 'dart:core';
 import 'package:flutter_svg/flutter_svg.dart';
+import '../top_bar_view.dart';
 import 'editTasks/edit_tasks.dart';
 
 class FullTasks extends StatelessWidget {
@@ -20,78 +21,7 @@ class FullTasks extends StatelessWidget {
             margin: EdgeInsets.all(30),
             child: Column(
               children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Container(
-                      margin: const EdgeInsets.only(bottom: 20, top: 10),
-
-                      child: SizedBox(
-                        width: 50,
-                        child: FloatingActionButton(
-                          heroTag: 'menu_button',
-                          backgroundColor: AppColors.white,
-                          splashColor: AppColors.grey,
-                          elevation: 1.5,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(8.0),
-                          ),
-                          onPressed: () {},
-                          tooltip: 'Floating Action Button',
-                          child: const Icon(Icons.menu,
-                            color: AppColors.black,
-                            //size: 25,
-                          ),
-                        ),
-                      ),
-                    ),
-                    Row(
-                      children: [
-                        Container(
-                          margin: const EdgeInsets.only(bottom: 20, top: 10),
-                          child: SizedBox(
-                            width: 50,
-                            child: FloatingActionButton(
-                              heroTag: 'bell_button',
-                              backgroundColor: AppColors.white,
-                              splashColor: AppColors.grey,
-                              elevation: 1.5,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(8.0),
-                              ),
-                              onPressed: () {},
-                              tooltip: 'Floating Action Button',
-                              child: const Icon(CupertinoIcons.bell_fill,
-                                color: AppColors.black,),
-                            ),
-                          ),
-                        ),
-                        const SizedBox(width: 10,),
-                        Container(
-                          margin: const EdgeInsets.only(bottom: 20, top: 10),
-                          child: SizedBox(
-                            width: 50,
-                            child: FloatingActionButton(
-                              heroTag: 'profile_button',
-                              backgroundColor: AppColors.white,
-                              splashColor: AppColors.grey,
-                              elevation: 1.5,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(8.0),
-                              ),
-                              onPressed: () {
-                                Navigator.of(context).pushNamed('/profile');
-                              },
-                              tooltip: 'Floating Action Button',
-                              child: const Icon(Icons.person,
-                                color: AppColors.black,),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
+                TopBar(),
                 Container(
                   margin: const EdgeInsets.only(top: 60),
                   alignment: Alignment.centerLeft,
@@ -177,52 +107,83 @@ class FullTasks extends StatelessWidget {
                                 ),
                               );
                             }
-                            return GestureDetector(
-                              onTap: (){
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => EditTasksL(task: tasks[index]),
+                            return Card(
+                              color: Colors.transparent,
+                              elevation: 0,
+                              child: Dismissible(
+                                key: Key(tasks[index].title ),
+                                direction: DismissDirection.endToStart,
+                                confirmDismiss: (direction) async {
+                                  if (direction == DismissDirection.endToStart) {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => EditTasksL(task: tasks[index]),
+                                      ),
+                                    );
+                                  } else {
+                                    return true;
+                                  }
+                                },
+                                onDismissed: (direction) {
+
+                                },
+                                background: Container(
+                                  alignment: Alignment.centerRight,
+                                  margin: EdgeInsets.only(right: 20),
+                                  child: Icon(
+                                    Icons.edit,
+                                    color: AppColors.black,
                                   ),
-                                );
-                              },
-                              child: Column(
-                                  children:[
-                                    ListTile(
-                                      contentPadding: const EdgeInsets.symmetric(vertical: 20),
-                                      leading: Container(
-                                        height: 60,
-                                        width: 60,
-                                        decoration: BoxDecoration(
-                                          color: AppColors.grey.withOpacity(0.3),
-                                          borderRadius: BorderRadius.circular(8),
+                                ),
+                                child: GestureDetector(
+                                  onTap: (){
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => EditTasksL(task: tasks[index]),
+                                      ),
+                                    );
+                                  },
+                                  child: Column(
+                                      children:[
+                                        ListTile(
+                                          contentPadding: const EdgeInsets.symmetric(vertical: 20),
+                                          leading: Container(
+                                            height: 60,
+                                            width: 60,
+                                            decoration: BoxDecoration(
+                                              color: AppColors.grey.withOpacity(0.3),
+                                              borderRadius: BorderRadius.circular(8),
+                                            ),
+                                            child: const Icon(Icons.settings,
+                                              color: AppColors.grey,),
+                                          ),
+                                          title: Text(tasks[index].title,
+                                            style: const TextStyle(
+                                                color: AppColors.black,
+                                                fontWeight: FontWeight.bold
+                                            ),),
+                                          subtitle: Column(
+                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            children: [
+                                              Text(tasks[index].performer,),
+                                              Text(tasks[index].date),
+
+                                            ],
+                                          ),
+                                          trailing: trailingWidget,
+
                                         ),
-                                        child: const Icon(Icons.settings,
-                                          color: AppColors.grey,),
-                                      ),
-                                      title: Text(tasks[index].title,
-                                        style: const TextStyle(
-                                            color: AppColors.black,
-                                            fontWeight: FontWeight.bold
-                                        ),),
-                                      subtitle: Column(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                        children: [
-                                          Text(tasks[index].performer,),
-                                          Text(tasks[index].date),
-
-                                        ],
-                                      ),
-                                      trailing: trailingWidget,
-
-                                    ),
-                                    Divider(
-                                      thickness: 1,
-                                      color: AppColors.grey.withOpacity(0.3),
-                                      indent: 20,
-                                      endIndent: 20,
-                                    ),
-                                  ]
+                                        Divider(
+                                          thickness: 1,
+                                          color: AppColors.grey.withOpacity(0.3),
+                                          indent: 20,
+                                          endIndent: 20,
+                                        ),
+                                      ]
+                                  ),
+                                ),
                               ),
                             );
 

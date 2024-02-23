@@ -13,6 +13,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:tasker/tasks/tasks_try.dart';
 
 import 'chat/chats_page_view.dart';
+import 'commands/all_commands_view.dart';
 import 'enter/entering/enter_view.dart';
 import 'enter/registration/registration_view.dart';
 import 'firebase_api.dart';
@@ -57,19 +58,16 @@ class Tasker extends StatelessWidget {
         "/list":(context)=> AnimationList(),
         "/try":(context)=> TryTasks(),
         "/chat":(context)=>CurrentChat(),
-
+        "/commands":(context)=>AllCommands(),
 
       },
       localizationsDelegates: const <LocalizationsDelegate<Object>>[
-        // ... app-specific localization delegate(s) here
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
       ],
       supportedLocales: const <Locale>[
         Locale('uk', 'UA'),
-        Locale('en', 'US'), // English
-         // German
-        // ... other locales the app supports
+        Locale('en', 'US'),
       ],
     );
   }
