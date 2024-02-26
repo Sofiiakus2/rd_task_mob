@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 import '../colors.dart';
 import '../top_bar_view.dart';
@@ -57,7 +58,6 @@ class _HomeState extends State<Home> {
               children: [
                 GestureDetector(
                   onTap: () {
-
                   },
                   child: Container(
                     margin: const EdgeInsets.only(top: 20),
@@ -254,74 +254,85 @@ class _HomeState extends State<Home> {
                 )
               ],
             ),
-            Container(
-              decoration: BoxDecoration(
-                    color: AppColors.grey.withOpacity(0.2),
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-              margin: const EdgeInsets.only(top: 20),
-              height: 80,
-              child: Row(
-                children: [
-                  Container(
-                    margin: const EdgeInsets.only(left: 30),
-                    child: const Icon(
-                    Icons.list,
-                    size: 30,
-                    color: AppColors.black,
-                  ),
-                  ),
-                  Container(
-                    margin: const EdgeInsets.only(left: 30),
-                    child: const Text(
-                      'Всі мої задачі',
-                      style: TextStyle(fontSize: 18),
+            GestureDetector(
+              onTap: (){
+
+                Navigator.of(context).pushNamed('/connectUsers');
+              },
+              child: Container(
+                decoration: BoxDecoration(
+                      color: AppColors.grey.withOpacity(0.2),
+                      borderRadius: BorderRadius.circular(10),
                     ),
-                  ),
-                  Expanded(
-                    child: Container(),
-                  ),
-                  IconButton(
-                    icon: const Icon(Icons.navigate_next, color: AppColors.black),
-                    onPressed: () {
-                      //Navigator.of(context).pushNamed('/try');
-                    },
-                  ),
-                ],
-              ),
-            ),
-            Container(
-              decoration: BoxDecoration(
-                color: AppColors.grey.withOpacity(0.2),
-                borderRadius: BorderRadius.circular(10),
-              ),
-              margin: const EdgeInsets.only(top: 20),
-              height: 80,
-              child: Row(
-                children: [
-                  Container(
-                    margin: const EdgeInsets.only(left: 30),
-                    child: const Icon(
-                      Icons.check_circle_outline,
+                margin: const EdgeInsets.only(top: 20),
+                height: 80,
+                child: Row(
+                  children: [
+                    Container(
+                      margin: const EdgeInsets.only(left: 30),
+                      child: const Icon(
+                      Icons.list,
                       size: 30,
                       color: AppColors.black,
                     ),
-                  ),
-                  Container(
-                    margin: const EdgeInsets.only(left: 30),
-                    child: const Text(
-                      'Задачі для мене',
-                      style: TextStyle(fontSize: 18),
                     ),
-                  ),
-                  Expanded(
-                    child: Container(),
-                  ),
-                  IconButton(
-                    icon: const Icon(Icons.navigate_next, color: AppColors.black),
-                    onPressed: () {},
-                  ),
-                ],
+                    Container(
+                      margin: const EdgeInsets.only(left: 30),
+                      child: const Text(
+                        'Всі мої задачі',
+                        style: TextStyle(fontSize: 18),
+                      ),
+                    ),
+                    Expanded(
+                      child: Container(),
+                    ),
+                    IconButton(
+                      icon: const Icon(Icons.navigate_next, color: AppColors.black),
+                      onPressed: () {
+                        //Navigator.of(context).pushNamed('/try');
+                      },
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            GestureDetector(
+              onTap: (){
+                Navigator.of(context).pushNamed('/reports');
+              },
+              child: Container(
+                decoration: BoxDecoration(
+                  color: AppColors.grey.withOpacity(0.2),
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                margin: const EdgeInsets.only(top: 20),
+                height: 80,
+                child: Row(
+                  children: [
+                    Container(
+                      margin: const EdgeInsets.only(left: 30),
+                      child: const Icon(
+                        Icons.check_circle_outline,
+                        size: 30,
+                        color: AppColors.black,
+                      ),
+                    ),
+                    Container(
+                      margin: const EdgeInsets.only(left: 30),
+                      child: const Text(
+                        'Задачі для мене',
+                        style: TextStyle(fontSize: 18),
+                      ),
+                    ),
+                    Expanded(
+                      child: Container(),
+                    ),
+                    IconButton(
+                      icon: const Icon(Icons.navigate_next, color: AppColors.black),
+                      onPressed: () {},
+                    ),
+                  ],
+                ),
               ),
             ),
             GestureDetector(

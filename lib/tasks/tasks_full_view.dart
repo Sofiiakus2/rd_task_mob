@@ -1,11 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:tasker/colors.dart';
 import 'package:tasker/tasks/tasks.dart';
 import 'dart:core';
 import 'package:flutter_svg/flutter_svg.dart';
 import '../top_bar_view.dart';
-import 'editTasks/edit_tasks.dart';
 
 class FullTasks extends StatelessWidget {
   FullTasks({super.key});
@@ -107,43 +107,17 @@ class FullTasks extends StatelessWidget {
                                 ),
                               );
                             }
-                            return Card(
-                              color: Colors.transparent,
-                              elevation: 0,
-                              child: Dismissible(
-                                key: Key(tasks[index].title ),
-                                direction: DismissDirection.endToStart,
-                                confirmDismiss: (direction) async {
-                                  if (direction == DismissDirection.endToStart) {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) => EditTasksL(task: tasks[index]),
-                                      ),
-                                    );
-                                  } else {
-                                    return true;
-                                  }
-                                },
-                                onDismissed: (direction) {
-
-                                },
-                                background: Container(
-                                  alignment: Alignment.centerRight,
-                                  margin: EdgeInsets.only(right: 20),
-                                  child: Icon(
-                                    Icons.edit,
-                                    color: AppColors.black,
-                                  ),
-                                ),
-                                child: GestureDetector(
+                            return GestureDetector(
                                   onTap: (){
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) => EditTasksL(task: tasks[index]),
-                                      ),
-                                    );
+                                    Get.toNamed('/editTasks', arguments: [
+                                      tasks[index],
+                                    ]);
+                                    // Navigator.push(
+                                    //   context,
+                                    //   MaterialPageRoute(
+                                    //     builder: (context) => EditTasksL(task: tasks[index]),
+                                    //   ),
+                                    // );
                                   },
                                   child: Column(
                                       children:[
@@ -183,8 +157,8 @@ class FullTasks extends StatelessWidget {
                                         ),
                                       ]
                                   ),
-                                ),
-                              ),
+
+
                             );
 
                           },
@@ -197,7 +171,7 @@ class FullTasks extends StatelessWidget {
           ),
           Positioned(
             bottom: 3.5 * screenSize.height / 6.5,
-            right: 40, // Змінено для центрування по горизонталі
+            right: 40,
             child: Container(
               // color: Colors.lightGreen,
               child: SvgPicture.asset(

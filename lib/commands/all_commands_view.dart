@@ -122,7 +122,30 @@ class AllCommands extends StatelessWidget {
                     ),
                   ],
                 ),
-              )
+              ),
+              SizedBox(height: 300,),
+              ElevatedButton(
+                onPressed: () {
+
+                  Navigator.of(context).pushNamed('/createCommand');
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: AppColors.black,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8.0),
+                  ),
+                ),
+                child: Container(
+                  margin: const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
+                  child: const Text(
+                    'Створити команду',
+                    style: TextStyle(
+                      color: AppColors.white,
+                      fontSize: 18,
+                    ),
+                  ),
+                ),
+              ),
             ],
           ),
         ),

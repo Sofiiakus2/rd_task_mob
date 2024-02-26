@@ -1,40 +1,54 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:tasker/tasks/editTasks/edit_MT_alert.dart';
 
 import '../../colors.dart';
 import '../../top_bar_view.dart';
+import '../tasks.dart';
 
 class EditTasks extends StatefulWidget {
-  final String title;
-  final String performer;
-  final String date;
-  final double progress;
-  final String result;
-  final List<String> miniTasks;
-  final String assigner;
-  final List<String>? assignees;
-  final List<bool> completedTasks;
-
-  const EditTasks({
-    Key? key,
-    required this.title,
-    required this.performer,
-    required this.date,
-    required this.progress,
-    required this.result,
-    required this.miniTasks,
-    required this.assigner,
-    required this.assignees,
-    required this.completedTasks,
-  }) : super(key: key);
+  // final String title;
+  // final String performer;
+  // final String date;
+  // final double progress;
+  // final String result;
+  // final List<String> miniTasks;
+  // final String assigner;
+  // final List<String>? assignees;
+  // final List<bool> completedTasks;
+  //
+  // const EditTasks({
+  //   Key? key,
+  //   required this.title,
+  //   required this.performer,
+  //   required this.date,
+  //   required this.progress,
+  //   required this.result,
+  //   required this.miniTasks,
+  //   required this.assigner,
+  //   required this.assignees,
+  //   required this.completedTasks,
+  // }) : super(key: key);
 
   @override
   State<EditTasks> createState() => _EditTasksState();
 }
 
 class _EditTasksState extends State<EditTasks> {
+  late Task task;
+
+  @override
+  void initState() {
+    task = Get.arguments[0];
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
+    List<bool> completedTasks = List.generate(task.miniTasks.length, (_) => false);
+
     Size screenSize = MediaQuery.of(context).size;
     return Scaffold(
       backgroundColor: AppColors.white,
@@ -56,7 +70,7 @@ class _EditTasksState extends State<EditTasks> {
                     Container(
                       alignment: Alignment.centerLeft,
                       child: Text(
-                        widget.title,
+                        task.title,
                         style: const TextStyle(
                           color: AppColors.black,
                           fontWeight: FontWeight.bold,
@@ -67,7 +81,7 @@ class _EditTasksState extends State<EditTasks> {
                     Container(
                       margin: const EdgeInsets.only(top: 10),
                       child: Text(
-                        'Результат: ${widget.result}',
+                        'Результат: ${task.result}',
                         style: const TextStyle(
                           fontSize: 14,
                           color: AppColors.darkGrey,
@@ -81,14 +95,14 @@ class _EditTasksState extends State<EditTasks> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              widget.performer,
+                              task.performer,
                               style: const TextStyle(
                                 fontSize: 14,
                                 color: AppColors.darkGrey,
                               ),
                             ),
                             Text(
-                              'До ${widget.date}',
+                              'До ${task.date}',
                               style: const TextStyle(
                                 fontSize: 14,
                                 color: AppColors.darkGrey,
@@ -118,46 +132,90 @@ class _EditTasksState extends State<EditTasks> {
             const SizedBox(height: 40),
             Expanded(
               child: ListView.builder(
-                itemCount: widget.miniTasks.length,
+                itemCount: task.miniTasks.length,
                 itemBuilder: (context, index) {
-                  return Column(
-                    children: [
-                      CheckboxListTile(
-                        secondary: Container(
-                          height: 60,
-                          width: 60,
-                          decoration: BoxDecoration(
-                            //color: AppColors.grey.withOpacity(0.2),
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                          child: const Icon(
-                            Icons.settings,
-                            color: AppColors.grey,
-                          ),
-                        ),
-                        title: Text(
-                          widget.miniTasks[index],
-                          style: const TextStyle(
-                            color: AppColors.black,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        value: widget.completedTasks[index],
-                        onChanged: (bool? value) {
-                          if (value != null) {
-                            setState(() {
-                              widget.completedTasks[index] = value;
-                            });
-                          }
-                        },
+                  return Card(
+                    color: Colors.transparent,
+                    elevation: 0,
+                    child: Dismissible(
+                      key: Key(task.miniTasks[index]),
+                      //direction: DismissDirection.endToStart,
+                      confirmDismiss: (direction) async {
+                        if (direction == DismissDirection.endToStart) {
+                          Get.dialog(
+                            EditMTAlert(),
+                            arguments: [
+                              task.miniTasks[index],
+                            ],
+                          );
+
+                        } else {
+                          return true;
+                        }
+                      },
+                      onDismissed: (direction) {
+
+                      },
+                      background: Container(
+                        margin: EdgeInsets.symmetric(horizontal: 35),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Icon(
+                              Icons.delete_forever_rounded,
+                              color: AppColors.black,
+                            ),
+                            Icon(
+                              Icons.edit,
+                              color: AppColors.black,
+                            ),
+
+                          ],
+                        )
+                        // alignment: Alignment.centerRight,
+                        // margin: EdgeInsets.only(right: 20),
+                        //
                       ),
-                      Divider(
-                        thickness: 1,
-                        color: AppColors.grey.withOpacity(0.3),
-                        indent: 20,
-                        endIndent: 20,
+                      child: Column(
+                        children: [
+                          CheckboxListTile(
+                            secondary: Container(
+                              height: 60,
+                              width: 60,
+                              decoration: BoxDecoration(
+                                //color: AppColors.grey.withOpacity(0.2),
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                              child: const Icon(
+                                Icons.settings,
+                                color: AppColors.grey,
+                              ),
+                            ),
+                            title: Text(
+                              task.miniTasks[index],
+                              style: const TextStyle(
+                                color: AppColors.black,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            value: completedTasks[index],
+                            onChanged: (bool? value) {
+                              if (value != null) {
+                                setState(() {
+                                  completedTasks[index] = value;
+                                });
+                              }
+                            },
+                          ),
+                          Divider(
+                            thickness: 1,
+                            color: AppColors.grey.withOpacity(0.3),
+                            indent: 20,
+                            endIndent: 20,
+                          ),
+                        ],
                       ),
-                    ],
+                    ),
                   );
                 },
               ),
