@@ -30,7 +30,7 @@ void main() async{
         appId: '1:157931460120:android:28e5ac9b77919a4409956d',
         messagingSenderId: '157931460120',
         projectId: 'rd-tasks-mobi',
-
+        storageBucket: 'rd-tasks-mobi.appspot.com',
       )
   );await FirebaseApi().initNotifications();
   runApp(const Tasker());
