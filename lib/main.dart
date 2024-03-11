@@ -12,7 +12,6 @@ import 'package:tasker/tasks/tasks_full_view.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:tasker/adminFunctionality/connect_new_users_view.dart';
 
-import 'adminFunctionality/reports_view.dart';
 import 'chat/chats_page_view.dart';
 import 'commands/all_commands_view.dart';
 import 'commands/createNewCommand/create_command_view.dart';
@@ -47,32 +46,32 @@ class Tasker extends StatelessWidget {
         textTheme: GoogleFonts.montserratTextTheme(),
       ),
       routes: {
-        "/":(context) => const BottomNavBar(),
+        "/":(context)=> const Enter(),
+        "/bottomNavBar":(context) => const BottomNavBar(),
         "/home":(context)=> const Home(),
         "/profile":(context)=>const Profile(),
         "/fullTasks":(context)=> FullTasks(),
-        "/editTasks":(context)=> EditTasks(),
+        "/editTasks":(context)=> const EditTasks(),
         "/addTasks":(context)=> const AddNewTask(),
         "/monitoringTasks":(context)=> MonitoringTasks(),
         "/allChats": (context)=> const ChatsPage(),
         "/registration":(context)=> const Registration(),
         "/enter":(context)=> const Enter(),
-        "/list":(context)=> AnimationList(),
-        "/connectUsers":(context)=> ConnectUsers(),
-        "/chat":(context)=>CurrentChat(),
-        "/commands":(context)=>AllCommands(),
-        "/createCommand":(context)=>CreateCommand(),
-        "/reports":(context)=>Reports(),
+        //"/connectUsers":(context)=> const ConnectUsers(),
+        "/chat":(context)=>const CurrentChat(),
+        "/commands":(context)=>const AllCommands(),
+        "/createCommand":(context)=>const CreateCommand(),
+       // "/reports":(context)=>Reports(),
 
       },
-      localizationsDelegates: const <LocalizationsDelegate<Object>>[
-        GlobalMaterialLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-      ],
-      supportedLocales: const <Locale>[
-        Locale('uk', 'UA'),
-        Locale('en', 'US'),
-      ],
+      // localizationsDelegates: const <LocalizationsDelegate<Object>>[
+      //   GlobalMaterialLocalizations.delegate,
+      //   GlobalWidgetsLocalizations.delegate,
+      // ],
+      // supportedLocales: const <Locale>[
+      //   Locale('uk', 'UA'),
+      //   Locale('en', 'US'),
+      // ],
     );
   }
 }

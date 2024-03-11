@@ -1,11 +1,11 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:tasker/colors.dart';
-import 'package:tasker/models/employee.dart';
-import 'package:tasker/top_bar_view.dart';
+import 'package:tasker/models/users.dart';
+import 'package:tasker/navigationBar/top_bar_view.dart';
 
 class ConnectUsers extends StatefulWidget {
+  const ConnectUsers({super.key});
+
   @override
   _ConnectUsersState createState() => _ConnectUsersState();
 }
@@ -15,20 +15,21 @@ class _ConnectUsersState extends State<ConnectUsers> with SingleTickerProviderSt
 
   @override
   Widget build(BuildContext context) {
+    List<User> users = getAllUsers() as List<User>;
     final Size screenSize = MediaQuery.of(context).size;
     return Scaffold(
       backgroundColor:AppColors.grey.withOpacity(0.3),
       body: Stack(
         children: [
           Container(
-            margin: EdgeInsets.all(30),
+            margin: const EdgeInsets.all(30),
             child: Column(
               children: [
-                TopBar(),
+                const TopBar(),
                 Container(
-                  margin: EdgeInsets.only(top: 20),
+                  margin: const EdgeInsets.only(top: 20),
                   alignment: Alignment.bottomLeft,
-                  child: Text(
+                  child: const Text(
                     'Ваші запити\nна приєднання до кімнати',
                     style: TextStyle(
                         color: AppColors.white,
@@ -45,7 +46,7 @@ class _ConnectUsersState extends State<ConnectUsers> with SingleTickerProviderSt
             child: Container(
               height: 3 * screenSize.height / 4,
               width: screenSize.width,
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 color: AppColors.white,
                 borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(40.0),
@@ -54,7 +55,7 @@ class _ConnectUsersState extends State<ConnectUsers> with SingleTickerProviderSt
               ),
               child: SingleChildScrollView(
                 child: Container(
-                  margin: EdgeInsets.only(top: 80, left: 30, right: 30),
+                  margin: const EdgeInsets.only(top: 80, left: 30, right: 30),
                   height: 100,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -67,27 +68,27 @@ class _ConnectUsersState extends State<ConnectUsers> with SingleTickerProviderSt
                           color: AppColors.grey.withOpacity(0.4),
                           borderRadius: BorderRadius.circular(20),
                         ),
-                        child: Icon(Icons.person,
+                        child: const Icon(Icons.person,
                         size: 50,
                         color: AppColors.grey,),
                       ),
                       Container(
-                        margin: EdgeInsets.only(top: 10),
+                        margin: const EdgeInsets.only(top: 10),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              '${Employee.employees.first.name}',
-                              style: TextStyle(
+                              users.first.name,
+                              style: const TextStyle(
                                 color: AppColors.black,
                                 fontSize: 18,
                                 fontWeight: FontWeight.w800
                               ),
                             ),
-                            SizedBox(height: 10,),
+                            const SizedBox(height: 10,),
                             Row(
                               children: [
-                                Text(
+                                const Text(
                                   'Керівник ',
                                   style: TextStyle(
                                       color: AppColors.black,
@@ -117,13 +118,13 @@ class _ConnectUsersState extends State<ConnectUsers> with SingleTickerProviderSt
 
                                 },
                                 color: AppColors.black,
-                                icon: Icon(Icons.clear)),
+                                icon: const Icon(Icons.clear)),
                             IconButton(
                                 onPressed: (){
 
                                 },
                                 color: AppColors.black,
-                                icon: Icon(Icons.check_outlined)),
+                                icon: const Icon(Icons.check_outlined)),
 
                             // ElevatedButton(
                             //   onPressed: () {
@@ -159,12 +160,6 @@ class _ConnectUsersState extends State<ConnectUsers> with SingleTickerProviderSt
 
         ],
 
-        // child: Column(
-        //   children: [
-        //     TopBar(),
-
-        //   ],
-        // ),
       ),
     );
   }

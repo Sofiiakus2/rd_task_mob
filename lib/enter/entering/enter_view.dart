@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 
 import '../../colors.dart';
+import 'enter.dart';
 
 class Enter extends StatelessWidget {
   const Enter({super.key});
 
   @override
   Widget build(BuildContext context) {
+    TextEditingController usernameController = TextEditingController();
+    TextEditingController passwordController = TextEditingController();
     return Scaffold(
       backgroundColor: AppColors.white,
       body: Container(
@@ -30,6 +33,7 @@ class Enter extends StatelessWidget {
                   ),),
                 const SizedBox(height: 60,),
                 TextField(
+                  controller: usernameController,
                   decoration: InputDecoration(
                     filled: true,
                     fillColor: AppColors.white,
@@ -50,6 +54,7 @@ class Enter extends StatelessWidget {
                 ),
                 const SizedBox(height: 20,),
                 TextField(
+                  controller: passwordController,
                   decoration: InputDecoration(
                     filled: true,
                     suffixIcon: IconButton(
@@ -58,7 +63,7 @@ class Enter extends StatelessWidget {
                       onPressed: () {  },
                     ),
                     fillColor: AppColors.white,
-                    hintText: 'Організація',
+                    hintText: 'Пароль',
                     hintStyle: const TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
@@ -76,7 +81,8 @@ class Enter extends StatelessWidget {
                 const SizedBox(height: 60,),
                 ElevatedButton(
                   onPressed: () {
-                    //Navigator.pop(context);
+                    EnterPage enterPage = EnterPage(username: usernameController.text, password: passwordController.text);
+                    enterPage.signIn(context);
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: AppColors.black,
@@ -100,7 +106,7 @@ class Enter extends StatelessWidget {
                 const SizedBox(height: 20,),
                 ElevatedButton(
                   onPressed: () {
-                    Navigator.pushNamed(context, "/");
+                    Navigator.pushNamed(context, "/registration");
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: AppColors.buttonsGrey,

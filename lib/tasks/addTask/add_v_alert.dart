@@ -1,9 +1,9 @@
+
 import 'package:flutter/material.dart';
 import 'package:tasker/colors.dart';
-import 'package:tasker/models/employee.dart';
-import 'package:tasker/tasks/SelectedEmployee.dart';
+import 'package:tasker/models/users.dart';
 
-import '../../models/department.dart';
+import '../../models/organization.dart';
 
 
 class AddVAlert extends StatefulWidget {
@@ -14,7 +14,15 @@ class AddVAlert extends StatefulWidget {
 }
 
 class _AddVAlertState extends State<AddVAlert> {
-  SelectedEmployee selectedEmployee = SelectedEmployee();
+  User? selectedUser;
+
+  late List<User> users;
+  late List<Organization> organizations;
+
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +30,7 @@ class _AddVAlertState extends State<AddVAlert> {
     return AlertDialog(
       title: Center(
         child: Text(
-          'Додати виконавця\n${selectedEmployee.name}',
+          'Додати виконавця\n${selectedUser?.name ?? ''}',
           textAlign: TextAlign.center,
           style: TextStyle(
             fontWeight: FontWeight.bold,
@@ -33,45 +41,81 @@ class _AddVAlertState extends State<AddVAlert> {
       content: Container(
         width: screenSize.width - 20,
         height: screenSize.height / 2,
-        child: SingleChildScrollView(
-          child: Column(
-            children: Department.departments.map((department) {
-              return ExpansionTile(
-                title: Text(
-                  department.name,
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 18,
-                  ),
-                ),
-                children: Employee.employees.map((employee) {
-                  return ListTile(
-                    title: Text(
-                      '${employee.name} - ${employee.position}',
-                      style: TextStyle(
-                        fontWeight: selectedEmployee.name == employee.name &&
-                            selectedEmployee.department == department.name
-                            ? FontWeight.bold
-                            : FontWeight.normal,
+        child: FutureBuilder<List<dynamic>>(
+          future: getOrganizationDepartments(),
+          builder: (context, snapshot) {
+            print(snapshot);
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return Center(child: CircularProgressIndicator());
+            } else if (snapshot.hasData) {
+              return SingleChildScrollView(
+                child: Column(
+                  children: [
+                    for (String department in snapshot.data!)
+                      ExpansionTile(
+                        title: Text(
+                          department,
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 18,
+                          ),
+                        ),
+                        children: [
+                          FutureBuilder<List<User>>(
+                            future: getUsersInOrganization(department),
+                            builder: (builder, usersSnapshot){
+                              if (usersSnapshot.connectionState == ConnectionState.waiting) {
+                                return Center(child: CircularProgressIndicator());
+                              } else if (usersSnapshot.hasData) {
+                                List<User> users = usersSnapshot.data!;
+                                return Column(
+                                  children: users.map((user) {
+                                    return ListTile(
+                                      title: Text(
+                                         user.name,
+                                        style: TextStyle(
+                                          fontWeight: selectedUser?.name == user.name
+                                              ? FontWeight.bold
+                                              : FontWeight.normal,
+                                        ),
+                                      ),
+                                      onTap: () {
+                                        setState(() {
+                                          selectedUser = user;
+                                        });
+                                      },
+                                    );
+                                  }).toList(),
+                                );
+                              } else {
+                                return Center(child: Text('No users available'));
+                              }
+                            },
+                          ),
+                        ]
                       ),
-                    ),
-                    onTap: () {
-                      setState(() {
-                        selectedEmployee = SelectedEmployee(
-                            name: employee.name, department: department.name);
-                      });
-                    },
-                  );
-                }).toList(),
+                  ],
+                ),
               );
-            }).toList(),
-          ),
+            } else {
+              return Center(child: Text('No data available'));
+            }
+          },
         ),
+
+
+
       ),
+
       actions: [
         ElevatedButton(
           onPressed: () {
-            Navigator.pop(context);
+            //getOrganizationDepartments();
+            if (selectedUser != null) {
+              Navigator.pop(context, selectedUser);
+            } else {
+              print('ОБЕРІТЬ ВИКОНАВЦЯ (ADD_V_ALERT)');
+            }
           },
           style: ElevatedButton.styleFrom(
             backgroundColor: AppColors.black,

@@ -30,7 +30,6 @@ class _AnimationListState extends State<AnimationList> {
         return SizeTransition(
           sizeFactor: animation,
           child: TextField(
-            //controller: taskWidgets[index],
             decoration: InputDecoration(
               suffixIcon: index == taskWidgets.length - 1
                   ? Row(
@@ -62,8 +61,6 @@ class _AnimationListState extends State<AnimationList> {
                 },
                 icon: const Icon(Icons.remove_circle_outline),
               ),
-              //filled: true,
-              //fillColor: AppColors.grey.withOpacity(0.3),
               hintText: 'Завдання',
               hintStyle: const TextStyle(
                 fontSize: 16,

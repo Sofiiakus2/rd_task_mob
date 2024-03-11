@@ -20,9 +20,10 @@ class _EditMTAlertState extends State<EditMTAlert> {
 
   @override
   Widget build(BuildContext context) {
+    TextEditingController titleController = TextEditingController(text:title );
     Size screenSize = MediaQuery.of(context).size;
     return  AlertDialog(
-      title: Center(
+      title: const Center(
         child: Text(
           'Редагувати підзадачу',
           textAlign: TextAlign.center,
@@ -33,17 +34,15 @@ class _EditMTAlertState extends State<EditMTAlert> {
         ),
       ),
         content: Container(
-          margin: EdgeInsets.only(top: 20),
+          margin: const EdgeInsets.only(top: 20),
           width: screenSize.width - 20,
-          //height: screenSize.height / 2,
           child: TextField(
-            controller: TextEditingController(text: title),
-            style: TextStyle(
+            controller: titleController,
+            style: const TextStyle(
               color: AppColors.black,
             ),
-            cursorColor: Colors.black, // Встановлення коліру курсору
-            decoration: InputDecoration(
-              // Настройка контуру
+            cursorColor: Colors.black,
+            decoration: const InputDecoration(
               enabledBorder: OutlineInputBorder(
                 borderSide: BorderSide(color: Colors.black),
               ),
@@ -59,7 +58,12 @@ class _EditMTAlertState extends State<EditMTAlert> {
         actions: [
           ElevatedButton(
             onPressed: () {
-              Navigator.pop(context);
+              if(titleController.text != title){
+                Navigator.pop(context, titleController.text);
+              }else{
+                print('THERE NOT CHANGES');
+              }
+
             },
             style: ElevatedButton.styleFrom(
               backgroundColor: AppColors.black,

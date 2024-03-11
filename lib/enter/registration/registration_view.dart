@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tasker/enter/registration/registration.dart';
 
 import '../../colors.dart';
 
@@ -7,6 +8,8 @@ class Registration extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    TextEditingController usernameController = TextEditingController();
+    TextEditingController passwordController = TextEditingController();
     return Scaffold(
       backgroundColor: AppColors.white,
       body: Container(
@@ -30,6 +33,7 @@ class Registration extends StatelessWidget {
             ),),
             const SizedBox(height: 60,),
             TextField(
+              controller: usernameController,
               decoration: InputDecoration(
                 filled: true,
                 fillColor: AppColors.white,
@@ -50,6 +54,7 @@ class Registration extends StatelessWidget {
             ),
             const SizedBox(height: 20,),
             TextField(
+              controller: passwordController,
               decoration: InputDecoration(
                 filled: true,
                 suffixIcon: IconButton(
@@ -76,7 +81,8 @@ class Registration extends StatelessWidget {
             const SizedBox(height: 60,),
             ElevatedButton(
               onPressed: () {
-                Navigator.pop(context);
+                RegistrationPage registrationPage = RegistrationPage(username: usernameController.text, password: passwordController.text);
+                registrationPage.writeUserData(context);
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: AppColors.black,

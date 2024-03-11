@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:tasker/colors.dart';
-import 'package:tasker/models/employee.dart';
-import 'package:tasker/tasks/SelectedEmployee.dart';
+import 'package:tasker/models/users.dart';
 
-import '../../models/department.dart';
+import '../../models/organization.dart';
 
 
 
@@ -16,7 +15,16 @@ class AddSAlert extends StatefulWidget {
 }
 
 class _AddVAlertState extends State<AddSAlert> {
-  List<SelectedEmployee> selectedItems = [];
+  List<User> selectedItems = [];
+
+  late List<User> users;
+  late List<Organization> organizations;
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     Size screenSize = MediaQuery.of(context).size;
@@ -32,82 +40,131 @@ class _AddVAlertState extends State<AddSAlert> {
         ),
       ),
       content: Container(
-        width: screenSize.width - 20,
-        height: screenSize.height / 2,
-        padding: EdgeInsets.all(10),
-        child: SingleChildScrollView(
-          child: Column(
-            children: Department.departments.map((department) {
-              return ExpansionTile(
-                title:selectedItems.any((item)=>item.department==department.name)
-                ?Wrap(
+            width: screenSize.width - 20,
+            height: screenSize.height / 2,
+            padding: EdgeInsets.all(10),
+            child: FutureBuilder<List<dynamic>>(
+              future: getOrganizationDepartments(),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return Center(child: CircularProgressIndicator());
+                }
+                return SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      for (String department in snapshot.data!)
+                        FutureBuilder<List<User>>(
+                          future: getUsersInOrganization(department),
+                          builder: (context, usersSnapshot) {
+                            if (usersSnapshot.connectionState == ConnectionState.waiting) {
+                              return Center(child: CircularProgressIndicator());
+                            }
+                            List<User> users = usersSnapshot.data!;
+                            return Column(
+                              children: users.map((users){
+                                return ExpansionTile(
+                                    title: selectedItems.any((item) => item.organizations != null && item.organizations!.any((org) => org['department'] == department))
+                                    ? Wrap(
+                                      children: selectedItems
+                                          .where((element) => element.organizations != null)
+                                          .expand((element) => element.organizations!)
+                                          .where((org) => org['department'] == department)
+                                          .map((org) {
+                                        User user = selectedItems.firstWhere((item) => item.organizations!.any((o) => o['department'] == department));
+                                        return Chip(
+                                          backgroundColor: AppColors.grey.withOpacity(0.3),
+                                          labelStyle: TextStyle(
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.w600,
+                                            color: AppColors.darkGrey,
+                                          ),
+                                          label: Text('${user.name}'),
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.circular(20),
+                                            side: BorderSide(
+                                              color: AppColors.grey.withOpacity(0.3),
+                                              width: 0,
+                                            ),
+                                          ),
+                                        );
+                                      })
+                                          .toList(),
+                                    )
+                                    :Text(
+                                      department,
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 18,
+                                      ),
+                                    ),
+                                    children: [
+                                      FutureBuilder<List<User>>(
+                                        future: getUsersInOrganization(department),
+                                        builder: (builder, usersSnapshot){
+                                          if (usersSnapshot.connectionState == ConnectionState.waiting) {
+                                            return Center(child: CircularProgressIndicator());
+                                          }
+                                          else if (usersSnapshot.hasData) {
+                                            List<User> users = usersSnapshot.data!;
 
-                  children: selectedItems.map((e) {
-                    if (e.department == department.name) {
-                      return Chip(
-                        backgroundColor: AppColors.grey.withOpacity(0.3),
-                        labelStyle: TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w600,
-                          color: AppColors.darkGrey
+                                            return Column(
+                                              children: users.map((user) {
+                                                return ListTile(
+                                                  title: Text(
+                                                    user.name,
+                                                    style: TextStyle(
+                                                      fontWeight: selectedItems.any((item) => item.name == user.name)
+                                                          ? FontWeight.bold
+                                                          : FontWeight.normal,
+
+                                                    ),
+                                                  ),
+                                                  onTap: () {
+                                                    setState(() {
+                                                      if (selectedItems.any((item) => item.id == user.id)) {
+                                                        selectedItems.removeWhere((item) => item.id == user.id);
+                                                      } else {
+                                                        selectedItems.add(user);
+                                                      }
+
+
+                                                      //selectedItems.add(user);
+
+                                                    });
+                                                  },
+                                                );
+                                              }).toList(),
+                                            );
+                                          } else {
+                                            return Center(child: Text('No users available'));
+                                          }
+                                        },
+                                      ),
+                                    ]
+                                );
+                              }).toList(),
+                            );
+
+                          }
                         ),
-                        label: Text(e.name),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20),
-                          side: BorderSide(
-                            color: AppColors.grey.withOpacity(0.3),
-                            width: 0
-                          ),
-                        ),
-                      );
-                    } else {
-                      return SizedBox();
-                    }
-                  }).toList(),
-                )
-                :Text(
-                  department.name,
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 18,
+                    ],
                   ),
-                ),
-                children: Employee.employees.map((employee) {
-                  return CheckboxListTile(
-                    title: Text(
-                      '${employee.name} - ${employee.position}',
-                      style: TextStyle(
-                        fontWeight: selectedItems.contains(employee.name) &&
-                            selectedItems.contains(department.name)
-                            ? FontWeight.bold
-                            : FontWeight.normal,
-                      ),
-                    ),
-                    value: selectedItems.any((item) => item.name == employee.name && item.department == department.name),
+                );
 
-                    onChanged: (bool? value) {
-                      setState(() {
-                        if (value != null && value) {
-                          selectedItems.add(SelectedEmployee(name: employee.name, department: department.name));
-                        } else {
-                          selectedItems.removeWhere((item) =>
-                          item.name == employee.name && item.department == department.name);
-                        }
-                      });
-                    },
-
-                  );
-                }).toList(),
-              );
-            }).toList(),
+              }
+            ),
           ),
-        ),
-      ),
+
 
       actions: [
         ElevatedButton(
           onPressed: () {
-            Navigator.pop(context);
+            if (selectedItems.isNotEmpty) {
+              Navigator.pop(context, selectedItems);
+            } else {
+              print('ОБЕРІТЬ СПОСТЕРІГАЧА (ADD_S_ALERT)');
+            }
+            //Navigator.pop(context);
           },
           style: ElevatedButton.styleFrom(
             backgroundColor: Colors.black,

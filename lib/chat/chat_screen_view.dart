@@ -1,12 +1,12 @@
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
+import 'package:random_string/random_string.dart';
 import 'package:tasker/colors.dart';
-import 'package:tasker/models/employee.dart';
-import 'package:tasker/models/message.dart';
+import 'package:tasker/global_storage.dart';
 
 import '../models/chat.dart';
 
@@ -20,174 +20,210 @@ class CurrentChat extends StatefulWidget {
 class _CurrentChatState extends State<CurrentChat> {
   ScrollController scrollController = ScrollController();
   TextEditingController textEditingController = TextEditingController();
-  late Employee employee;
-  late Chat chat;
+  late Map<String,dynamic> task;
+  late List<dynamic> chat = [];
   late String text;
 
   @override
   void initState() {
-    employee = Get.arguments[0];
-    chat = Get.arguments[1];
+    task = Get.arguments[0];
+    if (task.containsKey('chat')) {
+      chat = task['chat'];
+    }
     super.initState();
   }
+
+
 
   @override
   Widget build(BuildContext context) {
 
+    chat = task['chat'];
     Size screenSize = MediaQuery.of(context).size;
     return Scaffold(
       backgroundColor: AppColors.white.withAlpha(1000),
-      body: Stack(
-        children: [
-          Column(
-            children: [
-              Container(
-                height: screenSize.height / 6,
-                margin: const EdgeInsets.only(top: 30, left: 30, right: 30),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    IconButton(
-                      onPressed: () {
-                        Get.back();
-                      },
-                      icon: Icon(
-                        Icons.arrow_back_ios,
-                        color: AppColors.darkGrey,
-                      ),
-                    ),
-                    Container(
-                      width: screenSize.width / 7,
-                      height: screenSize.width / 7,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(8),
-                        color: AppColors.grey.withOpacity(0.3),
-                      ),
-                      child: const Center(
-                        child: Icon(
-                          Icons.perm_identity,
-                          color: AppColors.grey,
-                          size: 40,
-                        ),
-                      ),
-                    ),
-                    Text(
-                      '${chat.task.title}',
-                      style: TextStyle(
-                        color: AppColors.darkGrey,
-                        fontSize: 18,
-                      ),
-                    )
-                  ],
-                ),
-              ),
-            ],
-          ),
-          Positioned(
-            bottom: 0,
-            left: 0,
-            right: 0,
-            child: Container(
-              height: 4* screenSize.height / 5,
-              width: screenSize.width,
-              decoration: BoxDecoration(
-                color: AppColors.white,
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(40.0),
-                  topRight: Radius.circular(40.0),
-                ),
-              ),
-              child: Container(
-                margin: EdgeInsets.all(30),
-                child: Column(
-                  children: [
-                    Expanded(
-                        child: ListView.builder(
-                          controller: scrollController,
-                            shrinkWrap: true,
-                            reverse: true,
-                            itemCount: chat.messages.length,
-                            itemBuilder: (context, index){
-                              Message message = chat.messages[index];
-                              return Align(
-                                  alignment: (message.senderId=='1')
-                                      ?Alignment.centerRight
-                                      :Alignment.centerLeft,
-                                  child: Container(
-                                    constraints: BoxConstraints(
-                                      maxWidth: screenSize.width*0.66,
-                                    ),
-                                    padding: EdgeInsets.all(10),
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(10),
-                                        color: (message.senderId=='1')
-                                            ?AppColors.grey.withOpacity(0.3)
-                                            :AppColors.grey
-                                    ),
-                                    margin: EdgeInsets.symmetric(vertical: 15.0),
-                                    child: Text(
-                                      message.text,
-                                      style: Theme.of(context).textTheme.bodyMedium,
-                                    ),
-                                  ));
-                            }),
-                    ),
-                    TextFormField(
-                      controller: textEditingController,
-                      onChanged: (value){
-                        setState(() {
-                          text = value;
-                        });
-                      },
-                      decoration: InputDecoration(
-                        filled: true,
-                        fillColor: AppColors.grey.withOpacity(0.2),
-                        hintText: 'Коментар',
-                        hintStyle: TextStyle(
-                          color: AppColors.darkGrey
-                        ),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(20),
-                          borderSide: BorderSide.none,
-                        ),
-                        contentPadding: EdgeInsets.all(20),
-                        suffixIcon: IconButton(
-                          onPressed: (){
-                            Message message = Message(
-                                senderId: '1',
-                                recipientId: employee.id,
-                                text: text,
-                                createdAt: DateTime.now(),);
-                            List<Message> messages = List.from(chat.messages)..add(message);
-                            messages.sort((a,b)=>b.createdAt.compareTo(a.createdAt));
-                            setState(() {
-                              chat = chat.copyWith(messages: messages);
-                            });
-                            scrollController.animateTo(scrollController.position.minScrollExtent, duration: const Duration(milliseconds: 200), curve: Curves.easeIn,);
-                            textEditingController.clear();
-                          },
-                          icon: Icon(Icons.send,
-                          color: AppColors.darkGrey,),
-                        ),
-                        prefixIcon: IconButton(
-                          onPressed: _pickFile,
-                          //     (){
-                          //   showModalBottomSheet(
-                          //       context: context,
-                          //       builder: (builder)=>bottomsheet());
-                          // },
-                          icon: Icon(Icons.attach_file,
-                            color: AppColors.darkGrey,),
-                        )
-                      ),
+      body: GestureDetector(
+        onTap: () {
+          FocusManager.instance.primaryFocus?.unfocus();
+        },
+        child: Stack(
+          children: [
+            Column(
+              children: [
+                Container(
+                  height: screenSize.height / 6,
+                  margin: const EdgeInsets.only(top: 30, left: 30, right: 30),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                          IconButton(
+                            onPressed: () {
+                              Get.back();
+                            },
+                            icon: const Icon(
+                              Icons.arrow_back_ios,
+                              color: AppColors.darkGrey,
+                            ),
+                          ),
+                          SizedBox(width: screenSize.width/20,),
+                          Container(
+                            width: screenSize.width / 7,
+                            height: screenSize.width / 7,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(8),
+                              color: AppColors.grey.withOpacity(0.3),
+                            ),
+                            child: const Center(
+                              child: Icon(
+                                Icons.perm_identity,
+                                color: AppColors.grey,
+                                size: 40,
+                              ),
+                            ),
+                          ),
+                          SizedBox(width: screenSize.width/15,),
 
-                    ),
-                  ],
+                      Text(
+                        task['title'],
+                        style: const TextStyle(
+                          color: AppColors.darkGrey,
+                          fontSize: 18,
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+              ],
+            ),
+            Positioned(
+              bottom: 0,
+              left: 0,
+              right: 0,
+              child: Container(
+                height: 4* screenSize.height / 5,
+                width: screenSize.width,
+                decoration: const BoxDecoration(
+                  color: AppColors.white,
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(40.0),
+                    topRight: Radius.circular(40.0),
+                  ),
+                ),
+                child: Container(
+                  margin: const EdgeInsets.all(30),
+                  child: Column(
+                    children: [
+                      Expanded(
+                          child: (chat.isEmpty)
+                              ? Center(child: Text('У вас поки немає повідомлень'))
+                              : ListView.builder(
+                            controller: scrollController,
+                              shrinkWrap: true,
+                              reverse: true,
+                              itemCount: chat.length,
+                              itemBuilder: (context, index){
+
+                                //Message message = chat.messages[index];
+                                return Align(
+                                    alignment: (chat[index]['senderId']==GlobalUserState.userId)//(message.senderId=='1')
+                                        ?Alignment.centerRight
+                                        :Alignment.centerLeft,
+                                    child: Container(
+                                      constraints: BoxConstraints(
+                                        maxWidth: screenSize.width*0.66,
+                                      ),
+                                      padding: const EdgeInsets.all(10),
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(10),
+                                          color: (chat[index]['senderId']==GlobalUserState.userId)
+                                              ?AppColors.grey.withOpacity(0.3)
+                                              :AppColors.grey
+                                      ),
+                                      margin: const EdgeInsets.symmetric(vertical: 15.0),
+                                      child: Text(
+                                        chat[index]['text'],
+                                        style: Theme.of(context).textTheme.bodyMedium,
+                                      ),
+                                    ));
+                              }),
+                      ),
+                      TextFormField(
+                        controller: textEditingController,
+                        onChanged: (value){
+                          setState(() {
+                            text = value;
+                          });
+                        },
+                        decoration: InputDecoration(
+                          filled: true,
+                          fillColor: AppColors.grey.withOpacity(0.2),
+                          hintText: 'Коментар',
+                          hintStyle: const TextStyle(
+                            color: AppColors.darkGrey
+                          ),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(20),
+                            borderSide: BorderSide.none,
+                          ),
+                          contentPadding: const EdgeInsets.all(20),
+                          suffixIcon: IconButton(
+                            onPressed: (){
+                              print(task['id']);
+                              String messageId = randomAlphaNumeric(10);
+                              DateTime createdAt = DateTime.now();
+                               FirebaseFirestore.instance.collection('tasks')
+                                 .doc(task['id'])
+                                .update({
+                                 'chat': FieldValue.arrayUnion([
+                                   {
+                                     'text': text,
+                                     'messageId':messageId,
+                                     'senderId':GlobalUserState.userId,
+                                     'createdAt':createdAt,
+                                   }
+                                 ])
+                               }).then((value) {
+                                 print('eeeee');
+                               }).catchError((error){
+                                 print(error);
+                               });
+                              setState(() {
+                                task['chat'].insert(0, {
+                                  'text': text,
+                                  'messageId': messageId,
+                                  'senderId': GlobalUserState.userId,
+                                  'createdAt': createdAt,
+                                });
+                              });
+                              scrollController.animateTo(
+                                scrollController.position.minScrollExtent,
+                                duration: const Duration(milliseconds: 200),
+                                curve: Curves.easeIn,);
+                              textEditingController.clear();
+                            },
+                            icon: const Icon(Icons.send,
+                            color: AppColors.darkGrey,),
+                          ),
+                          prefixIcon: const IconButton(
+                            onPressed: _pickFile,
+                            //     (){
+                            //   showModalBottomSheet(
+                            //       context: context,
+                            //       builder: (builder)=>bottomsheet());
+                            // },
+                            icon: Icon(Icons.attach_file,
+                              color: AppColors.darkGrey,),
+                          )
+                        ),
+
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
 
