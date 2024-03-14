@@ -4,6 +4,8 @@ import 'package:tasker/colors.dart';
 import 'package:tasker/commands/createNewCommand/create_command.dart';
 import 'package:tasker/navigationBar/top_bar_view.dart';
 
+import '../../enter/entering/enter.dart';
+
 class CreateCommand extends StatefulWidget {
   const CreateCommand({super.key});
 
@@ -17,81 +19,81 @@ class _CreateCommandState extends State<CreateCommand> {
   List<String> departments = [];
   TextEditingController nameController = TextEditingController();
 
-  final List<String> _items = ['Віддід 1'];
-  final GlobalKey<AnimatedListState> _key = GlobalKey();
+ // final List<String> _items = ['Віддід 1'];
+ // final GlobalKey<AnimatedListState> _key = GlobalKey();
   List<TextEditingController> taskWidgets = [TextEditingController()];
 
-  void _addItem() {
-    _items.insert(0, "Відділ");
-    _key.currentState!.insertItem(
-      0,
-      duration: const Duration(seconds: 1),
-    );
-    setState(() {
-      departments.add('');
-    });
-  }
-
-  void _removeItem(int index) {
-    _key.currentState!.removeItem(
-      index,
-          (context, animation) {
-        return SizeTransition(
-          sizeFactor: animation,
-          child: TextField(
-            //controller: taskWidgets[index],
-            decoration: InputDecoration(
-              suffixIcon: index == taskWidgets.length - 1
-                  ? Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  IconButton(
-                    onPressed: () {
-                      setState(() {
-                       //
-                        taskWidgets.removeAt(index);
-                        departments.removeAt(index);
-                      });
-                    },
-                    icon: const Icon(Icons.remove_circle_outline),
-                  ),
-                  IconButton(
-                    onPressed: () {
-                      setState(() {
-                        taskWidgets.add(TextEditingController());
-                      });
-                    },
-                    icon: const Icon(Icons.add_circle_outline),
-                  ),
-                ],
-              )
-                  : IconButton(
-                onPressed: () {
-                  setState(() {
-                    taskWidgets.removeAt(index);
-                  });
-                },
-                icon: const Icon(Icons.remove_circle_outline),
-              ),
-              //filled: true,
-              //fillColor: AppColors.grey.withOpacity(0.3),
-              hintText: 'Завдання',
-              hintStyle: const TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.bold,
-              ),
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(6.0),
-                borderSide: BorderSide.none,
-              ),
-            ),
-          ),
-        );
-      },
-      duration: const Duration(milliseconds: 300),
-    );
-    _items.removeAt(index);
-  }
+  // void _addItem() {
+  //   _items.insert(0, "Відділ");
+  //   _key.currentState!.insertItem(
+  //     0,
+  //     duration: const Duration(seconds: 1),
+  //   );
+  //   setState(() {
+  //     departments.add('');
+  //   });
+  // }
+  //
+  // void _removeItem(int index) {
+  //   _key.currentState!.removeItem(
+  //     index,
+  //         (context, animation) {
+  //       return SizeTransition(
+  //         sizeFactor: animation,
+  //         child: TextField(
+  //           //controller: taskWidgets[index],
+  //           decoration: InputDecoration(
+  //             suffixIcon: index == taskWidgets.length - 1
+  //                 ? Row(
+  //               mainAxisSize: MainAxisSize.min,
+  //               children: [
+  //                 IconButton(
+  //                   onPressed: () {
+  //                     setState(() {
+  //                      //
+  //                       taskWidgets.removeAt(index);
+  //                       departments.removeAt(index);
+  //                     });
+  //                   },
+  //                   icon: const Icon(Icons.remove_circle_outline),
+  //                 ),
+  //                 IconButton(
+  //                   onPressed: () {
+  //                     setState(() {
+  //                       taskWidgets.add(TextEditingController());
+  //                     });
+  //                   },
+  //                   icon: const Icon(Icons.add_circle_outline),
+  //                 ),
+  //               ],
+  //             )
+  //                 : IconButton(
+  //               onPressed: () {
+  //                 setState(() {
+  //                   taskWidgets.removeAt(index);
+  //                 });
+  //               },
+  //               icon: const Icon(Icons.remove_circle_outline),
+  //             ),
+  //             //filled: true,
+  //             //fillColor: AppColors.grey.withOpacity(0.3),
+  //             hintText: 'Завдання',
+  //             hintStyle: const TextStyle(
+  //               fontSize: 16,
+  //               fontWeight: FontWeight.bold,
+  //             ),
+  //             border: OutlineInputBorder(
+  //               borderRadius: BorderRadius.circular(6.0),
+  //               borderSide: BorderSide.none,
+  //             ),
+  //           ),
+  //         ),
+  //       );
+  //     },
+  //     duration: const Duration(milliseconds: 300),
+  //   );
+  //   _items.removeAt(index);
+  // }
   List<FocusNode> _focusNodes = [];
 
   @override
@@ -332,15 +334,14 @@ class _CreateCommandState extends State<CreateCommand> {
           
                                   ),
                                   ElevatedButton(
-                                    onPressed: () {
+                                    onPressed:  () async {
                                       for(TextEditingController task in taskWidgets){
                                           departments.add(task.text);
                                       }
                                       CreateOrganization createOrganization = CreateOrganization(name: nameController.text, departments: departments);
-                                      createOrganization.writeOrganizationData();
-                                      createOrganization.addOrUpdateOrganizationToUser();
-                                      Navigator.pushNamed(context, '/bottomNavBar');
-                                     // Navigator.pop(context);
+                                      await createOrganization.writeOrganizationData();
+                                      await createOrganization.addOrUpdateOrganizationToUser();
+                                      checkUserFieldExistence();
                                     },
                                     style: ElevatedButton.styleFrom(
                                       backgroundColor: AppColors.black,
@@ -383,6 +384,8 @@ class _CreateCommandState extends State<CreateCommand> {
 
     );
   }
+
+
 }
 
 

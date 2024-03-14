@@ -4,7 +4,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class GlobalUserState {
   static String? userId;
-
+  static String? userType;
+  static String? messageId;
 }
 
 
@@ -28,6 +29,70 @@ Future<String?> getPerformerName(String performerId) async {
     return null;
   }
 }
+
+Future<String?> getUserType(String taskId) async {
+  try {
+    DocumentSnapshot<Map<String, dynamic>> userDoc = await FirebaseFirestore
+        .instance
+        .collection('tasks')
+        .doc(taskId)
+        .get();
+
+    if(GlobalUserState.userId == userDoc.data()!['supervisorId']){
+      return 'supervisor';
+    }
+    else{
+      return 'performer';
+    }
+
+  } catch (e) {
+    print('Error getting user type: $e');
+  }
+
+  return null;
+}
+
+
+Future<void> deleteMiniTaskInGlobalTask(String taskId, String miniTaskName) async {
+  try {
+    DocumentSnapshot<Map<String, dynamic>> taskDoc = await FirebaseFirestore
+        .instance
+        .collection('tasks')
+        .doc(taskId)
+        .get();
+
+    if (taskDoc.exists && taskDoc.data() != null) {
+      List<dynamic> miniTasks = List.from(taskDoc.data()!['miniTasks']);
+
+      // Перевіряємо всі міні-завдання у списку
+      for (int i = 0; i < miniTasks.length; i++) {
+        Map<String, dynamic> miniTask = miniTasks[i];
+        if (miniTask['name'] == miniTaskName) {
+          // Знайдено співпадіння за ім'ям, видаляємо елемент зі списку
+          miniTasks.removeAt(i);
+
+          // Оновлюємо документ у Firestore з оновленим списком miniTasks
+          await FirebaseFirestore.instance
+              .collection('tasks')
+              .doc(taskId)
+              .update({'miniTasks': miniTasks});
+
+          print('Mini task deleted successfully');
+          return; // Завершуємо функцію після видалення
+        }
+      }
+
+      print('Mini task not found in task miniTasks');
+    } else {
+      print('Task document not found');
+    }
+  } catch (e) {
+    print('Error deleting mini task: $e');
+  }
+}
+
+
+
 
 //get all tasks that User should do
 Future<List<DocumentSnapshot<Map<String, dynamic>>>> getTasks() async {

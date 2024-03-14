@@ -12,8 +12,11 @@ import 'package:tasker/tasks/tasks_full_view.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:tasker/adminFunctionality/connect_new_users_view.dart';
 
+import 'adminFunctionality/appoint_department_for_user_view.dart';
+import 'adminFunctionality/connect_and_appoint_view.dart';
 import 'chat/chats_page_view.dart';
 import 'commands/all_commands_view.dart';
+import 'commands/connertToCommand/connect_command_view.dart';
 import 'commands/createNewCommand/create_command_view.dart';
 import 'enter/entering/enter_view.dart';
 import 'enter/registration/registration_view.dart';
@@ -57,10 +60,12 @@ class Tasker extends StatelessWidget {
         "/allChats": (context)=> const ChatsPage(),
         "/registration":(context)=> const Registration(),
         "/enter":(context)=> const Enter(),
-        //"/connectUsers":(context)=> const ConnectUsers(),
+        "/connectUsers":(context)=> const AppointSwipeConnect(),
         "/chat":(context)=>const CurrentChat(),
         "/commands":(context)=>const AllCommands(),
         "/createCommand":(context)=>const CreateCommand(),
+        "/connectCommand":(context)=>const ConnectCommand(),
+       // "/appointDepartment":(context)=>AppointDepartment(),
        // "/reports":(context)=>Reports(),
 
       },

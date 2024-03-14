@@ -61,7 +61,7 @@ class _EditMTAlertState extends State<EditMTAlert> {
               if(titleController.text != title){
                 Navigator.pop(context, titleController.text);
               }else{
-                print('THERE NOT CHANGES');
+                Navigator.pop(context, titleController.text);
               }
 
             },

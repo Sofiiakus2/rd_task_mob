@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:random_string/random_string.dart';
 import 'package:tasker/colors.dart';
@@ -23,7 +24,7 @@ class _CurrentChatState extends State<CurrentChat> {
   late Map<String,dynamic> task;
   late List<dynamic> chat = [];
   late String text;
-
+  bool isEdit = false;
   @override
   void initState() {
     task = Get.arguments[0];
@@ -65,7 +66,7 @@ class _CurrentChatState extends State<CurrentChat> {
                               color: AppColors.darkGrey,
                             ),
                           ),
-                          SizedBox(width: screenSize.width/20,),
+                          SizedBox(width: screenSize.width/100,),
                           Container(
                             width: screenSize.width / 7,
                             height: screenSize.width / 7,
@@ -83,11 +84,16 @@ class _CurrentChatState extends State<CurrentChat> {
                           ),
                           SizedBox(width: screenSize.width/15,),
 
-                      Text(
-                        task['title'],
-                        style: const TextStyle(
-                          color: AppColors.darkGrey,
-                          fontSize: 18,
+                      Container(
+                        //color: Colors.amber,
+                        constraints: BoxConstraints(maxWidth: MediaQuery.of(context).size.width/2),
+                        child: Text(
+                          task['title'],
+                          style: const TextStyle(
+                            color: AppColors.darkGrey,
+                            fontSize: 18,
+                          ),
+                          softWrap: true,
                         ),
                       )
                     ],
@@ -123,27 +129,92 @@ class _CurrentChatState extends State<CurrentChat> {
                               itemCount: chat.length,
                               itemBuilder: (context, index){
 
-                                //Message message = chat.messages[index];
-                                return Align(
-                                    alignment: (chat[index]['senderId']==GlobalUserState.userId)//(message.senderId=='1')
+                              return Align(
+                                    alignment: (chat[index]['senderId']==GlobalUserState.userId)
                                         ?Alignment.centerRight
                                         :Alignment.centerLeft,
-                                    child: Container(
-                                      constraints: BoxConstraints(
-                                        maxWidth: screenSize.width*0.66,
-                                      ),
-                                      padding: const EdgeInsets.all(10),
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(10),
-                                          color: (chat[index]['senderId']==GlobalUserState.userId)
-                                              ?AppColors.grey.withOpacity(0.3)
-                                              :AppColors.grey
-                                      ),
-                                      margin: const EdgeInsets.symmetric(vertical: 15.0),
-                                      child: Text(
-                                        chat[index]['text'],
-                                        style: Theme.of(context).textTheme.bodyMedium,
-                                      ),
+                                    child: Column(
+                                        mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        FutureBuilder<String>(
+                                          future: getSenderName(chat[index]['senderId']),
+                                          builder: (context, snapshot) {
+                                              if (snapshot.hasError) {
+                                                return Text('');
+                                              } else {
+                                                return Container(
+                                                  child: Text(snapshot.data ?? ''),
+                                                );
+                                              }
+
+                                          },
+                                        ),
+                                        GestureDetector(
+
+                                          onLongPress : (){
+                                            if(chat[index]['senderId']==GlobalUserState.userId) {
+                                                showModalBottomSheet(
+                                                  context: context,
+                                                  builder:
+                                                      (BuildContext context) {
+                                                    return Container(
+                                                      child: Column(
+                                                        mainAxisSize:
+                                                        MainAxisSize.min,
+                                                        children: <Widget>[
+                                                          ListTile(
+                                                            leading: Icon(
+                                                                Icons.edit),
+                                                            title: Text(
+                                                                'Редагувати'),
+                                                            onTap: () {
+                                                              Navigator.pop(context);
+                                                              textEditingController.text = chat[index]['text'];
+                                                              setState(() {
+                                                                isEdit = true;
+                                                              });
+                                                              GlobalUserState.messageId = chat[index]['messageId'];
+},
+                                                          ),
+                                                          ListTile(
+                                                            leading: Icon(Icons.delete),
+                                                            title: Text(
+                                                                'Видалити'),
+                                                            onTap: () {
+                                                              deleteMessage(
+                                                                  task['id'], chat[index]['messageId']);
+                                                              setState(() {
+                                                                chat.removeAt(index);
+                                                              });
+                                                              Navigator.pop(context);
+                                                            },
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    );
+                                                  },
+                                                );
+                                              }
+                                            },
+                                          child: Container(
+                                            constraints: BoxConstraints(
+                                              maxWidth: screenSize.width*0.66,
+                                            ),
+                                            padding: const EdgeInsets.all(10),
+                                            decoration: BoxDecoration(
+                                              borderRadius: BorderRadius.circular(10),
+                                                color: (chat[index]['senderId']==GlobalUserState.userId)
+                                                    ?AppColors.grey.withOpacity(0.3)
+                                                    :AppColors.grey
+                                            ),
+                                            margin: const EdgeInsets.symmetric(vertical: 15.0),
+                                            child: Text(
+                                              chat[index]['text'],
+                                              style: Theme.of(context).textTheme.bodyMedium,
+                                            ),
+                                          ),
+                                        ),
+                                      ],
                                     ));
                               }),
                       ),
@@ -166,9 +237,24 @@ class _CurrentChatState extends State<CurrentChat> {
                             borderSide: BorderSide.none,
                           ),
                           contentPadding: const EdgeInsets.all(20),
-                          suffixIcon: IconButton(
+                          suffixIcon: isEdit
+                              ? IconButton(
+                            onPressed: () {
+                              editMessage(task['id'], textEditingController.text);
+                              int editedMessageIndex = chat.indexWhere((message) => message['messageId'] == GlobalUserState.messageId);
+
+                              setState(() {
+                                chat[editedMessageIndex]['text'] = textEditingController.text;
+                                isEdit=false;
+                              });
+                              textEditingController.clear();
+                            },
+                            icon: Icon(Icons.check_circle),
+
+                          )
+                          : IconButton(
                             onPressed: (){
-                              print(task['id']);
+                             // print(task['id']);
                               String messageId = randomAlphaNumeric(10);
                               DateTime createdAt = DateTime.now();
                                FirebaseFirestore.instance.collection('tasks')
@@ -183,7 +269,7 @@ class _CurrentChatState extends State<CurrentChat> {
                                    }
                                  ])
                                }).then((value) {
-                                 print('eeeee');
+                                // print('eeeee');
                                }).catchError((error){
                                  print(error);
                                });
@@ -206,11 +292,6 @@ class _CurrentChatState extends State<CurrentChat> {
                           ),
                           prefixIcon: const IconButton(
                             onPressed: _pickFile,
-                            //     (){
-                            //   showModalBottomSheet(
-                            //       context: context,
-                            //       builder: (builder)=>bottomsheet());
-                            // },
                             icon: Icon(Icons.attach_file,
                               color: AppColors.darkGrey,),
                           )

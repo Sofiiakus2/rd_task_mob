@@ -48,7 +48,7 @@ class TopBar extends StatelessWidget {
                       borderRadius: BorderRadius.circular(8.0),
                     ),
                     onPressed: () {
-                      Navigator.of(context).pushNamed('/registration');
+                     // Navigator.of(context).pushNamed('/registration');
                     },
                     tooltip: 'Floating Action Button',
                     child: const Icon(CupertinoIcons.bell_fill,

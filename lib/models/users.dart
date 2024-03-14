@@ -65,11 +65,14 @@ Future<User?> getCurrentUser() async {
         .collection('users')
         .doc(GlobalUserState.userId)
         .get();
+
+    print(GlobalUserState.userId);
+    print(userSnapshot.data());
     if (userSnapshot.exists) {
       Map<String, dynamic>? userData = userSnapshot.data();
       if (userData != null) {
         List<dynamic> organizationData = userData['organizations'];
-
+        //print(GlobalOrganizationState.organizationId);
         for (var org in organizationData){
           if(org['id']==GlobalOrganizationState.organizationId)
             {
@@ -180,6 +183,34 @@ Future<void> updatePositionInOrganization(String newPosition) async {
           await FirebaseFirestore.instance
               .collection('users')
               .doc(GlobalUserState.userId)
+              .set({'organizations': organizations}, SetOptions(merge: true));
+
+          break;
+        }
+      }
+    }
+  } catch (e) {
+    print('Помилка під час оновлення поля "position": $e');
+  }
+}
+
+Future<void> updateDepartmentInOrganization(String id, String newDepartment) async {
+  try {
+    DocumentSnapshot<Map<String, dynamic>> userDoc = await FirebaseFirestore.instance
+        .collection('users')
+        .doc(id)
+        .get();
+
+
+    if (userDoc.exists && userDoc.data() != null && userDoc.data()!.containsKey('organizations')) {
+      List<dynamic> organizations = userDoc.data()!['organizations'];
+      for (var organization in organizations) {
+        if (organization['id'] == GlobalOrganizationState.organizationId) {
+          organization['department'] = newDepartment;
+
+          await FirebaseFirestore.instance
+              .collection('users')
+              .doc(id)
               .set({'organizations': organizations}, SetOptions(merge: true));
 
           break;

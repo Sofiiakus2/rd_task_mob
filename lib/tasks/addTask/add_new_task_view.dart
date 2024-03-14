@@ -24,8 +24,6 @@ class _AddNewTaskState extends State<AddNewTask> {
   double panelHeight = 400;
 
   DateTime selectedDate = DateTime.now();
-  final List<String> _items = ['Завдання 1'];
-  final GlobalKey<AnimatedListState> _key = GlobalKey();
   List<TextEditingController> taskWidgets = [TextEditingController()];
 
   User? selectedPerformer;
@@ -34,71 +32,6 @@ class _AddNewTaskState extends State<AddNewTask> {
   TextEditingController resultController = TextEditingController();
 
   List<FocusNode> _focusNodes = [];
-  void _addItem() {
-    _items.insert(0, "Завдання");
-    _key.currentState!.insertItem(
-      0,
-      duration: const Duration(seconds: 1),
-    );
-  }
-
-  void _removeItem(int index) {
-    _key.currentState!.removeItem(
-      index,
-          (context, animation) {
-        return SizeTransition(
-          sizeFactor: animation,
-          child: TextField(
-            decoration: InputDecoration(
-              suffixIcon: index == taskWidgets.length - 1
-                  ? Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  IconButton(
-                    onPressed: () {
-                      setState(() {
-                        taskWidgets.removeAt(index);
-                      });
-                    },
-                    icon: const Icon(Icons.remove_circle_outline),
-                  ),
-                  IconButton(
-                    onPressed: () {
-                      setState(() {
-                        taskWidgets.add(TextEditingController());
-                      });
-                    },
-                    icon: const Icon(Icons.add_circle_outline),
-                  ),
-                ],
-              )
-                  : IconButton(
-                onPressed: () {
-                  setState(() {
-                    taskWidgets.removeAt(index);
-                  });
-                },
-                icon: const Icon(Icons.remove_circle_outline),
-              ),
-              //filled: true,
-              //fillColor: AppColors.grey.withOpacity(0.3),
-              hintText: 'Завдання',
-              hintStyle: const TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.bold,
-              ),
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(6.0),
-                borderSide: BorderSide.none,
-              ),
-            ),
-          ),
-        );
-      },
-      duration: const Duration(milliseconds: 300),
-    );
-    _items.removeAt(index);
-  }
 
   @override
   void dispose() {
@@ -397,68 +330,7 @@ class _AddNewTaskState extends State<AddNewTask> {
                                     ),
                                   ),
                                   const SizedBox(height: 20),
-                                  //ANIMATED LIST
-                                  // Container(
-                                  //   height: MediaQuery.of(context).size.height , // Фіксована висота для AnimatedList
-                                  //   child: AnimatedList(
-                                  //     key: _key,
-                                  //     initialItemCount: _items.length,
-                                  //     itemBuilder: (context, index, animation) {
-                                  //       return Padding(
-                                  //         padding: const EdgeInsets.symmetric(vertical: 8.0),
-                                  //         child: SizeTransition(
-                                  //           key: UniqueKey(),
-                                  //           sizeFactor: animation,
-                                  //           child: TextField(
-                                  //             decoration: InputDecoration(
-                                  //               filled: true,
-                                  //               fillColor: AppColors.grey.withOpacity(0.3),
-                                  //               suffixIcon: index == taskWidgets.length - 1
-                                  //                   ? Row(
-                                  //                 mainAxisSize: MainAxisSize.min,
-                                  //                 children: [
-                                  //                   IconButton(
-                                  //                     onPressed: () {
-                                  //                       setState(() {
-                                  //                         _removeItem(index);
-                                  //                       });
-                                  //                     },
-                                  //                     icon: const Icon(Icons.remove_circle_outline),
-                                  //                   ),
-                                  //                   IconButton(
-                                  //                     onPressed: () {
-                                  //                       setState(() {
-                                  //                         _addItem();
-                                  //                       });
-                                  //                     },
-                                  //                     icon: const Icon(Icons.add_circle_outline),
-                                  //                   ),
-                                  //                 ],
-                                  //               )
-                                  //                   : IconButton(
-                                  //                 onPressed: () {
-                                  //                   setState(() {
-                                  //                     _removeItem(index);
-                                  //                   });
-                                  //                 },
-                                  //                 icon: const Icon(Icons.remove_circle_outline),
-                                  //               ),
-                                  //               hintText: 'Завдання',
-                                  //               hintStyle: const TextStyle(
-                                  //                 fontSize: 16,
-                                  //                 fontWeight: FontWeight.bold,
-                                  //               ),
-                                  //               border: OutlineInputBorder(
-                                  //                 borderRadius: BorderRadius.circular(6.0),
-                                  //                 borderSide: BorderSide.none,
-                                  //               ),
-                                  //             ),
-                                  //           ),
-                                  //         ),
-                                  //       );
-                                  //     },
-                                  //   ),
-                                  // ),
+
                                   Row(
                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                     children: [
@@ -537,12 +409,6 @@ class _AddNewTaskState extends State<AddNewTask> {
                                     onPressed: () {
                                       List<String> miniTasks = [];
                                       List<String> assigneesIds =[];
-                                      if(titleController.text.isEmpty){
-                                        print('немає заголовка');
-                                      }
-                                      if (resultController.text.isEmpty){
-                                        print('немає результату');
-                                      }
                                       if(taskWidgets.length ==1 &&taskWidgets.first.text.isEmpty){
                                         print('takssss');
                                       }else{
@@ -551,16 +417,12 @@ class _AddNewTaskState extends State<AddNewTask> {
                                           //print(miniTasks);
                                         }
                                       }
-                                      if(selectedPerformer==null){
-                                        print('performer');
-                                      }
                                       if(selectedWatchers.isEmpty){
                                         print('watchers');
                                       }else{
                                         for(var i in selectedWatchers)
                                         {
                                           assigneesIds.add(i.id);
-                                          //print(assigneesIds);
                                         }
                                       }print('are you shure');
                                       if(selectedDate ==DateTime.now()){
@@ -569,8 +431,54 @@ class _AddNewTaskState extends State<AddNewTask> {
                                       if(selectedDate.isBefore(DateTime.now())){
                                         print('погана дата');
                                       }
-                                      addNewTask(titleController.text, resultController.text, miniTasks, selectedPerformer!.id,  selectedDate, assigneesIds: assigneesIds,);
 
+                                      if(titleController.text.isEmpty||titleController.text.isEmpty||taskWidgets.first.text.isEmpty||selectedPerformer==null){
+                                        showDialog(
+                                          context: context,
+                                          builder: (BuildContext context) {
+                                            return AlertDialog(
+                                              title: Text("Помилка"),
+                                              content: Text("Недостатньо даних"),
+                                              actions: <Widget>[
+                                                ElevatedButton(
+                                                  style: ElevatedButton.styleFrom(
+                                                    backgroundColor: AppColors.black,
+                                                    shape: RoundedRectangleBorder(
+                                                      borderRadius: BorderRadius.circular(8.0),
+                                                    ),
+                                                  ),
+                                                  child: Text("OK",
+                                                    style: TextStyle(color: AppColors.white),
+                                                  ),
+                                                  onPressed: () {
+                                                    Navigator.of(context).pop();
+                                                  },
+                                                ),
+                                              ],
+                                            );
+                                          },
+                                        );
+                                      }else{
+                                        addNewTask(
+                                          titleController.text,
+                                          resultController.text,
+                                          miniTasks,
+                                          selectedPerformer!.id,
+                                          selectedDate,
+                                          assigneesIds: assigneesIds,
+                                        );
+                                        ScaffoldMessenger.of(context).showSnackBar(
+                                          SnackBar(
+                                            content: Text("Задачу успішно додано"),
+                                            backgroundColor: AppColors.black,
+                                            duration: Duration(seconds: 1),
+                                          ),
+                                        );
+                                        titleController.clear();
+                                        resultController.clear();
+                                        taskWidgets=[TextEditingController()];
+
+                                      }
                                     },
 
                                     style: ElevatedButton.styleFrom(

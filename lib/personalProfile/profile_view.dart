@@ -46,6 +46,8 @@ class _ProfileState extends State<Profile> {
           child: FutureBuilder<User?>(
             future: getCurrentUser(),
             builder: (context, snapshotUser) {
+              print('--------------------');
+              print(snapshotUser);
               if (snapshotUser.hasError) {
                 return Text('Error: ${snapshotUser.error}');
               }
@@ -220,6 +222,13 @@ class _ProfileState extends State<Profile> {
                       }
                       if(position!=snapshotUser.data!.organizations?.first['position']){
                         updatePositionInOrganization(position!);
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text("Дані успішно оновлено"),
+                            backgroundColor: AppColors.black,
+                            duration: Duration(seconds: 1),
+                          ),
+                        );
                       }
                     },
                     color: AppColors.black,

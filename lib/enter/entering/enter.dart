@@ -28,7 +28,6 @@ class EnterPage extends StatelessWidget{
       if (querySnapshot.docs.isNotEmpty) {
         GlobalUserState.userId = querySnapshot.docs.first.id;
         saveUserName(username);
-       // getTasks();
         checkUserFieldExistence();
       } else {
         showDialog(
@@ -58,30 +57,7 @@ class EnterPage extends StatelessWidget{
     }
   }
 
-  Future<void> checkUserFieldExistence() async {
-    try {
-      DocumentSnapshot userDoc = await FirebaseFirestore.instance.collection('users').doc(GlobalUserState.userId).get();
-      if (userDoc.exists) {
-        Map<String, dynamic>? userData = userDoc.data() as Map<String, dynamic>?;
-        if (userData != null && userData.containsKey('organizations')) {
-          dynamic organizationsData = userData['organizations'];
-          if (organizationsData.length > 1) {
-            Get.toNamed('/commands');
-          } else if(organizationsData.length == 1) {
-            GlobalOrganizationState.organizationId =organizationsData[0]['id'];
-            Get.toNamed('/bottomNavBar');
-          }
-        } else {
-          Get.toNamed('/createCommand');
-        }
-      } else {
-        print('Документ користувача не існує(ENTER)');
-      }
-    } catch (e) {
-      // Помилка запиту до бази даних
-      print('Помилка()ENTER: $e');
-    }
-  }
+
 
   Future<void> saveUserName(String userName) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -99,4 +75,34 @@ class EnterPage extends StatelessWidget{
 
 
 
+}
+
+Future<void> checkUserFieldExistence() async {
+  try {
+
+    DocumentSnapshot userDoc = await FirebaseFirestore.instance.collection('users').doc(GlobalUserState.userId).get();
+    if (userDoc.exists) {
+
+      Map<String, dynamic>? userData = userDoc.data() as Map<String, dynamic>?;
+      if (userData != null && userData.containsKey('organizations')) {
+
+        List<dynamic> organizationsData = userData['organizations'];
+        print(organizationsData.length);
+
+        if (organizationsData.length > 1 || organizationsData.isEmpty) {
+          Get.toNamed('/commands');
+        }
+        else if(organizationsData.length == 1) {
+          GlobalOrganizationState.organizationId =organizationsData[0]['id'];
+          Get.toNamed('/bottomNavBar');
+        }
+      } else {
+        Get.toNamed('/commands');
+      }
+    } else {
+      print('Документ користувача не існує(ENTER)');
+    }
+  } catch (e) {
+    print('Помилка()ENTER: $e');
+  }
 }

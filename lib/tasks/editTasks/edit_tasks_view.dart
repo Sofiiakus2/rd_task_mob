@@ -164,14 +164,26 @@ class _EditTasksState extends State<EditTasks> {
                                     ),
                                   ),
                                   actions: [
-                                    TextButton(
+                                    ElevatedButton(
                                       onPressed: () {
                                         Navigator.pop(context);
                                       },
-                                      child: Text('Скасувати'),
+                                      style: ElevatedButton.styleFrom(
+                                        backgroundColor: AppColors.buttonsGrey,
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(8.0),
+                                        ),
+                                      ),
+                                      child: Text('Скасувати',
+                                      style: TextStyle(color: AppColors.black),),
                                     ),
-                                    TextButton(
-                                      //todo: add comment to chat
+                                    ElevatedButton(
+                                      style: ElevatedButton.styleFrom(
+                                        backgroundColor: AppColors.black,
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(8.0),
+                                        ),
+                                      ),
                                       onPressed: () async {
                                         if (commentController.text.isNotEmpty) {
                                           final messageId =randomAlphaNumeric(10);
@@ -203,7 +215,9 @@ class _EditTasksState extends State<EditTasks> {
                                         }
                                       },
 
-                                      child: Text('Створити'),
+                                      child: Text('Створити',
+                                      style: TextStyle(color: AppColors.white),
+                                      ),
                                     ),
                                   ],
                                 ),
@@ -230,102 +244,164 @@ class _EditTasksState extends State<EditTasks> {
             ),
             const SizedBox(height: 40),
             Expanded(
-              child: ListView.builder(
-                itemCount: miniTasks.length,
-                itemBuilder: (context, index) {
-                  return Card(
-                    color: Colors.transparent,
-                    elevation: 0,
-                    child: Dismissible(
-                      key: Key(index.toString()),
-                      confirmDismiss: (direction) async {
-                        if (direction == DismissDirection.endToStart) {
-                          if (task != null && task['miniTasks'] != null) {
-                            task['miniTasks'][index]['name'] = await Get.dialog(
-                              const EditMTAlert(),
-                              arguments: [
-                                task['miniTasks'][index]['name'],
-                              ],
-                            );
-                            setState(() {});
-                          }
-                          print(task['miniTasks'][index]['name']);
-                        } else {
-                          return true;
-                        }
-                        return null;
-                      },
-
-                      onDismissed: (direction) {
-
-                      },
-                      background: Container(
-                        margin: const EdgeInsets.symmetric(horizontal: 35),
-                        child: const Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Icon(
-                              Icons.delete_forever_rounded,
-                              color: AppColors.black,
-                            ),
-                            Icon(
-                              Icons.edit,
-                              color: AppColors.black,
-                            ),
-
-                          ],
-                        )
-                        //
-                      ),
-                      child: Column(
-                        children: [
-                          CheckboxListTile(
-                            activeColor: AppColors.black,
-                            secondary: Container(
-                              height: 60,
-                              width: 60,
-                              decoration: BoxDecoration(
-                                //color: AppColors.grey.withOpacity(0.2),
-                                borderRadius: BorderRadius.circular(8),
-                              ),
-                              child: const Icon(
-                                Icons.settings,
-                                color: AppColors.grey,
-                              ),
-                            ),
-                            title: Text(
-                              task['miniTasks'][index]['name'],
-                              style: const TextStyle(
-                                color: AppColors.black,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            value: task['miniTasks'][index]?['status'],
-                            onChanged: (bool? value) {
-                              if (value != null) {
-                                setState(() {
-                                  task['miniTasks'][index]?['status'] = value;
-
-                                });
+              child: FutureBuilder<String?>(
+                future: getUserType(taskId),
+                builder: (context, snapshot) {
+                  return ListView.builder(
+                    itemCount: miniTasks.length,
+                    itemBuilder: (context, index) {
+                      if(snapshot.data=="supervisor"){
+                        return Card(
+                          color: Colors.transparent,
+                          elevation: 0,
+                          child: Dismissible(
+                            key: Key(index.toString()),
+                            confirmDismiss: (direction) async {
+                              if (direction == DismissDirection.endToStart) {
+                                if (task != null && task['miniTasks'] != null) {
+                                  task['miniTasks'][index]['name'] = await Get.dialog(
+                                    const EditMTAlert(),
+                                    arguments: [
+                                      task['miniTasks'][index]['name'],
+                                    ],
+                                  );
+                                  setState(() {});
+                                }
                               }
+                              else if (direction == DismissDirection.startToEnd){
+                                deleteMiniTaskInGlobalTask(taskId,  task['miniTasks'][index]['name']);
+                                return true;
+                              }
+                              else {
+
+                                return true;
+                              }
+                              return null;
                             },
+
+                            onDismissed: (direction) {
+
+                            },
+                            background: Container(
+                                margin: const EdgeInsets.symmetric(horizontal: 35),
+                                child: const Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Icon(
+                                      Icons.delete_forever_rounded,
+                                      color: AppColors.black,
+                                    ),
+                                    Icon(
+                                      Icons.edit,
+                                      color: AppColors.black,
+                                    ),
+
+                                  ],
+                                )
+                              //
+                            ),
+                            child: Column(
+                              children: [
+                                CheckboxListTile(
+                                  activeColor: AppColors.black,
+                                  secondary: Container(
+                                    height: 60,
+                                    width: 60,
+                                    decoration: BoxDecoration(
+                                      //color: AppColors.grey.withOpacity(0.2),
+                                      borderRadius: BorderRadius.circular(8),
+                                    ),
+                                    child: const Icon(
+                                      Icons.settings,
+                                      color: AppColors.grey,
+                                    ),
+                                  ),
+                                  title: Text(
+                                    task['miniTasks'][index]['name'],
+                                    style: const TextStyle(
+                                      color: AppColors.black,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  value: task['miniTasks'][index]?['status'],
+                                  onChanged: (bool? value) {
+                                    if (value != null) {
+                                      setState(() {
+                                        task['miniTasks'][index]?['status'] = value;
+
+                                      });
+                                    }
+                                  },
+                                ),
+                                Divider(
+                                  thickness: 1,
+                                  color: AppColors.grey.withOpacity(0.3),
+                                  indent: 20,
+                                  endIndent: 20,
+                                ),
+                              ],
+                            ),
                           ),
-                          Divider(
-                            thickness: 1,
-                            color: AppColors.grey.withOpacity(0.3),
-                            indent: 20,
-                            endIndent: 20,
-                          ),
-                        ],
-                      ),
-                    ),
+                        );
+                      }else{
+                        return Column(
+                          children: [
+                            CheckboxListTile(
+                              activeColor: AppColors.black,
+                              secondary: Container(
+                                height: 60,
+                                width: 60,
+                                decoration: BoxDecoration(
+                                  //color: AppColors.grey.withOpacity(0.2),
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                                child: const Icon(
+                                  Icons.settings,
+                                  color: AppColors.grey,
+                                ),
+                              ),
+                              title: Text(
+                                task['miniTasks'][index]['name'],
+                                style: const TextStyle(
+                                  color: AppColors.black,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              value: task['miniTasks'][index]?['status'],
+                              onChanged: (bool? value) {
+                                if (value != null) {
+                                  setState(() {
+                                    task['miniTasks'][index]?['status'] = value;
+
+                                  });
+                                }
+                              },
+                            ),
+                            Divider(
+                              thickness: 1,
+                              color: AppColors.grey.withOpacity(0.3),
+                              indent: 20,
+                              endIndent: 20,
+                            ),
+                          ],
+                        );
+                      }
+
+                    },
                   );
-                },
+                }
               ),
             ),
             ElevatedButton(
               onPressed: () async{
                 editMiniTasks(taskId,task['miniTasks']);
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text("Дані успішно оновлено"),
+                    backgroundColor: AppColors.black,
+                    duration: Duration(seconds: 1),
+                  ),
+                );
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: AppColors.black,
